@@ -1,0 +1,12 @@
+* {
+    background-color: whitesmoke;
+}
+
+.title {
+    background-color: violet;
+}
+
+.errMsg {
+    color: tomato;
+    background-color: olive;
+}
