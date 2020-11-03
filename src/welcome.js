@@ -4,10 +4,14 @@ import Registration from "./registration";
 export default function Welcome() {
     return (
         <div>
-            {/* some image */}
-            <h1 className="title">welcome to our social network</h1>
-            <Registration />
-            <p>already a member? log in...</p>
+            <img src="/coffee_background.jpg" className="bgImg"></img>
+            <div className="topLeft">
+                <img src="/cool_beans_transp.png" className="logo"></img>
+                <h1 className="title">nerdy coffee talks</h1>
+            </div>
+            <div>
+                <Registration />
+            </div>
         </div>
     );
 }

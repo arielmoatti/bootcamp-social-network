@@ -46,8 +46,9 @@ export default class Registration extends React.Component {
 
     render() {
         return (
-            <div>
-                <h1>please take a moment to register</h1>
+            <div className="formContainer">
+                <h1>please take a moment</h1>
+                <h1>to register</h1>
                 <input
                     name="firstname"
                     placeholder="First Name *"
@@ -79,10 +80,13 @@ export default class Registration extends React.Component {
                     onChange={(e) => this.handleChange(e)}
                     onClick={() => this.clearErrMsg()}
                 ></input>
-                <button onClick={() => this.submit()}>register!</button>
+                <button name="submit" onClick={() => this.submit()}>
+                    register!
+                </button>
                 {this.state.error && (
                     <h1 className="errMsg">{this.state.message}</h1>
                 )}
+                <h2>already a member? log in...</h2>
             </div>
         );
     }
