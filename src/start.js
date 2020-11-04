@@ -9,7 +9,7 @@ const userIsLoggedIn = location.pathname != "/welcome";
 if (!userIsLoggedIn) {
     elem = <Welcome />;
 } else {
-    elem = <h1>logo component here</h1>;
+    elem = <img src="/cool_beans_transp.png" className="logo"></img>;
 }
 
 ReactDOM.render(elem, document.querySelector("main"));

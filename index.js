@@ -6,6 +6,7 @@ const csurf = require("csurf");
 const { hash, compare } = require("./bc");
 const db = require("./db");
 
+////////////////////// MIDDLEWARE //////////////////////
 app.use(
     cookieSession({
         secret: `we need more cowbell!`,
@@ -19,13 +20,13 @@ app.use(
 //     })
 // );
 
-// app.use(csurf());
+app.use(csurf());
 
-// app.use(function (req, res, next) {
-//     res.locals.csrfToken = req.csrfToken();
-//     res.set("x-frame-options", "DENY");
-//     next();
-// });
+app.use(function (req, res, next) {
+    res.cookie("mytoken", req.csrfToken());
+    res.set("x-frame-options", "DENY");
+    next();
+});
 
 app.use(compression());
 
@@ -122,6 +123,57 @@ app.post("/register", (req, res) => {
         res.json({
             success: false,
             message: "make sure your form is complete!",
+        });
+    }
+});
+
+app.post("/login", (req, res) => {
+    const { email, password } = req.body;
+    if (email && password) {
+        db.getUserDataByEmail(email)
+            .then((results) => {
+                // console.log("from getUserDataByEmail > results: ", results);
+                const hashedPw = results.rows[0].password;
+                console.log("from getUserDataByEmail > hashedPw: ", hashedPw);
+                compare(password, hashedPw)
+                    .then((match) => {
+                        console.log(
+                            "user input password matches the hash? ",
+                            match
+                        );
+                        if (match) {
+                            //set cookie
+                            req.session.userId = results.rows[0].id;
+                            console.log("successful log in!");
+                            res.json({ success: true });
+                        } else {
+                            console.log("error! no match passwords");
+                            res.json({
+                                success: false,
+                                message: "Uh oh! you have failed to log in...",
+                            });
+                        }
+                    })
+                    .catch((err) => {
+                        console.log("error in POST /login compare():", err);
+                        res.json({
+                            success: false,
+                            message: "server error",
+                        });
+                    });
+            })
+            .catch((err) => {
+                console.log("error in POST /login getUserDataByEmail():", err);
+                res.json({
+                    success: false,
+                    message: "Uh oh! you have failed to log in...",
+                });
+            });
+    } else {
+        console.log("error! empty fields!");
+        res.json({
+            success: false,
+            message: "these two fields are mandatory!",
         });
     }
 });

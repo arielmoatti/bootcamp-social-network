@@ -2,7 +2,7 @@ import React from "react";
 import axios from "./axios";
 import { Link } from "react-router-dom";
 
-export default class Registration extends React.Component {
+export default class Login extends React.Component {
     constructor() {
         super();
         this.state = {};
@@ -28,7 +28,7 @@ export default class Registration extends React.Component {
     submit() {
         console.log("about to submit");
         axios
-            .post("/register", this.state)
+            .post("/login", this.state)
             .then((response) => {
                 // console.log("response", response);
                 if (response.data.success) {
@@ -42,30 +42,14 @@ export default class Registration extends React.Component {
                     });
                 }
             })
-            .catch((e) => console.log("error in axios post /register", e));
+            .catch((e) => console.log("error in axios post /login", e));
     }
 
     render() {
         return (
             <div className="formContainer">
-                <h1>please take a moment</h1>
-                <h1>to register</h1>
-                <input
-                    name="firstname"
-                    placeholder="First Name *"
-                    autoComplete="off"
-                    pattern="^[a-zA-Z ]+$"
-                    onChange={(e) => this.handleChange(e)}
-                    onClick={() => this.clearErrMsg()}
-                ></input>
-                <input
-                    name="lastname"
-                    placeholder="Last Name *"
-                    autoComplete="off"
-                    pattern="^[a-zA-Z ]+$"
-                    onChange={(e) => this.handleChange(e)}
-                    onClick={() => this.clearErrMsg()}
-                ></input>
+                <h1>welcome back!</h1>
+                <h1>please log in</h1>
                 <input
                     name="email"
                     placeholder="Email Address *"
@@ -82,14 +66,14 @@ export default class Registration extends React.Component {
                     onClick={() => this.clearErrMsg()}
                 ></input>
                 <button name="submit" onClick={() => this.submit()}>
-                    register!
+                    log in!
                 </button>
                 {this.state.error && (
                     <h1 className="errMsg">{this.state.message}</h1>
                 )}
                 <h2>
-                    already a member? then please
-                    <Link to="/login"> log in</Link>
+                    not yet a member? then go ahead and
+                    <Link to="/"> register</Link>
                 </h2>
             </div>
         );
