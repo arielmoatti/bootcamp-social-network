@@ -24,9 +24,9 @@ export default class ResetPassword extends React.Component {
                 // console.log("response", response);
                 if (response.data.success) {
                     //then continue to the next step
+
                     this.setState({
                         step: "provideCodePW",
-                        [this.name]: "";
                     });
                     this.clearErrMsg();
                 } else {
@@ -56,7 +56,7 @@ export default class ResetPassword extends React.Component {
                         onClick={() => this.clearErrMsg()}
                     ></input>
                     <button name="submit" onClick={() => this.submitReset()}>
-                        reset!
+                        send email
                     </button>
                     {this.state.error && (
                         <h1 className="errMsg">{this.state.message}</h1>
@@ -70,7 +70,7 @@ export default class ResetPassword extends React.Component {
                         recovery email was sent! please check your mailbox for
                         instructions and fill out these fields
                     </h3>
-                    <input                        
+                    <input
                         name="secretCode"
                         placeholder="Recovery Code *"
                         autoComplete="off"
@@ -86,7 +86,7 @@ export default class ResetPassword extends React.Component {
                         onClick={() => this.clearErrMsg()}
                     ></input>
                     <button name="submit" onClick={() => this.submit()}>
-                        update!
+                        reset password
                     </button>
                     {this.state.error && (
                         <h1 className="errMsg">{this.state.message}</h1>

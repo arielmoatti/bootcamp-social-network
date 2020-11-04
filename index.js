@@ -66,55 +66,33 @@ app.get("*", function (req, res) {
 
 app.post("/register", (req, res) => {
     const { firstname, lastname, email, password } = req.body;
-    // console.log("Hit the post register route");
-    // console.log("req.body", req.body);
-    if (
-        // firstname !== "" &&
-        // lastname !== "" &&
-        // email !== "" &&
-        // password !== ""
-        firstname &&
-        lastname &&
-        email &&
-        password
-    ) {
-        //existing email validation
-        db.getUserDataByEmail(email)
-            .then((results) => {
-                if (results.rows.length == 0) {
-                    console.log("email is good to use!");
-                    //email not existing
-                    hash(password)
-                        .then((hashedPw) => {
-                            // console.log("hashedPw", hashedPw);
-                            db.createUser(firstname, lastname, email, hashedPw)
-                                .then((results) => {
-                                    //set cookie
-                                    req.session.userId = results.rows[0].id;
-                                    console.log("a new user was added!");
-                                    res.json({ success: true });
-                                }) //end of createUser()
-                                .catch((err) => {
-                                    console.log(
-                                        "error in POST /register createUser()",
-                                        err
-                                    );
-                                });
-                        }) //end of hash()
-                        .catch((err) => {
-                            console.log("error is POST /register hash()", err);
-                        });
-                } else {
-                    //of if block (email)
-                    console.log("error! email has been already used");
-                    res.json({
-                        success: false,
-                        message: "this email is already in use",
+    if (firstname && lastname && email && password) {
+        hash(password)
+            .then((hashedPw) => {
+                db.createUser(firstname, lastname, email, hashedPw)
+                    .then((results) => {
+                        //set cookie
+                        req.session.userId = results.rows[0].id;
+                        console.log("a new user was added!");
+                        res.json({ success: true });
+                    }) //end of createUser()
+                    .catch((err) => {
+                        if (err.constraint == "users_email_key") {
+                            console.log("error! email has been already used");
+                            res.json({
+                                success: false,
+                                message: "this email is already in use",
+                            });
+                        } else {
+                            console.log(
+                                "error in POST /register createUser()",
+                                err
+                            );
+                        }
                     });
-                }
-            }) //end of getUserDataByEmail()
+            }) //end of hash()
             .catch((err) => {
-                console.log("error is POST /register checkEmail()", err);
+                console.log("error is POST /register hash()", err);
             });
         //end of hash block
     } else {
@@ -132,7 +110,6 @@ app.post("/login", (req, res) => {
     if (email && password) {
         db.getUserDataByEmail(email)
             .then((results) => {
-                // console.log("from getUserDataByEmail > results: ", results);
                 const hashedPw = results.rows[0].password;
                 console.log("from getUserDataByEmail > hashedPw: ", hashedPw);
                 compare(password, hashedPw)
