@@ -78,6 +78,15 @@ exports.createUser = (firstname, lastname, email, hashedPw) => {
     );
 };
 
+exports.storeCode = (secretCode, userEmail) => {
+    return db.query(
+        `
+        INSERT INTO reset_codes (code, email)
+        VALUES ($1, $2)        
+        `,
+        [secretCode, userEmail]
+    );
+};
 // exports.addSignature = (userId, canvaSignature) => {
 //     return db.query(
 //         `

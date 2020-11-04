@@ -5,6 +5,8 @@ const cookieSession = require("cookie-session");
 const csurf = require("csurf");
 const { hash, compare } = require("./bc");
 const db = require("./db");
+const cryptoRandomString = require("crypto-random-string");
+const ses = require("./ses");
 
 ////////////////////// MIDDLEWARE //////////////////////
 app.use(
@@ -161,12 +163,47 @@ app.post("/password/reset/start", (req, res) => {
         db.getUserDataByEmail(email)
             .then((results) => {
                 if (results.rows.length > 0) {
-                    console.log("rest of code");
-                    res.json({ success: true });
+                    const secretCode = cryptoRandomString({
+                        length: 6,
+                    });
+                    console.log("secretCode", secretCode);
+                    db.storeCode(secretCode, email)
+                        .then(() => {
+                            console.log("code inserted into table");
+                            const resetEmail = {
+                                subject: "Your request to reset your password",
+                                message: `Please use the code below as verification to reset your password:
+                                ${secretCode}`,
+                            };
+                            ses.sendEmail(
+                                email,
+                                resetEmail.message,
+                                resetEmail.subject
+                            );
+                            console.log(
+                                "email, resetEmail.message, resetEmail.subject",
+                                email,
+                                resetEmail.message,
+                                resetEmail.subject
+                            );
+
+                            //when email was sent successfully, send success only
+                            res.json({ success: true });
+                        })
+                        .catch((err) => {
+                            console.log(
+                                "error in POST /password/reset/start storeCode()",
+                                err
+                            );
+                            res.json({
+                                success: false,
+                                message: "server error. Please try again",
+                            });
+                        });
                 } else {
                     res.json({
                         success: false,
-                        message: "email address was not found",
+                        message: "email address was not found, try again",
                     });
                 }
             })
