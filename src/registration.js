@@ -87,10 +87,13 @@ export default class Registration extends React.Component {
                 {this.state.error && (
                     <h1 className="errMsg">{this.state.message}</h1>
                 )}
-                <h2>
-                    already a member? then please
-                    <Link to="/login"> log in</Link>
-                </h2>
+                <div className="formLower">
+                    <h3>already a member?</h3>
+                    <h3>
+                        then please
+                        <Link to="/login"> log in</Link>
+                    </h3>
+                </div>
             </div>
         );
     }

@@ -71,10 +71,18 @@ export default class Login extends React.Component {
                 {this.state.error && (
                     <h1 className="errMsg">{this.state.message}</h1>
                 )}
-                <h2>
-                    not yet a member? then go ahead and
-                    <Link to="/"> register</Link>
-                </h2>
+                <div className="formLower">
+                    <h3>not yet a member?</h3>
+                    <h3>
+                        then please
+                        <Link to="/"> register</Link>
+                    </h3>
+                    <h3>forgot your password?</h3>
+                    <h3>
+                        click here to
+                        <Link to="/reset-password"> reset</Link>
+                    </h3>
+                </div>
             </div>
         );
     }

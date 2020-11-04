@@ -178,6 +178,40 @@ app.post("/login", (req, res) => {
     }
 });
 
+app.post("/password/reset/start", (req, res) => {
+    const { email } = req.body;
+    if (email) {
+        db.getUserDataByEmail(email)
+            .then((results) => {
+                if (results.rows.length > 0) {
+                    console.log("rest of code");
+                    res.json({ success: true });
+                } else {
+                    res.json({
+                        success: false,
+                        message: "email address was not found",
+                    });
+                }
+            })
+            .catch((err) => {
+                console.log(
+                    "error in POST /password/reset/start getUserDataByEmail():",
+                    err
+                );
+                res.json({
+                    success: false,
+                    message: "server error",
+                });
+            });
+    } else {
+        console.log("error! empty field!");
+        res.json({
+            success: false,
+            message: "please enter your email address",
+        });
+    }
+});
+
 if (require.main == module) {
     app.listen(process.env.PORT || 8080, () =>
         console.log("social network SERVER at 8080...")
