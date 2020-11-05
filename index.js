@@ -7,6 +7,7 @@ const { hash, compare } = require("./bc");
 const db = require("./db");
 const cryptoRandomString = require("crypto-random-string");
 const ses = require("./ses");
+const { async } = require("crypto-random-string");
 
 ////////////////////// MIDDLEWARE //////////////////////
 app.use(
@@ -232,23 +233,21 @@ app.post("/password/reset/start", async (req, res) => {
     if (email) {
         try {
             let checkEmail = await db.getUserDataByEmail(email);
-            if (checkEmail.length > 0) {
+            if (checkEmail.rows.length > 0) {
                 const secretCode = cryptoRandomString({
                     length: 6,
                 });
-                const storeCode = await db.storeCode(secretCode, email);
-                const eSubject = "Your request to reset password";
+                console.log("secretCode: ", secretCode);
+                await db.storeCode(secretCode, email);
+                const first = checkEmail.rows[0].first;
+                const eSubject = "Your request to reset the login password";
                 const eMessage = `
+                Hello, ${first}!
                 Please use the code below as verification to reset your password:
                 ${secretCode}
                 note: this code expires after 10 minutes!
                 `;
-                const sendEmail = await ses.sendEmail(
-                    email,
-                    eMessage,
-                    eSubject
-                );
-                console.log("reset email got sent to: ", email);
+                // await ses.sendEmail(email, eMessage, eSubject); ////////////////// NO SES!!!!
                 res.json({ success: true });
             } else {
                 res.json({
@@ -256,14 +255,67 @@ app.post("/password/reset/start", async (req, res) => {
                     message: "email address was not found, try again",
                 });
             }
-        } catch (e) {
-            console.log(e); // need to work on elaborating this!
+        } catch (err) {
+            if (err.message.startsWith("Invalid domain name")) {
+                console.log("error in ses.sendEmail(): ", err);
+            } else {
+                console.log(err);
+            }
+            res.json({
+                success: false,
+                message: "server error. Please try again",
+            });
         }
     } else {
         console.log("error! empty field!");
         res.json({
             success: false,
             message: "please enter your email address",
+        });
+    }
+});
+
+app.post("/password/reset/verify", async (req, res) => {
+    const { email, secretCode, password } = req.body;
+    if (secretCode && password) {
+        try {
+            let checkCode = await db.checkCode(email);
+            if (checkCode.rows.length > 0) {
+                // console.log("most recent code is: ", checkCode.rows[0].code);
+                if (checkCode.rows[0].code === secretCode) {
+                    // console.log("exists and matches!");
+                    let hashedPw = await hash(password);
+                    // console.log("hashedPw", hashedPw);
+                    await db.updatePw(hashedPw, email);
+                    res.json({ success: true });
+                } else {
+                    console.log("code mismatch :(");
+                    res.json({
+                        success: false,
+                        message:
+                            "recovery code doesn't match or expired. Please try again or request a new code",
+                    });
+                }
+            } else {
+                console.log("code is expired :(");
+                res.json({
+                    success: false,
+                    message:
+                        "recovery code doesn't match or expired. Please try again or request a new code",
+                });
+            }
+        } catch (err) {
+            console.log(err);
+            res.json({
+                success: false,
+                message: "server error. Please try again",
+            });
+        }
+    } else {
+        console.log("error! empty fields!");
+        res.json({
+            success: false,
+            message: "these two fields are mandatory!",
         });
     }
 });

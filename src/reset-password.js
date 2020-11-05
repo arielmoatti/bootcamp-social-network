@@ -17,28 +17,46 @@ export default class ResetPassword extends React.Component {
         this.setState({ error: false });
     }
 
-    submitReset() {
+    submitEmail() {
         axios
             .post("/password/reset/start", this.state)
             .then((response) => {
-                // console.log("response", response);
                 if (response.data.success) {
-                    //then continue to the next step
-
                     this.setState({
                         step: "provideCodePW",
                     });
                     this.clearErrMsg();
                 } else {
-                    //show error message
                     this.setState({
                         error: true,
                         message: response.data.message,
                     });
                 }
             })
-            .catch((e) =>
-                console.log("error in axios post /password/reset/start", e)
+            .catch((err) =>
+                console.log("error in axios post /password/reset/start", err)
+            );
+    }
+
+    submitNewPw() {
+        axios
+            .post("/password/reset/verify", this.state)
+            .then((response) => {
+                if (response.data.success) {
+                    this.setState({
+                        step: "",
+                    });
+                    console.log("phase 1 completed");
+                    // this.clearErrMsg();
+                } else {
+                    this.setState({
+                        error: true,
+                        message: response.data.message,
+                    });
+                }
+            })
+            .catch((err) =>
+                console.log("error in axios post /password/reset/verify", err)
             );
     }
 
@@ -55,7 +73,7 @@ export default class ResetPassword extends React.Component {
                         onChange={(e) => this.handleChange(e)}
                         onClick={() => this.clearErrMsg()}
                     ></input>
-                    <button name="submit" onClick={() => this.submitReset()}>
+                    <button name="submit" onClick={() => this.submitEmail()}>
                         send email
                     </button>
                     {this.state.error && (
@@ -67,8 +85,8 @@ export default class ResetPassword extends React.Component {
             return (
                 <div className="formContainer">
                     <h3>
-                        recovery email was sent! please check your mailbox for
-                        instructions and fill out these fields
+                        email was sent! please check your mailbox for the
+                        recovery code, and fill out these fields
                     </h3>
                     <input
                         name="secretCode"
@@ -86,11 +104,11 @@ export default class ResetPassword extends React.Component {
                         onChange={(e) => this.handleChange(e)}
                         onClick={() => this.clearErrMsg()}
                     ></input>
-                    <button name="submit" onClick={() => this.submit()}>
+                    <button name="submit" onClick={() => this.submitNewPw()}>
                         reset password
                     </button>
                     {this.state.error && (
-                        <h1 className="errMsg">{this.state.message}</h1>
+                        <h3 className="errMsg">{this.state.message}</h3>
                     )}
                 </div>
             );
