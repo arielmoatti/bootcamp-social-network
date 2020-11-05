@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Welcome from "./welcome";
+import App from "./app";
 
 let elem;
 const userIsLoggedIn = location.pathname != "/welcome";
@@ -8,7 +9,8 @@ const userIsLoggedIn = location.pathname != "/welcome";
 if (!userIsLoggedIn) {
     elem = <Welcome />;
 } else {
-    elem = <img src="/cool_beans_transp.png" className="logo"></img>;
+    elem = <App />;
+    // elem = <img src="/cool_beans_transp.png" className="logo"></img>;
 }
 
 ReactDOM.render(elem, document.querySelector("main"));

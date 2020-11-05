@@ -75,7 +75,7 @@ app.post("/register", (req, res) => {
                     .then((results) => {
                         //set cookie
                         req.session.userId = results.rows[0].id;
-                        console.log("a new user was added!");
+                        // console.log("a new user was added!");
                         res.json({ success: true });
                     }) //end of createUser()
                     .catch((err) => {
@@ -113,17 +113,17 @@ app.post("/login", (req, res) => {
         db.getUserDataByEmail(email)
             .then((results) => {
                 const hashedPw = results.rows[0].password;
-                console.log("from getUserDataByEmail > hashedPw: ", hashedPw);
+                // console.log("from getUserDataByEmail > hashedPw: ", hashedPw);
                 compare(password, hashedPw)
                     .then((match) => {
-                        console.log(
-                            "user input password matches the hash? ",
-                            match
-                        );
+                        // console.log(
+                        //     "user input password matches the hash? ",
+                        //     match
+                        // );
                         if (match) {
                             //set cookie
                             req.session.userId = results.rows[0].id;
-                            console.log("successful log in!");
+                            // console.log("successful log in!");
                             res.json({ success: true });
                         } else {
                             console.log("error! no match passwords");
@@ -157,7 +157,7 @@ app.post("/login", (req, res) => {
     }
 });
 
-app.post("/password/reset/start", (req, res) => {
+app.post("/password/reset/old", (req, res) => {
     const { email } = req.body;
     if (email) {
         db.getUserDataByEmail(email)
@@ -166,29 +166,30 @@ app.post("/password/reset/start", (req, res) => {
                     const secretCode = cryptoRandomString({
                         length: 6,
                     });
-                    console.log("secretCode", secretCode);
                     db.storeCode(secretCode, email)
                         .then(() => {
-                            console.log("code inserted into table");
-                            const resetEmail = {
-                                subject: "Your request to reset your password",
-                                message: `Please use the code below as verification to reset your password:
-                                ${secretCode}`,
-                            };
-                            ses.sendEmail(
-                                email,
-                                resetEmail.message,
-                                resetEmail.subject
-                            );
-                            console.log(
-                                "email, resetEmail.message, resetEmail.subject",
-                                email,
-                                resetEmail.message,
-                                resetEmail.subject
-                            );
-
-                            //when email was sent successfully, send success only
-                            res.json({ success: true });
+                            const eSubject = "Your request to reset password";
+                            const eMessage = `
+                                Please use the code below as verification to reset your password:
+                                ${secretCode}
+                                note: this code expires after 10 minutes!
+                                `;
+                            ses.sendEmail(email, eMessage, eSubject)
+                                .then(() => {
+                                    console.log(
+                                        "reset email got sent to: ",
+                                        email
+                                    );
+                                    res.json({ success: true });
+                                })
+                                .catch((err) => {
+                                    console.log("error in ses.sendEmail:", err);
+                                    res.json({
+                                        success: false,
+                                        message:
+                                            "server error. Please try again",
+                                    });
+                                });
                         })
                         .catch((err) => {
                             console.log(
@@ -214,9 +215,50 @@ app.post("/password/reset/start", (req, res) => {
                 );
                 res.json({
                     success: false,
-                    message: "server error",
+                    message: "server error. Please try again",
                 });
             });
+    } else {
+        console.log("error! empty field!");
+        res.json({
+            success: false,
+            message: "please enter your email address",
+        });
+    }
+});
+
+app.post("/password/reset/start", async (req, res) => {
+    const { email } = req.body;
+    if (email) {
+        try {
+            let checkEmail = await db.getUserDataByEmail(email);
+            if (checkEmail.length > 0) {
+                const secretCode = cryptoRandomString({
+                    length: 6,
+                });
+                const storeCode = await db.storeCode(secretCode, email);
+                const eSubject = "Your request to reset password";
+                const eMessage = `
+                Please use the code below as verification to reset your password:
+                ${secretCode}
+                note: this code expires after 10 minutes!
+                `;
+                const sendEmail = await ses.sendEmail(
+                    email,
+                    eMessage,
+                    eSubject
+                );
+                console.log("reset email got sent to: ", email);
+                res.json({ success: true });
+            } else {
+                res.json({
+                    success: false,
+                    message: "email address was not found, try again",
+                });
+            }
+        } catch (e) {
+            console.log(e); // need to work on elaborating this!
+        }
     } else {
         console.log("error! empty field!");
         res.json({

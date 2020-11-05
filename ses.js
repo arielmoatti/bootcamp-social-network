@@ -31,7 +31,7 @@ exports.sendEmail = function (recipient, message, subject) {
                 },
             },
         })
-        .promise()
-        .then(() => console.log("reset email got sent"))
-        .catch((err) => console.log("error in ses.sendEmail:", err));
+        .promise();
+    // .then(() => console.log("reset email got sent"))
+    // .catch((err) => console.log("error in ses.sendEmail:", err));
 };

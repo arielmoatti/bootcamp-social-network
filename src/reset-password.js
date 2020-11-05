@@ -74,6 +74,7 @@ export default class ResetPassword extends React.Component {
                         name="secretCode"
                         placeholder="Recovery Code *"
                         autoComplete="off"
+                        key={this.state.step}
                         onChange={(e) => this.handleChange(e)}
                         onClick={() => this.clearErrMsg()}
                     ></input>
@@ -101,11 +102,11 @@ export default class ResetPassword extends React.Component {
                         <h3>now you can go ahead</h3>
                         <h3>
                             and <Link to="/login"> log in</Link>
+                            with your new password
                         </h3>
                     </div>
                 </div>
             );
-            //...........
         }
     }
 
