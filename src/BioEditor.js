@@ -11,17 +11,24 @@ export default class BioEditor extends Component {
     }
 
     methodInBioEditor() {
-        console.log("methodInBioEditor just ran after fake axios!");
         this.props.methodInAppBio(this.state.draftBio);
+    }
+
+    handleChange(e) {
+        this.setState({
+            draftBio: e.target.value,
+        });
     }
 
     textareaToggle() {
         this.setState({
             editorIsVisible: !this.state.editorIsVisible,
         });
-
         if (this.state.editorIsVisible) {
-            if (this.state.draftBio) {
+            if (
+                this.state.draftBio !== null ||
+                this.state.draftBio !== undefined
+            ) {
                 let bioObj = { biotext: this.state.draftBio };
                 (async () => {
                     try {
@@ -35,12 +42,6 @@ export default class BioEditor extends Component {
                 })();
             }
         }
-    }
-
-    handleChange(e) {
-        this.setState({
-            draftBio: e.target.value,
-        });
     }
 
     render() {
