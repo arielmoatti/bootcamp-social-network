@@ -1,27 +1,71 @@
 import React, { Component } from "react";
+import axios from "./axios";
 
 export default class BioEditor extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            editorIsVisible: false, //toggle this with the edit button
+            editorIsVisible: false,
+            draftBio: null,
         };
+    }
+
+    methodInBioEditor() {
+        console.log("methodInBioEditor just ran after fake axios!");
+        this.props.methodInAppBio(this.state.draftBio);
     }
 
     textareaToggle() {
         this.setState({
             editorIsVisible: !this.state.editorIsVisible,
         });
+
+        if (this.state.editorIsVisible) {
+            if (this.state.draftBio) {
+                let bioObj = { biotext: this.state.draftBio };
+                (async () => {
+                    try {
+                        let response = await axios.post("/upload/bio", bioObj);
+                        let { returnedBio } = response.data;
+                        this.setState({ draftBio: returnedBio });
+                        this.methodInBioEditor();
+                    } catch (err) {
+                        console.log("error in axios POST /upload/bio:", err);
+                    }
+                })();
+            }
+        }
+    }
+
+    handleChange(e) {
+        this.setState({
+            draftBio: e.target.value,
+        });
     }
 
     render() {
         return (
             <>
-                <h1>Bio Editor</h1>
-                {this.state.editorIsVisible && <textarea />}
-                <button onClick={() => this.textareaToggle()}>
-                    click to edit
-                </button>
+                <div className="profileEditor">
+                    <p>{this.props.bio}</p>
+                    {this.state.editorIsVisible && (
+                        <textarea
+                            defaultValue={this.props.bio}
+                            rows="2"
+                            cols="100"
+                            onChange={(e) => this.handleChange(e)}
+                        />
+                    )}
+                    <div>
+                        <button onClick={() => this.textareaToggle()}>
+                            {this.state.editorIsVisible
+                                ? "save"
+                                : this.props.bio
+                                ? "edit"
+                                : "add"}
+                        </button>
+                    </div>
+                </div>
             </>
         );
     }

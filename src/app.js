@@ -13,17 +13,19 @@ export default class App extends React.Component {
             uploaderIsVisible: false,
         };
         this.methodInApp = this.methodInApp.bind(this);
+        this.methodInAppBio = this.methodInAppBio.bind(this);
     }
 
     componentDidMount() {
         (async () => {
             try {
                 let response = await axios.post("/user");
-                const { first, last, p_pic_url } = response.data.rows;
+                const { first, last, p_pic_url, bio } = response.data.rows;
                 this.setState({
                     first: first,
                     last: last,
                     profilePicUrl: p_pic_url,
+                    bio: bio,
                 });
             } catch (err) {
                 console.log("error in axios POST /user: ", err);
@@ -37,14 +39,13 @@ export default class App extends React.Component {
         });
     }
 
+    methodInAppBio(arg) {
+        this.setState({ bio: arg });
+    }
+
     methodInApp(arg) {
-        // this.toggleUploader();
-        // console.log("running in App");
-        // console.log("the arg passed:", arg);
         this.setState({ profilePicUrl: arg });
         this.toggleUploader();
-
-        //must bind this! because we didn't wrap it in a function
     }
 
     render() {
@@ -61,12 +62,17 @@ export default class App extends React.Component {
                     />
                 </header>
 
-                <Profile first={this.state.first} />
+                <Profile
+                    first={this.state.first}
+                    last={this.state.last}
+                    profilePicUrl={this.state.profilePicUrl}
+                    bio={this.state.bio}
+                    methodInAppBio={this.methodInAppBio}
+                />
 
                 {this.state.uploaderIsVisible && (
                     <Uploader
                         methodInApp={this.methodInApp}
-                        // methodInApp={() => this.methodInApp()}
                         profilePicUrl={this.state.profilePicUrl}
                     />
                 )}

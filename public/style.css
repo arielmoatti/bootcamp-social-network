@@ -138,9 +138,21 @@ input:-webkit-autofill {
 .profileIcon:hover {
     cursor: pointer;
 }
+/* 
+.profilePicBig {
+    border: 1px solid whitesmoke;
+    border-radius: 5px;
+    width: 200px;
+    height: 200px;
+} */
 
 .profile {
     background-color: tomato;
+}
+
+.profileEditor {
+    background-color: gray;
+    height: 3em;
 }
 
 .uploaderModal {

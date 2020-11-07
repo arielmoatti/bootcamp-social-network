@@ -392,6 +392,22 @@ app.post(
     }
 );
 
+app.post("/upload/bio", async (req, res) => {
+    const { userId } = req.session;
+    const { biotext } = req.body;
+    try {
+        let results = await db.updateBio(biotext, userId);
+        let returnedBio = results.rows[0].bio;
+        res.json({ returnedBio });
+    } catch (err) {
+        console.log("error in post/upload/bio", err);
+        res.json({
+            success: false,
+            message: "server error. Please try again",
+        });
+    }
+});
+
 if (require.main == module) {
     app.listen(process.env.PORT || 8080, () =>
         console.log("social network SERVER at 8080...")

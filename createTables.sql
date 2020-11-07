@@ -17,3 +17,8 @@ CREATE TABLE reset_codes(
     code        VARCHAR NOT NULL,
     timestamp   TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
+
+
+-- update users
+-- set bio='Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aut praesentium tenetur, libero laudantium fuga perspiciatis.'
+-- where id=2;

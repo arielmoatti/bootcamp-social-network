@@ -88,3 +88,15 @@ exports.uploadPicture = (profilePicUrl, userId) => {
         [profilePicUrl, userId]
     );
 };
+
+exports.updateBio = (bioText, userId) => {
+    return db.query(
+        `
+        UPDATE users
+        SET bio = $1
+        WHERE id = $2
+        RETURNING bio;
+        `,
+        [bioText, userId]
+    );
+};
