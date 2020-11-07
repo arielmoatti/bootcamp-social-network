@@ -10,6 +10,11 @@ body {
 a {
     text-decoration: none;
 }
+
+header {
+    background-color: seagreen;
+}
+
 .errMsg {
     color: tomato;
     background-color: olive;
@@ -121,4 +126,31 @@ input {
 input:-webkit-autofill {
     -webkit-transition: "color 9999s ease-out, background-color 9999s ease-out";
     -webkit-transition-delay: 9999s;
+}
+
+.profileIcon {
+    border: 2px solid whitesmoke;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+}
+
+.profileIcon:hover {
+    cursor: pointer;
+}
+
+.profile {
+    background-color: tomato;
+}
+
+.uploaderModal {
+    background-color: wheat;
+    border: 3px solid black;
+    border-radius: 5px;
+    padding: 20px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%);
+    filter: drop-shadow(5px 5px 5px #222);
 }

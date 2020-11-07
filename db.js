@@ -18,6 +18,16 @@ exports.getUserDataByEmail = (userEmail) => {
     );
 };
 
+exports.getUserDataById = (userId) => {
+    return db.query(
+        `
+        SELECT first, last, p_pic_url, bio 
+        FROM users 
+        WHERE id = $1;
+        `,
+        [userId]
+    );
+};
 exports.checkCode = (userEmail) => {
     return db.query(
         `
@@ -64,5 +74,16 @@ exports.updatePw = (hashedPw, userEmail) => {
         WHERE email = $2;
         `,
         [hashedPw, userEmail]
+    );
+};
+
+exports.uploadPicture = (profilePicUrl, userId) => {
+    return db.query(
+        `
+        UPDATE users
+        SET p_pic_url = $1
+        WHERE id = $2;        
+        `,
+        [profilePicUrl, userId]
     );
 };

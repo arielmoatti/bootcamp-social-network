@@ -7,7 +7,33 @@ const { hash, compare } = require("./bc");
 const db = require("./db");
 const cryptoRandomString = require("crypto-random-string");
 const ses = require("./ses");
-const { async } = require("crypto-random-string");
+const s3 = require("./s3");
+const { s3Url } = require("./config.json");
+
+/////// MULTER ////////
+// handles files and stores them in the "uploads" folder
+const multer = require("multer");
+const uidSafe = require("uid-safe");
+const path = require("path");
+
+const diskStorage = multer.diskStorage({
+    destination: function (req, file, callback) {
+        callback(null, __dirname + "/uploads");
+    },
+    filename: function (req, file, callback) {
+        uidSafe(24).then(function (uid) {
+            callback(null, uid + path.extname(file.originalname));
+        });
+    },
+});
+
+const uploader = multer({
+    storage: diskStorage,
+    limits: {
+        fileSize: 2097152,
+    },
+});
+////////////////////////////////////////////
 
 ////////////////////// MIDDLEWARE //////////////////////
 app.use(
@@ -243,7 +269,7 @@ app.post("/password/reset/start", async (req, res) => {
                 const eSubject = "Your request to reset the login password";
                 const eMessage = `
                 Hello, ${first}!
-                Please use the code below as verification to reset your password:
+                Please use the verification code below to reset your password:
                 ${secretCode}
                 note: this code expires after 10 minutes!
                 `;
@@ -319,6 +345,48 @@ app.post("/password/reset/verify", async (req, res) => {
         });
     }
 });
+
+app.post("/user", async (req, res) => {
+    const { userId } = req.session;
+    try {
+        let userData = await db.getUserDataById(userId);
+        let rows = userData.rows[0];
+        res.json({ rows });
+    } catch (err) {
+        console.log("error in post/user", err);
+    }
+});
+
+app.post(
+    "/upload/profilepic",
+    uploader.single("file"),
+    s3.upload,
+    async (req, res) => {
+        if (req.file) {
+            // console.log("req.file", req.file);
+
+            const { userId } = req.session;
+            const url = `${s3Url}${req.file.filename}`;
+            try {
+                let profilePicUrl = await db.uploadPicture(url, userId);
+                // console.log("profilePicUrl", profilePicUrl);
+                res.json({ url });
+            } catch (err) {
+                console.log("error in post/upload/profilepic", err);
+                res.json({
+                    success: false,
+                    message: "server error. Please try again",
+                });
+            }
+        } else {
+            console.log("error! no image selected in uploader");
+            res.json({
+                success: false,
+                message: "no file was chosen",
+            });
+        }
+    }
+);
 
 if (require.main == module) {
     app.listen(process.env.PORT || 8080, () =>

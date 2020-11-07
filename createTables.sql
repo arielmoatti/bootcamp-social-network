@@ -5,6 +5,8 @@ CREATE TABLE users (
     last        VARCHAR(255) NOT NULL,
     email       VARCHAR(255) NOT NULL UNIQUE,
     password    VARCHAR(255) NOT NULL,
+    p_pic_url   VARCHAR(255),
+    bio         TEXT,
     created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
 
