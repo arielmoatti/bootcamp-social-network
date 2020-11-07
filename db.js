@@ -21,7 +21,7 @@ exports.getUserDataByEmail = (userEmail) => {
 exports.getUserDataById = (userId) => {
     return db.query(
         `
-        SELECT first, last, p_pic_url, bio 
+        SELECT first, last, avatar, bio 
         FROM users 
         WHERE id = $1;
         `,
@@ -81,9 +81,9 @@ exports.uploadPicture = (profilePicUrl, userId) => {
     return db.query(
         `
         UPDATE users
-        SET p_pic_url = $1
+        SET avatar = $1
         WHERE id = $2
-        RETURNING p_pic_url;
+        RETURNING avatar;
         `,
         [profilePicUrl, userId]
     );

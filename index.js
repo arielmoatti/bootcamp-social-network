@@ -373,7 +373,7 @@ app.post(
             const url = `${s3Url}${req.file.filename}`;
             try {
                 let results = await db.uploadPicture(url, userId);
-                let returnedUrl = results.rows[0].p_pic_url;
+                let returnedUrl = results.rows[0].avatar;
                 res.json({ returnedUrl });
             } catch (err) {
                 console.log("error in post/upload/profilepic", err);

@@ -20,11 +20,11 @@ export default class App extends React.Component {
         (async () => {
             try {
                 let response = await axios.post("/user");
-                const { first, last, p_pic_url, bio } = response.data.rows;
+                const { first, last, avatar, bio } = response.data.rows;
                 this.setState({
                     first: first,
                     last: last,
-                    profilePicUrl: p_pic_url,
+                    profilePicUrl: avatar,
                     bio: bio,
                 });
             } catch (err) {
