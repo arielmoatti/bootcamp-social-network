@@ -21,9 +21,13 @@ const diskStorage = multer.diskStorage({
         callback(null, __dirname + "/uploads");
     },
     filename: function (req, file, callback) {
-        uidSafe(24).then(function (uid) {
-            callback(null, uid + path.extname(file.originalname));
-        });
+        uidSafe(24)
+            .then(function (uid) {
+                callback(null, uid + path.extname(file.originalname));
+            })
+            .catch((err) => {
+                console.log("error in multerdiskstorage: ", err);
+            });
     },
 });
 
@@ -368,9 +372,9 @@ app.post(
             const { userId } = req.session;
             const url = `${s3Url}${req.file.filename}`;
             try {
-                let profilePicUrl = await db.uploadPicture(url, userId);
-                // console.log("profilePicUrl", profilePicUrl);
-                res.json({ url });
+                let results = await db.uploadPicture(url, userId);
+                let returnedUrl = results.rows[0].p_pic_url;
+                res.json({ returnedUrl });
             } catch (err) {
                 console.log("error in post/upload/profilepic", err);
                 res.json({

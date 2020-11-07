@@ -10,19 +10,11 @@ export default class Login extends React.Component {
     }
 
     handleChange(e) {
-        // console.log("e.target.value", e.target.value);
-        this.setState(
-            {
-                [e.target.name]: e.target.value,
-            }
-            // () => console.log(this.state)
-        );
+        this.setState({ [e.target.name]: e.target.value });
     }
 
     clearErrMsg() {
-        this.setState({
-            error: false,
-        });
+        this.setState({ error: false });
     }
 
     submit() {
@@ -30,12 +22,9 @@ export default class Login extends React.Component {
         axios
             .post("/login", this.state)
             .then((response) => {
-                // console.log("response", response);
                 if (response.data.success) {
-                    //then redirect to our webpage
                     location.replace("/");
                 } else {
-                    //show error message
                     this.setState({
                         error: true,
                         message: response.data.message,

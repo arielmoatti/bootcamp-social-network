@@ -82,7 +82,8 @@ exports.uploadPicture = (profilePicUrl, userId) => {
         `
         UPDATE users
         SET p_pic_url = $1
-        WHERE id = $2;        
+        WHERE id = $2
+        RETURNING p_pic_url;
         `,
         [profilePicUrl, userId]
     );
