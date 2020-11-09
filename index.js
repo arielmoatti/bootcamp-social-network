@@ -408,13 +408,13 @@ app.post("/upload/bio", async (req, res) => {
     }
 });
 
-app.post("/user/:id", async (req, res) => {
+app.post("/user/:otherId", async (req, res) => {
     const { userId } = req.session;
-    const { id } = req.params;
+    const { otherId } = req.params;
     try {
-        let otherProfileData = await db.getUserDataById(id);
+        let otherProfileData = await db.getUserDataById(otherId);
         let rows = otherProfileData.rows[0];
-        if (rows.id === userId) {
+        if (otherId == userId) {
             res.json({
                 rows,
                 match: true,
