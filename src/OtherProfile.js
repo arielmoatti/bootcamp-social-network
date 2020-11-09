@@ -32,13 +32,20 @@ export default class OtherProfile extends React.Component {
     render() {
         return (
             <>
-                <h1>{`${this.state.first} ${this.state.last}`}</h1>
-                <img
-                    className="profilePicture"
-                    src={this.state.profilePicUrl}
-                    alt={`${this.state.first} ${this.state.last}`}
-                />
-                <p>{this.state.bio}</p>
+                <div className="otherProfile profileContainer">
+                    <h2>{`${this.state.first} ${this.state.last}`}</h2>
+                    <div className="profileInner">
+                        <img
+                            className="profilePicture"
+                            key={this.state.profilePicUrl}
+                            src={this.state.profilePicUrl}
+                            alt={`${this.state.first} ${this.state.last}`}
+                        />
+                        <p className="bioText">
+                            {this.state.bio || "no bio yet"}
+                        </p>
+                    </div>
+                </div>
             </>
         );
     }

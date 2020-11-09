@@ -47,7 +47,10 @@ export default class BioEditor extends Component {
         return (
             <>
                 <div className="profileEditor">
-                    <p>{this.props.bio}</p>
+                    <p className="bioText">
+                        {this.props.bio ||
+                            "your bio is empty. Click add now..."}
+                    </p>
                     {this.state.editorIsVisible && (
                         <textarea
                             defaultValue={this.props.bio}

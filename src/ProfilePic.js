@@ -9,7 +9,8 @@ export default function ProfilePic({
     return (
         <>
             <img
-                className="profileIcon"
+                className="profileImage"
+                key={profilePicUrl}
                 src={profilePicUrl || "/fallback-profile.png"}
                 alt={`${first} ${last}`}
                 onClick={toggleUploader}

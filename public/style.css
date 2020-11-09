@@ -13,6 +13,28 @@ a {
 
 header {
     background-color: seagreen;
+    height: 200px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    /* align-items: center; */
+}
+
+header > .profileImage {
+    border: 2px solid whitesmoke;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    align-self: flex-end;
+    /* margin-bottom: 30px; */
+}
+
+header > .profileImage:hover {
+    cursor: pointer;
+}
+
+.logo {
+    max-height: 150px;
 }
 
 .errMsg {
@@ -128,31 +150,21 @@ input:-webkit-autofill {
     -webkit-transition-delay: 9999s;
 }
 
-.profileIcon {
-    border: 2px solid whitesmoke;
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-}
-
-.profileIcon:hover {
-    cursor: pointer;
-}
-/* 
-.profilePicBig {
-    border: 1px solid whitesmoke;
-    border-radius: 5px;
-    width: 200px;
-    height: 200px;
-} */
-
-.profile {
+.profileContainer {
     background-color: tomato;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
 }
 
+.profileInner {
+    display: flex;
+    /* flex-direction: row; */
+}
 .profileEditor {
-    background-color: gray;
+    /* background-color: gray; */
     height: 3em;
+    padding: 30px;
 }
 
 .uploaderModal {
@@ -167,6 +179,23 @@ input:-webkit-autofill {
     filter: drop-shadow(5px 5px 5px #222);
 }
 
+.profileInner > .profileImage,
 .profilePicture {
-    max-width: 200px;
+    max-width: 300px;
+    border: 1px solid whitesmoke;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+.otherProfile {
+    background-color: lightskyblue;
+}
+
+.bioText {
+    font-size: 20px;
+    padding: 30px;
+}
+
+.profileEditor > .bioText {
+    padding: 0 0 10px 0;
 }
