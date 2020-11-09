@@ -411,23 +411,28 @@ app.post("/upload/bio", async (req, res) => {
 app.post("/user/:otherId", async (req, res) => {
     const { userId } = req.session;
     const { otherId } = req.params;
-    try {
-        let otherProfileData = await db.getUserDataById(otherId);
-        let rows = otherProfileData.rows[0];
-        if (otherId == userId) {
-            res.json({
-                rows,
-                match: true,
-                ownId: userId,
-            });
-        } else {
-            res.json({
-                rows,
-                match: false,
-            });
+    if (otherId > 0) {
+        try {
+            let otherProfileData = await db.getUserDataById(otherId);
+            let rows = otherProfileData.rows[0];
+            if (otherId == userId) {
+                res.json({
+                    rows,
+                    match: true,
+                    ownId: userId,
+                });
+            } else {
+                res.json({
+                    rows,
+                    match: false,
+                });
+            }
+        } catch (err) {
+            console.log("Error in POST user/:id", err);
         }
-    } catch (err) {
-        console.log("Error in POST user/:id", err);
+    } else {
+        console.log("invalid user id: not a number or negative");
+        res.json({ rows: null });
     }
 });
 

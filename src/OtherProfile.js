@@ -11,17 +11,17 @@ export default class OtherProfile extends React.Component {
         (async () => {
             try {
                 let response = await axios.post(`/user/${otherProfileId}`);
-                const { first, last, avatar, bio } = response.data.rows;
-                // if (otherProfileId == response.data.ownId) {
-                if (response.data.match) {
-                    this.props.history.push("/");
-                } else {
+                if (response.data.rows && !response.data.match) {
+                    // if (otherProfileId == response.data.ownId) {
+                    const { first, last, avatar, bio } = response.data.rows;
                     this.setState({
                         first: first,
                         last: last,
                         profilePicUrl: avatar,
                         bio: bio,
                     });
+                } else {
+                    this.props.history.push("/");
                 }
             } catch (err) {
                 console.log("error in axios POST /user/id: ", err);
