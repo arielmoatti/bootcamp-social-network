@@ -25,10 +25,9 @@ export default class BioEditor extends Component {
             editorIsVisible: !this.state.editorIsVisible,
         });
         if (this.state.editorIsVisible) {
-            if (
-                this.state.draftBio !== null ||
-                this.state.draftBio !== undefined
-            ) {
+            if (this.state.draftBio == null) {
+                return;
+            } else {
                 let bioObj = { biotext: this.state.draftBio };
                 (async () => {
                     try {

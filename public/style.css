@@ -166,3 +166,7 @@ input:-webkit-autofill {
     transform: translateX(-50%);
     filter: drop-shadow(5px 5px 5px #222);
 }
+
+.profilePicture {
+    max-width: 200px;
+}

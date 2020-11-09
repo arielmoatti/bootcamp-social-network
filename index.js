@@ -118,7 +118,7 @@ app.post("/register", (req, res) => {
                             });
                         } else {
                             console.log(
-                                "error in POST /register createUser()",
+                                "Error in POST /register createUser()",
                                 err
                             );
                         }
@@ -165,7 +165,7 @@ app.post("/login", (req, res) => {
                         }
                     })
                     .catch((err) => {
-                        console.log("error in POST /login compare():", err);
+                        console.log("Error in POST /login compare():", err);
                         res.json({
                             success: false,
                             message: "server error",
@@ -173,7 +173,7 @@ app.post("/login", (req, res) => {
                     });
             })
             .catch((err) => {
-                console.log("error in POST /login getUserDataByEmail():", err);
+                console.log("Error in POST /login getUserDataByEmail():", err);
                 res.json({
                     success: false,
                     message: "Uh oh! you have failed to log in...",
@@ -224,7 +224,7 @@ app.post("/password/reset/old", (req, res) => {
                         })
                         .catch((err) => {
                             console.log(
-                                "error in POST /password/reset/start storeCode()",
+                                "Error in POST /password/reset/start storeCode()",
                                 err
                             );
                             res.json({
@@ -241,7 +241,7 @@ app.post("/password/reset/old", (req, res) => {
             })
             .catch((err) => {
                 console.log(
-                    "error in POST /password/reset/start getUserDataByEmail():",
+                    "Error in POST /password/reset/start getUserDataByEmail():",
                     err
                 );
                 res.json({
@@ -350,14 +350,14 @@ app.post("/password/reset/verify", async (req, res) => {
     }
 });
 
-app.post("/user", async (req, res) => {
+app.post("/api/user", async (req, res) => {
     const { userId } = req.session;
     try {
         let userData = await db.getUserDataById(userId);
         let rows = userData.rows[0];
         res.json({ rows });
     } catch (err) {
-        console.log("error in post/user", err);
+        console.log("Error in POST api/user", err);
     }
 });
 
@@ -376,7 +376,7 @@ app.post(
                 let returnedUrl = results.rows[0].avatar;
                 res.json({ returnedUrl });
             } catch (err) {
-                console.log("error in post/upload/profilepic", err);
+                console.log("Error in POST upload/profilepic", err);
                 res.json({
                     success: false,
                     message: "server error. Please try again",
@@ -400,11 +400,34 @@ app.post("/upload/bio", async (req, res) => {
         let returnedBio = results.rows[0].bio;
         res.json({ returnedBio });
     } catch (err) {
-        console.log("error in post/upload/bio", err);
+        console.log("Error in POST upload/bio", err);
         res.json({
             success: false,
             message: "server error. Please try again",
         });
+    }
+});
+
+app.post("/user/:id", async (req, res) => {
+    const { userId } = req.session;
+    const { id } = req.params;
+    try {
+        let otherProfileData = await db.getUserDataById(id);
+        let rows = otherProfileData.rows[0];
+        if (rows.id === userId) {
+            res.json({
+                rows,
+                match: true,
+                ownId: userId,
+            });
+        } else {
+            res.json({
+                rows,
+                match: false,
+            });
+        }
+    } catch (err) {
+        console.log("Error in POST user/:id", err);
     }
 });
 

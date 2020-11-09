@@ -21,7 +21,7 @@ exports.getUserDataByEmail = (userEmail) => {
 exports.getUserDataById = (userId) => {
     return db.query(
         `
-        SELECT first, last, avatar, bio 
+        SELECT id, first, last, avatar, bio 
         FROM users 
         WHERE id = $1;
         `,

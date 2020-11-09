@@ -11,7 +11,7 @@ export default function ProfilePic({
             <img
                 className="profileIcon"
                 src={profilePicUrl || "/fallback-profile.png"}
-                alt={first + " " + last}
+                alt={`${first} ${last}`}
                 onClick={toggleUploader}
             />
         </>

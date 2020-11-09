@@ -7,9 +7,9 @@ export default function Profile(props) {
     return (
         <>
             <div className="profile">
-                <p>
-                    {props.first} {props.last}
-                </p>
+                <h2>
+                    {props.first} {props.last} {props.id}
+                </h2>
                 <ProfilePic
                     first={props.first}
                     last={props.last}
