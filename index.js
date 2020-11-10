@@ -440,7 +440,7 @@ app.post("/users", async (req, res) => {
     try {
         let { rows } = await db.getMostRecent();
         // let rows = results.rows[0];
-        res.json({ rows });
+        res.json(rows);
     } catch (err) {
         console.log("Error in POST users", err);
     }

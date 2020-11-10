@@ -6,7 +6,7 @@ import ProfilePic from "./ProfilePic";
 export default function Profile(props) {
     return (
         <>
-            <div className="profileContainer">
+            <div className="personalProfile profileContainer">
                 <h2>
                     {props.first} {props.last}
                 </h2>

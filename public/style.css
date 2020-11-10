@@ -150,23 +150,6 @@ input:-webkit-autofill {
     -webkit-transition-delay: 9999s;
 }
 
-.profileContainer {
-    background-color: tomato;
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-}
-
-.profileInner {
-    display: flex;
-    /* flex-direction: row; */
-}
-.profileEditor {
-    /* background-color: gray; */
-    height: 3em;
-    padding: 30px;
-}
-
 .uploaderModal {
     background-color: wheat;
     border: 3px solid black;
@@ -179,16 +162,43 @@ input:-webkit-autofill {
     filter: drop-shadow(5px 5px 5px #222);
 }
 
+.profileContainer {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.profileInner {
+    display: flex;
+}
+
 .profileInner > .profileImage,
 .profilePicture {
-    max-width: 300px;
+    width: 250px;
     border: 1px solid whitesmoke;
     border-radius: 5px;
     margin-top: 20px;
 }
 
+.profileInner > h3 {
+    padding: 30px;
+}
+
+.personalProfile {
+    background-color: tomato;
+}
+
 .otherProfile {
     background-color: lightskyblue;
+}
+
+.lastThreeContainer {
+    background-color: orange;
+}
+
+.profileEditor {
+    height: 3em;
+    padding: 30px;
 }
 
 .bioText {
