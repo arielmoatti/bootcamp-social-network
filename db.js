@@ -28,6 +28,7 @@ exports.getUserDataById = (userId) => {
         [userId]
     );
 };
+
 exports.checkCode = (userEmail) => {
     return db.query(
         `
@@ -38,6 +39,17 @@ exports.checkCode = (userEmail) => {
         LIMIT 1;
         `,
         [userEmail]
+    );
+};
+
+exports.getMostRecent = () => {
+    return db.query(
+        `
+        SELECT id, first, last, avatar 
+        FROM users 
+        ORDER BY id DESC 
+        LIMIT 3;
+        `
     );
 };
 

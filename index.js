@@ -436,6 +436,16 @@ app.post("/user/:otherId", async (req, res) => {
     }
 });
 
+app.post("/users", async (req, res) => {
+    try {
+        let { rows } = await db.getMostRecent();
+        // let rows = results.rows[0];
+        res.json({ rows });
+    } catch (err) {
+        console.log("Error in POST users", err);
+    }
+});
+
 if (require.main == module) {
     app.listen(process.env.PORT || 8080, () =>
         console.log("social network SERVER at 8080...")

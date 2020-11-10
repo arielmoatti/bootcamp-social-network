@@ -7,6 +7,7 @@ import Uploader from "./uploader";
 import Profile from "./profile";
 import Logo from "./Logo";
 import OtherProfile from "./OtherProfile";
+import FindPeople from "./FindPeople";
 
 export default class App extends React.Component {
     constructor() {
@@ -90,6 +91,7 @@ export default class App extends React.Component {
                             />
                         )}
                     />
+                    <Route path="/users" render={() => <FindPeople />} />
                 </div>
 
                 {this.state.uploaderIsVisible && (
