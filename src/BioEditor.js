@@ -53,6 +53,7 @@ export default class BioEditor extends Component {
                     </p>
                     {this.state.editorIsVisible && (
                         <textarea
+                            autoFocus={true}
                             defaultValue={this.props.bio}
                             rows="2"
                             cols="100"
