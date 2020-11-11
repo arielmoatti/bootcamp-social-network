@@ -13,10 +13,10 @@ export default function ProfilePic({
                 key={profilePicUrl}
                 src={profilePicUrl || "/fallback-profile.png"}
                 // onError={(e) => (e.target.src = "/fallback-profile.png")}
-                // onError={(e) => {
-                //     e.target.onerror = null;
-                //     e.target.src = "/fallback-profile.png";
-                // }}
+                onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = "/fallback-profile.png";
+                }}
                 alt={`${first} ${last}`}
                 onClick={toggleUploader}
             />

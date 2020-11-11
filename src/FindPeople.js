@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 export default function FindPeople() {
     const [users, setUsers] = useState([]);
     const [userSearch, setUserSearch] = useState("");
-    let empty = false;
+    const [empty, setEmpty] = useState(false);
 
     useEffect(() => {
         (async () => {
@@ -23,16 +23,16 @@ export default function FindPeople() {
         (async () => {
             try {
                 let { data } = await axios.post(`/users/${userSearch}`);
-                // console.log("data", data);
                 if (data.length == 0) {
-                    empty = true;
-                    console.log("empty", empty);
-                    console.log("data is empty array");
-                }
-                if (!abort) {
                     setUsers(data);
+                    setEmpty(true);
                 } else {
-                    console.log("aborted!");
+                    if (!abort) {
+                        setUsers(data);
+                        setEmpty(false);
+                    } else {
+                        console.log("aborted!");
+                    }
                 }
             } catch (err) {
                 console.log("error in axios POST /users/search:", err);
@@ -45,7 +45,6 @@ export default function FindPeople() {
 
     return (
         <div className="lastThreeContainer profileContainer">
-            {empty && <p>no results found</p>}
             <h1>check out our recent members:</h1>
             <h3>or if you want to search for someone, type name below</h3>
             <input
@@ -60,7 +59,15 @@ export default function FindPeople() {
                                 <Link to={`/user/${user.id}`}>
                                     <img
                                         className="profilePicture"
-                                        src={user.avatar}
+                                        src={
+                                            user.avatar ||
+                                            "/fallback-profile.png"
+                                        }
+                                        onError={(e) => {
+                                            e.target.onerror = null;
+                                            e.target.src =
+                                                "/fallback-profile.png";
+                                        }}
                                         alt={`${user.first} ${user.last}`}
                                     />
                                 </Link>
@@ -71,6 +78,7 @@ export default function FindPeople() {
                             </div>
                         </div>
                     ))}
+                {empty && <h2>no results found</h2>}
             </div>
         </div>
     );
