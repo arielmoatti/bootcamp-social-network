@@ -196,6 +196,10 @@ input:-webkit-autofill {
     background-color: orange;
 }
 
+.lastThreeContainer img {
+    width: 100px;
+}
+
 .profileEditor {
     height: 3em;
     padding: 30px;

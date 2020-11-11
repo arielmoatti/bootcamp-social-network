@@ -446,6 +446,22 @@ app.post("/users", async (req, res) => {
     }
 });
 
+app.post("/users/:search", async (req, res) => {
+    const { search } = req.params;
+    if (search) {
+        ///must see if we need this ////////////////
+        try {
+            let { rows } = await db.searchUser(search);
+            res.json(rows);
+        } catch (err) {
+            console.log("Error in POST user/:id", err);
+        }
+    } else {
+        console.log("invalid user id: not a number or negative"); /////change?
+        res.json({ rows: null });
+    }
+});
+
 if (require.main == module) {
     app.listen(process.env.PORT || 8080, () =>
         console.log("social network SERVER at 8080...")
