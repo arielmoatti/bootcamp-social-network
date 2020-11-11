@@ -15,7 +15,8 @@ export default function FriendButton({ otherId }) {
                 let { data } = await axios.get(
                     `/api/checkFriendStatus/${otherId}`
                 );
-                console.log("data", data);
+                setButtonText(data.btnText);
+                // console.log("data", data);
                 // console.log(props.otherId);
 
                 // setUsers(data);
@@ -28,5 +29,5 @@ export default function FriendButton({ otherId }) {
         })();
     }, []);
 
-    return <button name="friendship">{otherId || "default text"}</button>;
+    return <button name="friendship">{buttonText}</button>;
 }

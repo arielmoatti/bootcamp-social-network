@@ -218,3 +218,7 @@ input:-webkit-autofill {
 .profileContainer button {
     align-self: flex-start;
 }
+
+#memberName {
+    padding-bottom: 0.5em;
+}

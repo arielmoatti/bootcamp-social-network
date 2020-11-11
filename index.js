@@ -450,12 +450,15 @@ app.get("/api/users/:search", async (req, res) => {
 app.get("/api/checkFriendStatus/:otherId", async (req, res) => {
     const { userId } = req.session;
     const { otherId } = req.params;
-    console.log("userId", userId);
-    console.log("otherId", otherId);
     try {
-        let { rows } = await db.getFriendshipStatus(otherId, userId);
-        // res.json(rows);
-        res.json({ passedid: otherId });
+        let { rows } = await db.getFriendshipStatus(userId, otherId);
+        rows.length == 0
+            ? res.json({ btnText: "Send Friend Request" })
+            : rows[0].accepted
+            ? res.json({ btnText: "Unfriend" })
+            : rows[0].sender_id == userId
+            ? res.json({ btnText: "Cancel Friend Request" })
+            : res.json({ btnText: "Accept Friend Request" });
     } catch (err) {
         console.log("Error in app GET checkFriendStatus/:otherId", err);
     }

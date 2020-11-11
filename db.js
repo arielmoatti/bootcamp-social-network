@@ -67,7 +67,7 @@ exports.searchUser = (search) => {
     );
 };
 
-exports.getFriendshipStatus = (otherId, userId) => {
+exports.getFriendshipStatus = (userId, otherId) => {
     return db.query(
         `
         SELECT * FROM friendships
