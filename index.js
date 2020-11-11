@@ -79,19 +79,11 @@ if (process.env.NODE_ENV != "production") {
 }
 
 ////////////////////// ROUTES //////////////////////
+
 app.get("/welcome", (req, res) => {
     const { userId } = req.session;
     if (userId) {
         res.redirect("/");
-    } else {
-        res.sendFile(__dirname + "/index.html");
-    }
-});
-
-app.get("*", function (req, res) {
-    const { userId } = req.session;
-    if (!userId) {
-        res.redirect("/welcome");
     } else {
         res.sendFile(__dirname + "/index.html");
     }
@@ -277,7 +269,7 @@ app.post("/password/reset/start", async (req, res) => {
                 ${secretCode}
                 note: this code expires after 10 minutes!
                 `;
-                // await ses.sendEmail(email, eMessage, eSubject); ////////////////// NO SES!!!!
+                await ses.sendEmail(email, eMessage, eSubject); ////////////////// TOGGLE SES!!!!
                 res.json({ success: true });
             } else {
                 res.json({
@@ -350,14 +342,14 @@ app.post("/password/reset/verify", async (req, res) => {
     }
 });
 
-app.post("/api/user", async (req, res) => {
+app.get("/api/user", async (req, res) => {
     const { userId } = req.session;
     try {
         let userData = await db.getUserDataById(userId);
         let rows = userData.rows[0];
         res.json({ rows });
     } catch (err) {
-        console.log("Error in POST api/user", err);
+        console.log("Error in GET api/user", err);
     }
 });
 
@@ -408,7 +400,7 @@ app.post("/upload/bio", async (req, res) => {
     }
 });
 
-app.post("/user/:otherId", async (req, res) => {
+app.get("/api/user/:otherId", async (req, res) => {
     const { userId } = req.session;
     const { otherId } = req.params;
     if (otherId > 0) {
@@ -428,7 +420,7 @@ app.post("/user/:otherId", async (req, res) => {
                 });
             }
         } catch (err) {
-            console.log("Error in POST user/:id", err);
+            console.log("Error in GET user/:id", err);
         }
     } else {
         console.log("invalid user id: not a number or negative");
@@ -436,32 +428,49 @@ app.post("/user/:otherId", async (req, res) => {
     }
 });
 
-app.post("/users", async (req, res) => {
+app.get("/api/users", async (req, res) => {
     try {
         let { rows } = await db.getMostRecent();
-        // let rows = results.rows[0];
         res.json(rows);
     } catch (err) {
-        console.log("Error in POST users", err);
+        console.log("Error in app GET /users: ", err);
     }
 });
 
-app.post("/users/:search", async (req, res) => {
+app.get("/api/users/:search", async (req, res) => {
     const { search } = req.params;
-    if (search) {
-        ///must see if we need this ////////////////
-        try {
-            let { rows } = await db.searchUser(search);
-            res.json(rows);
-        } catch (err) {
-            console.log("Error in POST user/:id", err);
-        }
-    } else {
-        console.log("invalid user id: not a number or negative"); /////change?
-        res.json({ rows: null });
+    try {
+        let { rows } = await db.searchUser(search);
+        res.json(rows);
+    } catch (err) {
+        console.log("Error in GET users/:id", err);
     }
 });
 
+app.get("/api/checkFriendStatus/:otherId", async (req, res) => {
+    const { userId } = req.session;
+    const { otherId } = req.params;
+    console.log("userId", userId);
+    console.log("otherId", otherId);
+    try {
+        let { rows } = await db.getFriendshipStatus(otherId, userId);
+        // res.json(rows);
+        res.json({ passedid: otherId });
+    } catch (err) {
+        console.log("Error in app GET checkFriendStatus/:otherId", err);
+    }
+});
+
+///////////////////// MUST BE LAST GET ROUTE //////////////
+app.get("*", function (req, res) {
+    const { userId } = req.session;
+    if (!userId) {
+        res.redirect("/welcome");
+    } else {
+        res.sendFile(__dirname + "/index.html");
+    }
+});
+//////////////////////////////////////////////////////////
 if (require.main == module) {
     app.listen(process.env.PORT || 8080, () =>
         console.log("social network SERVER at 8080...")

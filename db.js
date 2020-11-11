@@ -63,10 +63,20 @@ exports.searchUser = (search) => {
         ORDER BY first ASC 
         LIMIT 15;
         `,
-        [search + "%"]
+        ["%" + search + "%"]
     );
 };
 
+exports.getFriendshipStatus = (otherId, userId) => {
+    return db.query(
+        `
+        SELECT * FROM friendships
+        WHERE (recipient_id = $1 AND sender_id = $2)
+        OR (recipient_id = $2 AND sender_id = $1);
+        `,
+        [otherId, userId]
+    );
+};
 //////////////////////////////////
 /// INSERT || UPDATE || UPSERT ///
 //////////////////////////////////

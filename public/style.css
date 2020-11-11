@@ -99,11 +99,12 @@ header > .profileImage:hover {
     font-weight: 800;
 }
 
-button[name="submit"] {
+/* button[name="submit"] { */
+button {
     font-family: "Nunito", sans-serif;
     font-size: 18px;
-    padding: 0.5rem;
-    margin: 10px;
+    padding: 0.1rem 0.5rem;
+    /* margin: 10px; */
     background-color: #22241f;
     align-self: center;
     color: #ccc5b9;
@@ -111,7 +112,7 @@ button[name="submit"] {
     cursor: pointer;
 }
 
-button[name="submit"]:hover {
+button:hover {
     background-color: #ccc5b9;
     color: #22241f;
     transition: 400ms ease-in-out;
@@ -212,4 +213,8 @@ input:-webkit-autofill {
 
 .profileEditor > .bioText {
     padding: 0 0 10px 0;
+}
+
+.profileContainer button {
+    align-self: flex-start;
 }

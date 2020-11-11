@@ -10,10 +10,10 @@ export default function FindPeople() {
     useEffect(() => {
         (async () => {
             try {
-                let { data } = await axios.post("/users");
+                let { data } = await axios.get("/api/users");
                 setUsers(data);
             } catch (err) {
-                console.log("error in axios POST /users:", err);
+                console.log("error in axios GET /users: ", err);
             }
         })();
     }, []);
@@ -22,7 +22,7 @@ export default function FindPeople() {
         let abort;
         (async () => {
             try {
-                let { data } = await axios.post(`/users/${userSearch}`);
+                let { data } = await axios.get(`/api/users/${userSearch}`);
                 if (data.length == 0) {
                     setUsers(data);
                     setEmpty(true);
@@ -35,7 +35,7 @@ export default function FindPeople() {
                     }
                 }
             } catch (err) {
-                console.log("error in axios POST /users/search:", err);
+                console.log("error in axios GET /user/search: ", err);
             }
         })();
         return () => {
@@ -45,9 +45,10 @@ export default function FindPeople() {
 
     return (
         <div className="lastThreeContainer profileContainer">
-            <h1>check out our recent members:</h1>
+            <h1>check out our most recent members:</h1>
             <h3>or if you want to search for someone, type name below</h3>
             <input
+                autoComplete="off"
                 onChange={(e) => setUserSearch(e.target.value)}
                 placeholder="type member name here..."
             ></input>

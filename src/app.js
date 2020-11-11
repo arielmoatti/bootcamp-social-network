@@ -22,7 +22,7 @@ export default class App extends React.Component {
     componentDidMount() {
         (async () => {
             try {
-                let response = await axios.post("/api/user");
+                let response = await axios.get("/api/user");
                 const { id, first, last, avatar, bio } = response.data.rows;
                 this.setState({
                     id: id,
@@ -32,7 +32,7 @@ export default class App extends React.Component {
                     bio: bio,
                 });
             } catch (err) {
-                console.log("error in axios POST /api/user: ", err);
+                console.log("error in axios GET /api/user: ", err);
             }
         })();
     }
