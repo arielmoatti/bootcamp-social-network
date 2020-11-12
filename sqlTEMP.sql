@@ -12,7 +12,7 @@ VALUES (201, 1);
 
 UPDATE friendships
 SET accepted = true
-WHERE recipient_id = 1;
+WHERE (sender_id = 201 AND recipient_id = 1);
 
 DELETE FROM friendships
 WHERE recipient_id = 1;

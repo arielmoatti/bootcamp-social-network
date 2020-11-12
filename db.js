@@ -74,7 +74,7 @@ exports.getFriendshipStatus = (userId, otherId) => {
         WHERE (recipient_id = $1 AND sender_id = $2)
         OR (recipient_id = $2 AND sender_id = $1);
         `,
-        [otherId, userId]
+        [userId, otherId]
     );
 };
 //////////////////////////////////
@@ -134,5 +134,39 @@ exports.updateBio = (bioText, userId) => {
         RETURNING bio;
         `,
         [bioText, userId]
+    );
+};
+
+exports.deleteFriendship = (userId, otherId) => {
+    return db.query(
+        `
+        DELETE FROM friendships
+        WHERE (sender_id = $1 AND recipient_id = $2)
+        OR (sender_id = $2 AND recipient_id = $1)
+        `,
+        [userId, otherId]
+    );
+};
+
+exports.acceptFriendship = (userId, otherId) => {
+    return db.query(
+        `
+        UPDATE friendships
+        SET accepted = true
+        WHERE (sender_id = $1 AND recipient_id = $2)
+        OR (sender_id = $2 AND recipient_id = $1)
+        `,
+        [userId, otherId]
+    );
+};
+
+exports.sendFriendship = (userId, otherId) => {
+    return db.query(
+        `
+        INSERT INTO friendships
+        (sender_id, recipient_id)
+        VALUES ($1, $2);
+        `,
+        [userId, otherId]
     );
 };

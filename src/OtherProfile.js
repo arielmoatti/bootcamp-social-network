@@ -8,10 +8,11 @@ export default class OtherProfile extends React.Component {
         this.state = {};
     }
     componentDidMount() {
-        let otherProfileId = this.props.match.params.id;
         (async () => {
             try {
-                let response = await axios.get(`/api/user/${otherProfileId}`);
+                let response = await axios.get(
+                    `/api/user/${this.props.match.params.id}`
+                );
                 if (response.data.rows && !response.data.match) {
                     const { first, last, avatar, bio } = response.data.rows;
                     this.setState({
@@ -34,7 +35,6 @@ export default class OtherProfile extends React.Component {
             <>
                 <div className="otherProfile profileContainer">
                     <h2 id="memberName">{`${this.state.first} ${this.state.last}`}</h2>
-                    {/* <FriendButton otherId={this.state.otherId} /> */}
                     <FriendButton otherId={this.props.match.params.id} />
                     <div className="profileInner">
                         <img

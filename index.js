@@ -464,6 +464,23 @@ app.get("/api/checkFriendStatus/:otherId", async (req, res) => {
     }
 });
 
+app.post("/api/setFriendship/:otherId", async (req, res) => {
+    const { userId } = req.session;
+    const { otherId } = req.params;
+    try {
+        let { rows } = await db.getFriendshipStatus(userId, otherId);
+        rows.length == 0
+            ? await db.sendFriendship(userId, otherId)
+            : rows[0].accepted
+            ? await db.deleteFriendship(userId, otherId)
+            : rows[0].sender_id == userId
+            ? await db.deleteFriendship(userId, otherId)
+            : await db.acceptFriendship(userId, otherId);
+    } catch (err) {
+        console.log("Error in app GET setFriendship/:otherId", err);
+    }
+});
+
 ///////////////////// MUST BE LAST GET ROUTE //////////////
 app.get("*", function (req, res) {
     const { userId } = req.session;
