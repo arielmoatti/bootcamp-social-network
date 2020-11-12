@@ -476,8 +476,9 @@ app.post("/api/setFriendship/:otherId", async (req, res) => {
             : rows[0].sender_id == userId
             ? await db.deleteFriendship(userId, otherId)
             : await db.acceptFriendship(userId, otherId);
+        res.json({ success: true });
     } catch (err) {
-        console.log("Error in app GET setFriendship/:otherId", err);
+        console.log("Error in app POST setFriendship/:otherId", err);
     }
 });
 

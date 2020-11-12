@@ -3,6 +3,7 @@ import axios from "./axios";
 
 export default function FriendButton({ otherId }) {
     const [buttonText, setButtonText] = useState("");
+    const [btnUpdate, setBtnUpdate] = useState(false);
 
     useEffect(() => {
         (async () => {
@@ -18,13 +19,16 @@ export default function FriendButton({ otherId }) {
                 );
             }
         })();
-    }, []);
+    }, [btnUpdate]);
 
     function handleClick() {
-        console.log("clicked!");
+        setBtnUpdate(false);
         (async () => {
             try {
-                await axios.post(`/api/setFriendship/${otherId}`);
+                let { data } = await axios.post(
+                    `/api/setFriendship/${otherId}`
+                );
+                data.success && setBtnUpdate(true);
             } catch (err) {
                 console.log("error in axios POST /setFriendship/otherId:", err);
             }
