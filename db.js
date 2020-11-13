@@ -47,8 +47,8 @@ exports.getMostRecent = () => {
         `
         SELECT id, first, last, avatar 
         FROM users 
-        ORDER BY id DESC 
-        LIMIT 3;
+        ORDER BY id ASC 
+        LIMIT 10;
         `
     );
 };
@@ -77,6 +77,21 @@ exports.getFriendshipStatus = (userId, otherId) => {
         [userId, otherId]
     );
 };
+
+exports.getFriendsAndWannabes = (userId) => {
+    return db.query(
+        `
+        SELECT users.id, first, last, avatar, accepted
+        FROM friendships
+        JOIN users
+        ON (accepted = false AND recipient_id = $1 AND sender_id = users.id)
+        OR (accepted = true AND recipient_id = $1 AND sender_id = users.id)
+        OR (accepted = true AND sender_id = $1 AND recipient_id = users.id)
+        `,
+        [userId]
+    );
+};
+
 //////////////////////////////////
 /// INSERT || UPDATE || UPSERT ///
 //////////////////////////////////

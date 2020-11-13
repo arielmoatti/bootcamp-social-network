@@ -482,6 +482,16 @@ app.post("/api/setFriendship/:otherId", async (req, res) => {
     }
 });
 
+app.get("/api/getFriends", async (req, res) => {
+    const { userId } = req.session;
+    try {
+        let { rows } = await db.getFriendsAndWannabes(userId);
+        res.json(rows);
+    } catch (err) {
+        console.log("Error in app GET getFriends", err);
+    }
+});
+
 ///////////////////// MUST BE LAST GET ROUTE //////////////
 app.get("*", function (req, res) {
     const { userId } = req.session;

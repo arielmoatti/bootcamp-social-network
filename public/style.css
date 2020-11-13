@@ -222,3 +222,34 @@ input:-webkit-autofill {
 #memberName {
     padding-bottom: 0.5em;
 }
+
+#friendsAndWannabes-wrapper {
+    /* background-color: teal; */
+    display: flex;
+    flex-direction: column;
+}
+.friends-container {
+    background-color: royalblue;
+    display: flex;
+    flex-direction: column;
+}
+
+.wannabes-container {
+    background-color: saddlebrown;
+    display: flex;
+    flex-direction: column;
+}
+
+.items {
+    display: flex;
+    flex-direction: row;
+}
+.member {
+    /* background-color: purple; */
+    margin: 10px;
+}
+
+.member img {
+    width: 100px;
+    height: 100px;
+}
