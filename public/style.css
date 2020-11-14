@@ -228,6 +228,7 @@ input:-webkit-autofill {
     display: flex;
     flex-direction: column;
 }
+
 .friends-container {
     background-color: royalblue;
     display: flex;
@@ -240,16 +241,35 @@ input:-webkit-autofill {
     flex-direction: column;
 }
 
+.pendings-container {
+    background-color: violet;
+    display: flex;
+    flex-direction: column;
+}
+
 .items {
     display: flex;
     flex-direction: row;
+    /* max-width: 32em; */
 }
+
 .member {
     /* background-color: purple; */
     margin: 10px;
+    max-width: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
 }
 
+.member p {
+    /* color: yellow; */
+    /* max-width: 10em;
+    flex-wrap: wrap; */
+    /* line-break: normal; */
+}
 .member img {
     width: 100px;
     height: 100px;
+    /* justify-self: flex-end; */
 }

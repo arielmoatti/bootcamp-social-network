@@ -48,4 +48,21 @@ OR (accepted = true AND sender_id = 201 AND recipient_id = users.id);
 
 
 
-
+DROP TABLE IF EXISTS friendships CASCADE;
+CREATE TABLE friendships(
+    id          SERIAL PRIMARY KEY,
+    sender_id   INT REFERENCES users(id) NOT NULL,
+    recipient_id INT REFERENCES users(id) NOT NULL,
+    accepted    BOOLEAN DEFAULT false
+    );
+INSERT INTO friendships
+    (sender_id, recipient_id, accepted)
+VALUES 
+    (201, 9, true),
+    (10, 201, false),
+    (201, 11, false),
+    (201, 12, true),
+    (13, 201, true),
+    (201, 14, false),
+    (15, 201, false),
+    (201, 16, true);
