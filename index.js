@@ -485,8 +485,28 @@ app.post("/api/setFriendship/:otherId", async (req, res) => {
 app.get("/api/getFriends", async (req, res) => {
     const { userId } = req.session;
     try {
+        let myRequests = [];
+        let friendsWannabes = [];
         let { rows } = await db.getFriendsAndWannabes(userId);
-        res.json(rows);
+        console.log("rows", rows[1].sender_id);
+        rows.forEach((i) => {
+            if (!i.accepted && i.sender_id == userId) {
+                myRequests.push(i);
+            } else {
+                friendsWannabes.push(i);
+            }
+        });
+        console.log("myRequests", myRequests);
+        console.log("friendsWannabes", friendsWannabes);
+        // console.log("rows", rows);
+        // if (rows[0].accepted && rows[0].sender_id == userId) {
+        //     console.log("made it!");
+        //     myRequests.push(rows);
+        // }
+        // else {
+        //     friendsWannabes.push(rows);
+        // }
+        // res.json({ myRequests, friendsWannabes });
     } catch (err) {
         console.log("Error in app GET getFriends", err);
     }
