@@ -6,17 +6,56 @@ export default function (state = {}, action) {
         });
     }
 
-    if (action.type == "FRIEND_ACCEPTED") {
+    if (action.type == "UNFRIENDED") {
         state = {
             ...state,
             friendsWannabes: state.friendsWannabes.map((friend) => {
                 if (friend.id == action.id) {
+                    return {};
+                } else {
+                    return friend;
+                }
+            }),
+        };
+    }
+
+    if (action.type == "ACCEPTED") {
+        state = {
+            ...state,
+            friendsWannabes: state.friendsWannabes.map((wannabe) => {
+                if (wannabe.id == action.id) {
                     return {
-                        ...friend,
+                        ...wannabe,
                         accepted: true,
                     };
                 } else {
-                    return friend;
+                    return wannabe;
+                }
+            }),
+        };
+    }
+
+    if (action.type == "REJECTED") {
+        state = {
+            ...state,
+            friendsWannabes: state.friendsWannabes.map((wannabe) => {
+                if (wannabe.id == action.id) {
+                    return {};
+                } else {
+                    return wannabe;
+                }
+            }),
+        };
+    }
+
+    if (action.type == "CANCELLED") {
+        state = {
+            ...state,
+            myRequests: state.myRequests.map((pending) => {
+                if (pending.id == action.id) {
+                    return {};
+                } else {
+                    return pending;
                 }
             }),
         };

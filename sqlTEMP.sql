@@ -58,6 +58,14 @@ CREATE TABLE friendships(
 INSERT INTO friendships
     (sender_id, recipient_id, accepted)
 VALUES 
+    (201, 1, true),
+    (2, 201, false),
+    (201, 3, false),
+    (201, 4, true),
+    (5, 201, true),
+    (201, 6, false),
+    (7, 201, false),
+    (201, 8, true),
     (201, 9, true),
     (10, 201, false),
     (201, 11, false),

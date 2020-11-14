@@ -16,18 +16,66 @@ export async function getList() {
     }
 }
 
-export async function acceptFriend(id) {
+export async function unfriend(id) {
     try {
         //
         let { data } = await axios.post(`/api/setFriendship/${id}`);
-        console.log("accepted!", data);
+        console.log("unfriended!");
         if (data.success) {
             return {
-                type: "FRIEND_ACCEPTED",
+                type: "UNFRIENDED",
                 id: id,
             };
         }
     } catch (err) {
-        console.log("error in ************** ", err);
+        console.log("error in axios /api/setFriendship ", err);
+    }
+}
+
+export async function accept(id) {
+    try {
+        //
+        let { data } = await axios.post(`/api/setFriendship/${id}`);
+        console.log("accepted!");
+        if (data.success) {
+            return {
+                type: "ACCEPTED",
+                id: id,
+            };
+        }
+    } catch (err) {
+        console.log("error in axios /api/setFriendship ", err);
+    }
+}
+
+export async function reject(id) {
+    try {
+        //
+        let { data } = await axios.post(`/api/setFriendship/${id}`);
+        console.log("rejected!");
+        if (data.success) {
+            return {
+                type: "REJECTED",
+                id: id,
+            };
+        }
+    } catch (err) {
+        console.log("error in axios /api/setFriendship ", err);
+    }
+}
+
+export async function cancel(id) {
+    try {
+        //
+        let { data } = await axios.post(`/api/setFriendship/${id}`);
+        console.log("cancelled!");
+        if (data.success) {
+            return {
+                type: "CANCELLED",
+                id: id,
+            };
+        }
+    } catch (err) {
+        console.log("error in axios /api/setFriendship ", err);
     }
 }

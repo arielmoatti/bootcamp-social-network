@@ -2,26 +2,28 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
-import { getList, acceptFriend, unfriend } from "./actions";
+import { getList, unfriend, accept, reject, cancel } from "./actions";
 
 export default function Friends() {
     const dispatch = useDispatch();
-    const pendings = useSelector((state) => state.myRequests);
+
     const friends = useSelector(
         (state) =>
             state.friendsWannabes &&
-            state.friendsWannabes.filter((friend) => friend.accepted)
+            state.friendsWannabes.filter((each) => each.accepted)
     );
     const wannabes = useSelector(
         (state) =>
             state.friendsWannabes &&
-            state.friendsWannabes.filter((wannabe) => wannabe.accepted == false)
+            state.friendsWannabes.filter((each) => each.accepted == false)
     );
+    const pendings = useSelector((state) => state.myRequests);
+
     useEffect(() => {
         dispatch(getList());
     }, []);
 
-    if (!pendings || !friends || !wannabes) {
+    if (!friends || !wannabes || !pendings) {
         return null;
     }
 
@@ -30,7 +32,7 @@ export default function Friends() {
             <div id="friendsAndWannabes-wrapper">
                 {friends && (
                     <div className="friends-container">
-                        <h2>your friends</h2>
+                        <h2>my friends</h2>
                         <div className="items">
                             {friends.map((friend) => (
                                 <div className="member" key={friend.id}>
@@ -48,6 +50,15 @@ export default function Friends() {
                                                 "/fallback-profile.png";
                                         }}
                                     />
+                                    <div className="buttons">
+                                        <button
+                                            onClick={() =>
+                                                dispatch(unfriend(friend.id))
+                                            }
+                                        >
+                                            unfriend
+                                        </button>
+                                    </div>
                                 </div>
                             ))}
                         </div>
@@ -76,12 +87,17 @@ export default function Friends() {
                                     <div className="buttons">
                                         <button
                                             onClick={() =>
-                                                dispatch(
-                                                    acceptFriend(wannabe.id)
-                                                )
+                                                dispatch(accept(wannabe.id))
                                             }
                                         >
                                             accept
+                                        </button>
+                                        <button
+                                            onClick={() =>
+                                                dispatch(reject(wannabe.id))
+                                            }
+                                        >
+                                            reject
                                         </button>
                                     </div>
                                 </div>
@@ -109,6 +125,15 @@ export default function Friends() {
                                                 "/fallback-profile.png";
                                         }}
                                     />
+                                    <div className="buttons">
+                                        <button
+                                            onClick={() =>
+                                                dispatch(cancel(pending.id))
+                                            }
+                                        >
+                                            cancel
+                                        </button>
+                                    </div>
                                 </div>
                             ))}
                         </div>
