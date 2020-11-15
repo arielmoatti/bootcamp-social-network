@@ -467,13 +467,15 @@ app.get("/api/checkFriendStatus/:otherId", async (req, res) => {
 app.post("/api/setFriendship/:otherId", async (req, res) => {
     const { userId } = req.session;
     const { otherId } = req.params;
+    const { action } = req.body;
+
     try {
         let { rows } = await db.getFriendshipStatus(userId, otherId);
         rows.length == 0
             ? await db.sendFriendship(userId, otherId)
-            : rows[0].accepted
-            ? await db.deleteFriendship(userId, otherId)
-            : rows[0].sender_id == userId
+            : rows[0].accepted ||
+              (!rows[0].accepted && rows[0].sender_id == userId) ||
+              action === "reject"
             ? await db.deleteFriendship(userId, otherId)
             : await db.acceptFriendship(userId, otherId);
         res.json({ success: true });

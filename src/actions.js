@@ -49,9 +49,10 @@ export async function accept(id) {
 }
 
 export async function reject(id) {
+    let body = { action: "reject" };
     try {
         //
-        let { data } = await axios.post(`/api/setFriendship/${id}`);
+        let { data } = await axios.post(`/api/setFriendship/${id}`, body);
         console.log("rejected!");
         if (data.success) {
             return {

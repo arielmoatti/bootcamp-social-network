@@ -39,15 +39,16 @@ VALUES
     (201, 8, true);
 
 
-SELECT users.id, first, last, avatar, accepted
+SELECT users.id, first, last, sender_id, recipient_id, accepted
 FROM friendships
 JOIN users
 ON (accepted = false AND recipient_id = 201 AND sender_id = users.id)
+OR (accepted = false AND sender_id = 201 AND recipient_id = users.id)
 OR (accepted = true AND recipient_id = 201 AND sender_id = users.id)
-OR (accepted = true AND sender_id = 201 AND recipient_id = users.id);
+OR (accepted = true AND sender_id = 201 AND recipient_id = users.id)
+ORDER BY id;
 
-
-
+------------------
 DROP TABLE IF EXISTS friendships CASCADE;
 CREATE TABLE friendships(
     id          SERIAL PRIMARY KEY,

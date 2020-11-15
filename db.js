@@ -169,8 +169,7 @@ exports.acceptFriendship = (userId, otherId) => {
         `
         UPDATE friendships
         SET accepted = true
-        WHERE (sender_id = $1 AND recipient_id = $2)
-        OR (sender_id = $2 AND recipient_id = $1)
+        WHERE (sender_id = $2 AND recipient_id = $1)        
         `,
         [userId, otherId]
     );

@@ -6,14 +6,14 @@ export default function (state = {}, action) {
         });
     }
 
-    if (action.type == "UNFRIENDED") {
+    if (action.type == "UNFRIENDED" || action.type == "REJECTED") {
         state = {
             ...state,
-            friendsWannabes: state.friendsWannabes.map((friend) => {
-                if (friend.id == action.id) {
-                    return {};
+            friendsWannabes: state.friendsWannabes.filter((member) => {
+                if (member.id == action.id) {
+                    return;
                 } else {
-                    return friend;
+                    return member;
                 }
             }),
         };
@@ -35,25 +35,12 @@ export default function (state = {}, action) {
         };
     }
 
-    if (action.type == "REJECTED") {
-        state = {
-            ...state,
-            friendsWannabes: state.friendsWannabes.map((wannabe) => {
-                if (wannabe.id == action.id) {
-                    return {};
-                } else {
-                    return wannabe;
-                }
-            }),
-        };
-    }
-
     if (action.type == "CANCELLED") {
         state = {
             ...state,
-            myRequests: state.myRequests.map((pending) => {
+            myRequests: state.myRequests.filter((pending) => {
                 if (pending.id == action.id) {
-                    return {};
+                    return;
                 } else {
                     return pending;
                 }
