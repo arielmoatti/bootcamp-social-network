@@ -223,7 +223,7 @@ input:-webkit-autofill {
     padding-bottom: 0.5em;
 }
 
-#friendsAndWannabes-wrapper {
+#friendsList-wrapper {
     /* background-color: teal; */
     display: flex;
     flex-direction: column;
@@ -233,6 +233,9 @@ input:-webkit-autofill {
     background-color: royalblue;
     display: flex;
     flex-direction: column;
+    /* flex-wrap: wrap; */
+    /* width: 100vw; */
+    /* overflow: auto; */
 }
 
 .wannabes-container {
@@ -250,6 +253,7 @@ input:-webkit-autofill {
 .items {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     /* max-width: 32em; */
 }
 

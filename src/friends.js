@@ -18,6 +18,7 @@ export default function Friends() {
             state.friendsWannabes.filter((each) => each.accepted == false)
     );
     const pendings = useSelector((state) => state.myRequests);
+    console.log("pendings", pendings);
 
     useEffect(() => {
         dispatch(getList());
@@ -29,7 +30,7 @@ export default function Friends() {
 
     return (
         <>
-            <div id="friendsAndWannabes-wrapper">
+            <div id="friendsList-wrapper">
                 {friends && (
                     <div className="friends-container">
                         <h2>my friends</h2>
@@ -39,17 +40,20 @@ export default function Friends() {
                                     <p>
                                         {friend.first} {friend.last}
                                     </p>
-                                    <img
-                                        src={
-                                            friend.avatar ||
-                                            "/fallback-profile.png"
-                                        }
-                                        onError={(e) => {
-                                            e.target.onerror = null;
-                                            e.target.src =
-                                                "/fallback-profile.png";
-                                        }}
-                                    />
+                                    <Link to={`/user/${friend.id}`}>
+                                        <img
+                                            src={
+                                                friend.avatar ||
+                                                "/fallback-profile.png"
+                                            }
+                                            onError={(e) => {
+                                                e.target.onerror = null;
+                                                e.target.src =
+                                                    "/fallback-profile.png";
+                                            }}
+                                            alt={`${friend.first} ${friend.last}`}
+                                        />
+                                    </Link>
                                     <div className="buttons">
                                         <button
                                             onClick={() =>
@@ -73,17 +77,20 @@ export default function Friends() {
                                     <p>
                                         {wannabe.first} {wannabe.last}
                                     </p>
-                                    <img
-                                        src={
-                                            wannabe.avatar ||
-                                            "/fallback-profile.png"
-                                        }
-                                        onError={(e) => {
-                                            e.target.onerror = null;
-                                            e.target.src =
-                                                "/fallback-profile.png";
-                                        }}
-                                    />
+                                    <Link to={`/user/${wannabe.id}`}>
+                                        <img
+                                            src={
+                                                wannabe.avatar ||
+                                                "/fallback-profile.png"
+                                            }
+                                            onError={(e) => {
+                                                e.target.onerror = null;
+                                                e.target.src =
+                                                    "/fallback-profile.png";
+                                            }}
+                                            alt={`${wannabe.first} ${wannabe.last}`}
+                                        />
+                                    </Link>
                                     <div className="buttons">
                                         <button
                                             onClick={() =>
@@ -114,17 +121,20 @@ export default function Friends() {
                                     <p>
                                         {pending.first} {pending.last}
                                     </p>
-                                    <img
-                                        src={
-                                            pending.avatar ||
-                                            "/fallback-profile.png"
-                                        }
-                                        onError={(e) => {
-                                            e.target.onerror = null;
-                                            e.target.src =
-                                                "/fallback-profile.png";
-                                        }}
-                                    />
+                                    <Link to={`/user/${pending.id}`}>
+                                        <img
+                                            src={
+                                                pending.avatar ||
+                                                "/fallback-profile.png"
+                                            }
+                                            onError={(e) => {
+                                                e.target.onerror = null;
+                                                e.target.src =
+                                                    "/fallback-profile.png";
+                                            }}
+                                            alt={`${pending.first} ${pending.last}`}
+                                        />
+                                    </Link>
                                     <div className="buttons">
                                         <button
                                             onClick={() =>
