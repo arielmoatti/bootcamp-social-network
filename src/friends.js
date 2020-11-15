@@ -30,7 +30,9 @@ export default function Friends() {
     return (
         <>
             <div id="friendsList-wrapper">
-                <h1>Friendship Status</h1>
+                {!friends && !wannabes && !pendings && (
+                    <h1>no friendships to show...</h1>
+                )}
                 {friends && (
                     <div className="friends-container">
                         <h2>my friends</h2>

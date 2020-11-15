@@ -47,8 +47,8 @@ exports.getMostRecent = () => {
         `
         SELECT id, first, last, avatar 
         FROM users 
-        ORDER BY id ASC 
-        LIMIT 10;
+        ORDER BY id DESC 
+        LIMIT 3;
         `
     );
 };

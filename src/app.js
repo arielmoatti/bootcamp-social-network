@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "./axios";
 import { BrowserRouter, Route } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import ProfilePic from "./ProfilePic";
 import Uploader from "./uploader";
@@ -53,11 +54,27 @@ export default class App extends React.Component {
         this.toggleUploader();
     }
 
+    logOut() {
+        (async () => {
+            try {
+                await axios.get("/api/logout");
+                location.replace("/welcome#/login");
+            } catch (err) {
+                console.log("error in axios GET /api/logout ", err);
+            }
+        })();
+    }
+
     render() {
         return (
             <BrowserRouter>
                 <header>
                     <Logo />
+                    <Link to={"/users"}>list of members</Link>
+                    <Link to={"/friends"}>manage your friendships</Link>
+                    <button name="logOut" onClick={() => this.logOut()}>
+                        log out
+                    </button>
                     <ProfilePic
                         first={this.state.first}
                         last={this.state.last}
@@ -93,8 +110,9 @@ export default class App extends React.Component {
                         )}
                     />
                     <Route exact path="/users" render={() => <FindPeople />} />
-                    <Route exact path="/friends" render={() => <Friends />} />
                 </div>
+
+                <Route exact path="/friends" render={() => <Friends />} />
 
                 {this.state.uploaderIsVisible && (
                     <Uploader

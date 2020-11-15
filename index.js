@@ -136,17 +136,10 @@ app.post("/login", (req, res) => {
         db.getUserDataByEmail(email)
             .then((results) => {
                 const hashedPw = results.rows[0].password;
-                // console.log("from getUserDataByEmail > hashedPw: ", hashedPw);
                 compare(password, hashedPw)
                     .then((match) => {
-                        // console.log(
-                        //     "user input password matches the hash? ",
-                        //     match
-                        // );
                         if (match) {
-                            //set cookie
-                            req.session.userId = results.rows[0].id;
-                            // console.log("successful log in!");
+                            req.session.userId = results.rows[0].id; //set cookie
                             res.json({ success: true });
                         } else {
                             console.log("error! no match passwords");
@@ -359,8 +352,6 @@ app.post(
     s3.upload,
     async (req, res) => {
         if (req.file) {
-            // console.log("req.file", req.file);
-
             const { userId } = req.session;
             const url = `${s3Url}${req.file.filename}`;
             try {
@@ -499,6 +490,11 @@ app.get("/api/getFriends", async (req, res) => {
     } catch (err) {
         console.log("Error in app GET getFriends", err);
     }
+});
+
+app.get("/api/logout", (req, res) => {
+    req.session = null;
+    res.redirect("*");
 });
 
 ///////////////////// MUST BE LAST GET ROUTE //////////////
