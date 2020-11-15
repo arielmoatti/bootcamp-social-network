@@ -7,30 +7,30 @@ import { getList, unfriend, accept, reject, cancel } from "./actions";
 export default function Friends() {
     const dispatch = useDispatch();
 
-    const friends = useSelector(
+    let friends = useSelector(
         (state) =>
             state.friendsWannabes &&
             state.friendsWannabes.filter((each) => each.accepted)
     );
-    const wannabes = useSelector(
+    let wannabes = useSelector(
         (state) =>
             state.friendsWannabes &&
             state.friendsWannabes.filter((each) => each.accepted == false)
     );
-    const pendings = useSelector((state) => state.myRequests);
-    console.log("pendings", pendings);
+    let pendings = useSelector((state) => state.myRequests);
 
     useEffect(() => {
         dispatch(getList());
     }, []);
 
-    if (!friends || !wannabes || !pendings) {
-        return null;
-    }
+    friends && friends.length == 0 && (friends = null);
+    wannabes && wannabes.length == 0 && (wannabes = null);
+    pendings && pendings.length == 0 && (pendings = null);
 
     return (
         <>
             <div id="friendsList-wrapper">
+                <h1>Friendship Status</h1>
                 {friends && (
                     <div className="friends-container">
                         <h2>my friends</h2>
