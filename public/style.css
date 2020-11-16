@@ -321,49 +321,6 @@ between the image and the menu */
     filter: drop-shadow(2px 2px 10px #222);
 }
 
-.toggler {
-    background-color: var(--toggler-bg-color);
-    transition: background-color 350ms;
-}
-
-.toggler--active {
-    background-color: var(--toggler-active-bg-color);
-}
-
-.display-enter {
-    top: var(--menu-starting-top);
-    width: var(--toggler-width);
-    max-height: var(--toggler-height);
-    color: var(--fade-from-color);
-    background-color: var(--toggler-bg-color);
-}
-
-.display-enter-active {
-    top: var(--menu-ending-top);
-    width: var(--menu-width);
-    max-height: var(--menu-max-height);
-    color: var(--fade-to-color);
-    background-color: var(--menu-bg-color);
-    transition: all var(--timeout);
-}
-
-.display-exit {
-    top: var(--menu-ending-top);
-    width: var(--menu-width);
-    max-height: var(--menu-max-height);
-    color: var(--fade-to-color);
-    background-color: var(--menu-bg-color);
-}
-
-.display-exit-active {
-    top: var(--menu-starting-top);
-    width: var(--toggler-width);
-    max-height: var(--toggler-height);
-    color: var(--fade-from-color);
-    background-color: var(--toggler-bg-color);
-    transition: all var(--timeout);
-}
-
 .navProf {
     align-items: center;
     display: flex;
