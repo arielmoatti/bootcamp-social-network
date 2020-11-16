@@ -1,6 +1,9 @@
 import React from "react";
 import axios from "./axios";
 import { BrowserRouter, Route } from "react-router-dom";
+import cx from "classnames";
+import { CSSTransition } from "react-transition-group";
+
 import { Link } from "react-router-dom";
 
 import ProfilePic from "./ProfilePic";
@@ -91,24 +94,33 @@ export default class App extends React.Component {
                     <Logo />
                     <div
                         id="nav-container"
-                        onMouseEnter={() => this.showNavBar()}
-                        onMouseLeave={() => this.hideNavBar()}
+                        className={cx("toggler", {
+                            "toggler--active": this.state.navbarIsVisible,
+                        })}
+                        onClick={() => this.toggleNavBar()}
+                        // onMouseEnter={() => this.showNavBar()}
+                        // onMouseLeave={() => this.hideNavBar()}
                     >
                         <ProfilePic
                             first={this.state.first}
                             last={this.state.last}
                             key={this.state.profilePicUrl}
                             profilePicUrl={this.state.profilePicUrl}
-                            toggleNavBar={() => this.toggleNavBar()}
+                            // toggleNavBar={() => this.toggleNavBar()}
                         />
-                        {this.state.navbarIsVisible && (
+                        <CSSTransition
+                            in={this.state.display}
+                            timeout={350}
+                            classNames="display"
+                            unmountOnExit
+                        >
                             <NavBar
                                 first={this.state.first}
                                 last={this.state.last}
                                 profilePicUrl={this.state.profilePicUrl}
                                 toggleUploader={() => this.toggleUploader()}
                             />
-                        )}
+                        </CSSTransition>
                     </div>
                 </header>
 
