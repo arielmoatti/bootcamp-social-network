@@ -46,11 +46,22 @@ export default class App extends React.Component {
             uploaderIsVisible: !this.state.uploaderIsVisible,
         });
     }
+
     toggleNavBar() {
         this.setState({
             navbarIsVisible: !this.state.navbarIsVisible,
         });
-        console.log("navbartoggle!");
+    }
+    showNavBar() {
+        this.setState({
+            navbarIsVisible: true,
+        });
+    }
+
+    hideNavBar() {
+        this.setState({
+            navbarIsVisible: false,
+        });
     }
 
     methodInAppBio(arg) {
@@ -78,7 +89,11 @@ export default class App extends React.Component {
             <BrowserRouter>
                 <header>
                     <Logo />
-                    <div id="nav-container">
+                    <div
+                        id="nav-container"
+                        onMouseEnter={() => this.showNavBar()}
+                        onMouseLeave={() => this.hideNavBar()}
+                    >
                         <ProfilePic
                             first={this.state.first}
                             last={this.state.last}
