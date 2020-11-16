@@ -105,6 +105,26 @@ button:hover {
     transition: 400ms ease-in-out;
 }
 
+#file-upload {
+    display: none;
+}
+
+.custom-file-upload {
+    border: 2px solid #f3eff5;
+    /* background-color: pink; */
+    display: inline-block;
+    color: blue;
+    opacity: 0.4;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+.custom-file-upload:hover {
+    background-color: #f3eff5;
+    color: #344083;
+    transition: 500ms;
+}
+
 input {
     background-color: transparent;
     border: none;
@@ -280,6 +300,12 @@ input:-webkit-autofill {
     align-self: flex-end;
 }
 
+/* only here to make sure there is a continuation
+between the image and the menu */
+.spacer {
+    min-height: 1rem;
+}
+
 #nav-container > .profileImage:hover {
     cursor: pointer;
 }
@@ -321,4 +347,16 @@ input:-webkit-autofill {
     background-color: lightgray;
     transition: 300ms;
     cursor: pointer;
+}
+
+.nav-visible {
+    visibility: visible;
+    opacity: 0.9;
+    transition: 500ms;
+}
+
+.nav-hidden {
+    visibility: hidden;
+    opacity: 0;
+    transition: 500ms;
 }

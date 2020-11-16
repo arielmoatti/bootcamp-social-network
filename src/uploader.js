@@ -42,14 +42,23 @@ export default class Uploader extends React.Component {
             <>
                 <div className="uploaderModal">
                     <h2>click below to update your profile picture</h2>
+                    <label htmlFor="file-upload" className="custom-file-upload">
+                        <i className="fa fa-cloud-upload"></i>
+                        {this.state.file ? "ready" : "select image"}
+                    </label>
                     <input
+                        id="file-upload"
                         type="file"
                         name="file"
-                        placeholder="choose image"
                         accept="image/*"
                         onChange={this.handleFileChange}
                     ></input>
-                    <button onClick={() => this.submit()}>upload</button>
+                    {this.state.file && (
+                        <button onClick={() => this.submit()}>upload</button>
+                    )}
+                    <button onClick={() => this.methodInUploader()}>
+                        cancel
+                    </button>
                 </div>
             </>
         );

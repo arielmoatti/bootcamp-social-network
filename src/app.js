@@ -73,17 +73,6 @@ export default class App extends React.Component {
         this.toggleUploader();
     }
 
-    logOut() {
-        (async () => {
-            try {
-                await axios.get("/api/logout");
-                location.replace("/welcome#/login");
-            } catch (err) {
-                console.log("error in axios GET /api/logout ", err);
-            }
-        })();
-    }
-
     render() {
         return (
             <BrowserRouter>
@@ -91,8 +80,10 @@ export default class App extends React.Component {
                     <Logo />
                     <div
                         id="nav-container"
-                        onMouseEnter={() => this.showNavBar()}
+                        // onMouseEnter={() => this.showNavBar()}
                         onMouseLeave={() => this.hideNavBar()}
+                        // tabIndex="0"
+                        // onBlur={() => this.hideNavBar()}
                     >
                         <ProfilePic
                             first={this.state.first}
@@ -101,14 +92,16 @@ export default class App extends React.Component {
                             profilePicUrl={this.state.profilePicUrl}
                             toggleNavBar={() => this.toggleNavBar()}
                         />
-                        {this.state.navbarIsVisible && (
-                            <NavBar
-                                first={this.state.first}
-                                last={this.state.last}
-                                profilePicUrl={this.state.profilePicUrl}
-                                toggleUploader={() => this.toggleUploader()}
-                            />
-                        )}
+                        <div className="spacer"></div>
+                        {/* {this.state.navbarIsVisible && ( */}
+                        <NavBar
+                            first={this.state.first}
+                            last={this.state.last}
+                            profilePicUrl={this.state.profilePicUrl}
+                            toggleUploader={() => this.toggleUploader()}
+                            navVisible={this.state.navbarIsVisible}
+                        />
+                        {/* )} */}
                     </div>
                 </header>
 

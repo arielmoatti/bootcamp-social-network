@@ -3,7 +3,13 @@ import axios from "./axios";
 import { Link } from "react-router-dom";
 import ProfilePic from "./ProfilePic";
 
-export default function NavBar({ first, last, profilePicUrl, toggleUploader }) {
+export default function NavBar({
+    first,
+    last,
+    profilePicUrl,
+    toggleUploader,
+    navVisible,
+}) {
     let logOut = async () => {
         try {
             console.log("log out fired!");
@@ -16,7 +22,10 @@ export default function NavBar({ first, last, profilePicUrl, toggleUploader }) {
 
     return (
         <>
-            <div id="navbar">
+            <div
+                id="navbar"
+                className={navVisible ? "nav-visible" : "nav-hidden"}
+            >
                 <Link to={"/"} className="navProf navItem">
                     <ProfilePic
                         first={first}
