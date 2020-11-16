@@ -1,5 +1,7 @@
 const express = require("express");
 const app = (exports.app = express());
+const server = require("http").Server(app);
+const io = require("socket.io")(server, { origins: "localhost:8080" });
 const compression = require("compression");
 const cookieSession = require("cookie-session");
 const csurf = require("csurf");
@@ -508,7 +510,53 @@ app.get("*", function (req, res) {
 });
 //////////////////////////////////////////////////////////
 if (require.main == module) {
-    app.listen(process.env.PORT || 8080, () =>
+    server.listen(process.env.PORT || 8080, () =>
         console.log("social network SERVER at 8080...")
     );
 }
+//////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////
+////////////////// SOCKETS GO HERE ///////////////////////
+//////////////////////////////////////////////////////////
+
+/*
+io.on("connection", (socket) => {
+    console.log(`socket with the id ${socket.id} is now connected`);
+
+    //sending a message - emitting an event with a payload
+    //first argument is a message as string, second is data sent to the client
+    //we need to LISTEN to this emitted event
+    //sends ONLY the one client
+
+    // socket.emit("welcome", {
+    //     name: "Ariel",
+    // });
+
+    //io.emit takes 2 arguments: the name of the message, 2nd is the data sent to the client
+    //will send to EVERY logged in USERS
+
+    // io.emit("messageWithIoEmit", {
+    //     id: socket.id,
+    // });
+
+    //broadcast.emit
+    //sends a message to ALL USERS except the client who just connected
+
+    // socket.broadcast.emit("broadcastEmitTest", {
+    //     id: socket.id,
+    // });
+
+    //here we listen to events emitted by the client
+
+    // socket.on("messageFromClient", (data) => {
+    //     console.log("data from client through sockets: ", data);
+    // });
+
+    //user leave or logged out?
+    //reserved string or EVENT for disconnect
+    socket.on("disconnect", () => {
+        console.log(`user id ${socket.id} has just disconnected`);
+    });
+});
+*/

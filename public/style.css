@@ -280,6 +280,9 @@ input:-webkit-autofill {
 
 #navbar {
     background-color: whitesmoke;
+    position: absolute;
+    right: 0px;
+    top: 50px;
     border-radius: 5px;
     padding: 10px;
     height: fit-content;
@@ -291,21 +294,28 @@ input:-webkit-autofill {
     /* visibility: hidden; */
 }
 
-.navProfPic {
-    display: flex;
+.navProf {
+    display: grid;
+    grid-template-columns: max-content auto;
+    grid-template-rows: auto;
     align-items: center;
+    column-gap: 10px;
 }
 
-#navbar .profileImage {
+.navProf .profileImage {
+    grid-column: 1;
+    /* grid-row: 1 / 3; */
     /* border: 1px solid whitesmoke; */
     border-radius: 50%;
     width: 60px;
     height: 60px;
-    margin-right: 10px;
+    /* margin-right: 10px; */
     /* align-self: flex-end; */
     /* margin-bottom: 30px; */
 }
 
+.navProf .profileText {
+}
 .navItem {
     padding: 10px 10px;
     margin: 2px 0;
@@ -313,10 +323,12 @@ input:-webkit-autofill {
     color: black;
 }
 
-.navItem:hover {
-    background-color: thistle;
-}
-
 .navItem .fas {
     padding-right: 10px;
+}
+
+.navItem:hover {
+    background-color: lightgray;
+    transition: 300ms;
+    cursor: pointer;
 }

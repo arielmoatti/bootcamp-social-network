@@ -27,19 +27,22 @@ export default function NavBar({ first, last, profilePicUrl, toggleUploader }) {
                         }}
                         alt={`${first} ${last}`}
                     />
-                    <p>
-                        <strong>{`${first} ${last}`}</strong>
-                    </p>
-                    <p>see your profile</p>
+                    <div className="profileText">
+                        <p>
+                            <strong>{`${first} ${last}`}</strong>
+                        </p>
+                        <p>see your profile</p>
+                    </div>
                 </Link>
-                <div className="navProfPic navItem" onClick={toggleUploader}>
+
+                <div className="navItem" onClick={toggleUploader}>
                     <i className="fas fa-camera"></i>
-                    <p>change profile picture</p>
+                    change profile picture
                 </div>
 
                 <Link to={"/users"} className="navItem">
                     <i className="fas fa-address-book"></i>
-                    list of members
+                    see other members
                 </Link>
                 <Link to={"/friends"} className="navItem">
                     <i className="fas fa-user-friends"></i>
