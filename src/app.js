@@ -90,7 +90,7 @@ export default class App extends React.Component {
                             last={this.state.last}
                             key={this.state.profilePicUrl}
                             profilePicUrl={this.state.profilePicUrl}
-                            toggleNavBar={() => this.toggleNavBar()}
+                            // toggleNavBar={() => this.toggleNavBar()}
                         />
                         <div className="spacer"></div>
                         {/* {this.state.navbarIsVisible && ( */}
