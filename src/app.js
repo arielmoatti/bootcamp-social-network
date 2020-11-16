@@ -10,6 +10,7 @@ import Logo from "./Logo";
 import OtherProfile from "./OtherProfile";
 import FindPeople from "./FindPeople";
 import Friends from "./friends";
+import NavBar from "./NavBar";
 
 export default class App extends React.Component {
     constructor() {
@@ -70,15 +71,21 @@ export default class App extends React.Component {
             <BrowserRouter>
                 <header>
                     <Logo />
-                    <Link to={"/users"}>list of members</Link>
+                    {/* <Link to={"/users"}>list of members</Link>
                     <Link to={"/friends"}>manage your friendships</Link>
                     <button name="logOut" onClick={() => this.logOut()}>
                         log out
-                    </button>
+                    </button> */}
                     <ProfilePic
                         first={this.state.first}
                         last={this.state.last}
                         key={this.state.profilePicUrl}
+                        profilePicUrl={this.state.profilePicUrl}
+                        toggleUploader={() => this.toggleUploader()}
+                    />
+                    <NavBar
+                        first={this.state.first}
+                        last={this.state.last}
                         profilePicUrl={this.state.profilePicUrl}
                         toggleUploader={() => this.toggleUploader()}
                     />
