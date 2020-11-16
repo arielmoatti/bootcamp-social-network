@@ -4,7 +4,7 @@ export default function ProfilePic({
     first,
     last,
     profilePicUrl,
-    toggleUploader,
+    toggleNavBar,
 }) {
     return (
         <>
@@ -17,7 +17,7 @@ export default function ProfilePic({
                     e.target.src = "/fallback-profile.png";
                 }}
                 alt={`${first} ${last}`}
-                onClick={toggleUploader}
+                onClick={toggleNavBar}
             />
         </>
     );

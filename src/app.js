@@ -17,6 +17,7 @@ export default class App extends React.Component {
         super();
         this.state = {
             uploaderIsVisible: false,
+            navbarIsVisible: false,
         };
         this.methodInApp = this.methodInApp.bind(this);
         this.methodInAppBio = this.methodInAppBio.bind(this);
@@ -45,6 +46,12 @@ export default class App extends React.Component {
             uploaderIsVisible: !this.state.uploaderIsVisible,
         });
     }
+    toggleNavBar() {
+        this.setState({
+            navbarIsVisible: !this.state.navbarIsVisible,
+        });
+        console.log("navbartoggle!");
+    }
 
     methodInAppBio(arg) {
         this.setState({ bio: arg });
@@ -71,24 +78,23 @@ export default class App extends React.Component {
             <BrowserRouter>
                 <header>
                     <Logo />
-                    {/* <Link to={"/users"}>list of members</Link>
-                    <Link to={"/friends"}>manage your friendships</Link>
-                    <button name="logOut" onClick={() => this.logOut()}>
-                        log out
-                    </button> */}
-                    <ProfilePic
-                        first={this.state.first}
-                        last={this.state.last}
-                        key={this.state.profilePicUrl}
-                        profilePicUrl={this.state.profilePicUrl}
-                        toggleUploader={() => this.toggleUploader()}
-                    />
-                    <NavBar
-                        first={this.state.first}
-                        last={this.state.last}
-                        profilePicUrl={this.state.profilePicUrl}
-                        toggleUploader={() => this.toggleUploader()}
-                    />
+                    <div id="nav-container">
+                        <ProfilePic
+                            first={this.state.first}
+                            last={this.state.last}
+                            key={this.state.profilePicUrl}
+                            profilePicUrl={this.state.profilePicUrl}
+                            toggleNavBar={() => this.toggleNavBar()}
+                        />
+                        {this.state.navbarIsVisible && (
+                            <NavBar
+                                first={this.state.first}
+                                last={this.state.last}
+                                profilePicUrl={this.state.profilePicUrl}
+                                toggleUploader={() => this.toggleUploader()}
+                            />
+                        )}
+                    </div>
                 </header>
 
                 <div id="profileRoute">

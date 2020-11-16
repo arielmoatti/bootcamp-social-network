@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "./axios";
 import { Link } from "react-router-dom";
+import ProfilePic from "./ProfilePic";
 
 export default function NavBar({ first, last, profilePicUrl, toggleUploader }) {
     let logOut = async () => {
@@ -17,15 +18,11 @@ export default function NavBar({ first, last, profilePicUrl, toggleUploader }) {
         <>
             <div id="navbar">
                 <Link to={"/"} className="navProf navItem">
-                    <img
-                        className="profileImage"
+                    <ProfilePic
+                        first={first}
+                        last={last}
                         key={profilePicUrl}
-                        src={profilePicUrl || "/fallback-profile.png"}
-                        onError={(e) => {
-                            e.target.onerror = null;
-                            e.target.src = "/fallback-profile.png";
-                        }}
-                        alt={`${first} ${last}`}
+                        profilePicUrl={profilePicUrl}
                     />
                     <div className="profileText">
                         <p>
