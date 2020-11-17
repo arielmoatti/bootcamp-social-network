@@ -93,9 +93,8 @@ export function mbdbHistory(msgs) {
 
 export function mbdbNewEntry(msg) {
     console.log("action: adding a new message!");
-    return;
-    // return {
-    //     type: "RETRIEVED_MSGS",
-    //     msgsHistory: msgs,
-    // };
+    return {
+        type: "NEW_MSG",
+        newestMessage: msg,
+    };
 }

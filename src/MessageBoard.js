@@ -13,10 +13,12 @@ export default function MessageBoard() {
     const elemRef = useRef();
 
     useEffect(() => {
-        boardMessages &&
-            (elemRef.current.scrollTop =
-                elemRef.current.scrollHeight - elemRef.current.clientHeight);
-    }, []);
+        elemRef.current.scrollTop =
+            elemRef.current.scrollHeight - elemRef.current.clientHeight;
+        // boardMessages &&
+        //     (elemRef.current.scrollTop =
+        //         elemRef.current.scrollHeight - elemRef.current.clientHeight);
+    }, [boardMessages]);
 
     boardMessages && boardMessages.length == 0 && (boardMessages = null);
 
@@ -32,8 +34,8 @@ export default function MessageBoard() {
     return (
         <>
             <div id="messageBoard">
-                {boardMessages && (
-                    <div className="msgboard-innerContainer" ref={elemRef}>
+                <div className="msgboard-innerContainer" ref={elemRef}>
+                    {boardMessages && (
                         <div className="msg-items">
                             {boardMessages.map((msg) => (
                                 <div className="message" key={msg.msgId}>
@@ -56,8 +58,8 @@ export default function MessageBoard() {
                                 </div>
                             ))}
                         </div>
-                    </div>
-                )}
+                    )}
+                </div>
                 <textarea
                     autoFocus={true}
                     rows="2"

@@ -50,6 +50,13 @@ export default (state = {}, action) => {
             state = Object.assign({}, state, {
                 boardMessages: action.msgsHistory,
             });
+        // break;
+
+        case "NEW_MSG":
+            state = {
+                ...state,
+                boardMessages: action.newestMessage,
+            };
     }
     return state;
 };
