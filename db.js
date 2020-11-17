@@ -93,6 +93,19 @@ exports.getFriendsAndWannabes = (userId) => {
     );
 };
 
+exports.getMsgBrdHistory = () => {
+    return db.query(
+        `
+        SELECT msgboard.id, message, first, last, avatar, msgboard.created_at
+        FROM msgboard
+        JOIN users
+        ON author = users.id
+        ORDER BY msgboard.created_at DESC
+        LIMIT 10;
+        `
+    );
+};
+
 //////////////////////////////////
 /// INSERT || UPDATE || UPSERT ///
 //////////////////////////////////

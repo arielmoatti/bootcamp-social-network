@@ -541,10 +541,22 @@ io.on("connection", (socket) => {
     const { userId } = socket.request.session;
     console.log(`connected socket id (${socket.id}) / userId (${userId})`);
     // retrieveing our chat history
+
+    (async () => {
+        try {
+            let data = await db.getMsgBrdHistory();
+            // console.log("rows", rows.reverse());
+            let payload = data.rows.reverse();
+            io.emit("mbdbHistory", payload);
+        } catch (err) {
+            console.log("Error in SOCKET io.emit mbdbHistory", err);
+        }
+    })();
     // 1. need to get our chat history from the db (async db.getChatHistory().)
     // 2. once we have our chat history we want to emit the chats to all our clients
 
-    io.sockets.emit(
+    /*
+    io.emit(
         "mbdbHistory",
 
         [
@@ -643,6 +655,7 @@ io.on("connection", (socket) => {
             },
         ]
     );
+    */
     //here we will ultimately send back a bunch of objects in an array that we got from our DB, it will be the last ten messages and probably look something like this: data.rows.reverse()
     // 1st argument is what we will have to listen for on the client side,
     // 2nd argument is the dataload we want to send along

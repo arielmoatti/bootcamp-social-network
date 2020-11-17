@@ -32,10 +32,11 @@ export default function MessageBoard() {
                     {boardMessages && (
                         <div className="msg-items">
                             {boardMessages.map((msg) => (
-                                <div className="message" key={msg.msgId}>
+                                <div className="message" key={msg.id}>
                                     <p className="authorName">
                                         {msg.first} {msg.last}
                                     </p>
+                                    <p>{msg.created_at}</p>
                                     <img
                                         src={
                                             msg.avatar ||
