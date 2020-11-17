@@ -22,7 +22,7 @@ export default function Friends() {
     useEffect(() => {
         dispatch(getList());
     }, []);
-
+    //making sure that empty arrays appear falsy and filtered out (hide sections)
     friends && friends.length == 0 && (friends = null);
     wannabes && wannabes.length == 0 && (wannabes = null);
     pendings && pendings.length == 0 && (pendings = null);

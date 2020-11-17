@@ -1,14 +1,14 @@
 export default (state = {}, action) => {
     switch (action.type) {
         case "GET_LIST":
-            state = Object.assign({}, state, {
+            return (state = Object.assign({}, state, {
                 myRequests: action.myRequests,
                 friendsWannabes: action.friendsWannabes,
-            });
+            }));
 
         case "UNFRIENDED":
         case "REJECTED":
-            state = {
+            return (state = {
                 ...state,
                 friendsWannabes: state.friendsWannabes.filter((member) => {
                     if (member.id == action.id) {
@@ -17,10 +17,10 @@ export default (state = {}, action) => {
                         return member;
                     }
                 }),
-            };
+            });
 
         case "ACCEPTED":
-            state = {
+            return (state = {
                 ...state,
                 friendsWannabes: state.friendsWannabes.map((wannabe) => {
                     if (wannabe.id == action.id) {
@@ -32,10 +32,10 @@ export default (state = {}, action) => {
                         return wannabe;
                     }
                 }),
-            };
+            });
 
         case "CANCELLED":
-            state = {
+            return (state = {
                 ...state,
                 myRequests: state.myRequests.filter((pending) => {
                     if (pending.id == action.id) {
@@ -44,19 +44,24 @@ export default (state = {}, action) => {
                         return pending;
                     }
                 }),
-            };
-
-        case "RETRIEVED_MSGS":
-            state = Object.assign({}, state, {
-                boardMessages: action.msgsHistory,
             });
-        // break;
+        ///////////////////// MESSAGE BOARD /////////////////////
+        case "RETRIEVED_MSGS":
+            return (state = Object.assign({}, state, {
+                boardMessages: action.msgsHistory,
+            }));
 
         case "NEW_MSG":
-            state = {
-                ...state,
+            return (state = Object.assign({}, state, {
                 boardMessages: action.newestMessage,
-            };
+            }));
+        // case "NEW_MSG":
+        //     return (state = {
+        //         ...state,
+        //         boardMessages: action.newestMessage,
+        //     });
+
+        default:
+            return state;
     }
-    return state;
 };

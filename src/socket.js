@@ -1,8 +1,6 @@
 import * as io from "socket.io-client";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 import { mbdbHistory, mbdbNewEntry } from "./actions";
-// we don't have these actions written yet and this would otherwise break our code,
-// you will need to write these actions later when you are working on completing part 10 :)
 
 export let socket;
 
@@ -13,16 +11,11 @@ export const init = (store) => {
         socket.on("mbdbHistory", (msgs) => {
             store.dispatch(mbdbHistory(msgs));
             console.log("array to be dispatched: ", msgs);
-            // what you want to do with this
-            // once it logs the actual chat history is dispatch an action the then
-            // adds the history to redux global state
         });
+
         socket.on("mbdbNewEntry", (msg) => {
             store.dispatch(mbdbNewEntry(msg));
             console.log("new msg to add to chat", msg);
-            // this will eventually be a new
-            // msg object, need to dispatch an action to add the object
-            // to redux global state
         });
         /*
         //receiving a message from server
