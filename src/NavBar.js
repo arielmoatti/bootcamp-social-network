@@ -37,26 +37,30 @@ export default function NavBar({
                         <p>
                             <strong>{`${first} ${last}`}</strong>
                         </p>
-                        <p>see your profile</p>
+                        <p>See your profile</p>
                     </div>
                 </Link>
 
                 <div className="navItem" onClick={toggleUploader}>
                     <i className="fas fa-camera"></i>
-                    change profile picture
+                    Change profile picture
                 </div>
 
                 <Link to={"/users"} className="navItem">
                     <i className="fas fa-address-book"></i>
-                    see other members
+                    See other members
                 </Link>
                 <Link to={"/friends"} className="navItem">
                     <i className="fas fa-user-friends"></i>
-                    manage your friendships
+                    Manage your friendships
+                </Link>
+                <Link to={"/msgboard"} className="navItem">
+                    <i className="fas fa-comments"></i>
+                    Message board
                 </Link>
                 <p className="navLogOut navItem" onClick={() => logOut()}>
                     <i className="fas fa-sign-out-alt"></i>
-                    log out
+                    Log out
                 </p>
             </div>
         </>

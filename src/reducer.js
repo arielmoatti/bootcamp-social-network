@@ -45,6 +45,11 @@ export default (state = {}, action) => {
                     }
                 }),
             };
+
+        case "RETRIEVED_MSGS":
+            state = Object.assign({}, state, {
+                boardMessages: action.msgsHistory,
+            });
     }
     return state;
 };

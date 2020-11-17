@@ -80,3 +80,22 @@ export async function cancel(id) {
         console.log("error in axios /api/setFriendship ", err);
     }
 }
+
+///////////////////// MESSAGE BOARD /////////////////////
+
+export function mbdbHistory(msgs) {
+    console.log("action: bringing up the list!");
+    return {
+        type: "RETRIEVED_MSGS",
+        msgsHistory: msgs,
+    };
+}
+
+export function mbdbNewEntry(msg) {
+    console.log("action: adding a new message!");
+    return;
+    // return {
+    //     type: "RETRIEVED_MSGS",
+    //     msgsHistory: msgs,
+    // };
+}

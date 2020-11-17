@@ -376,9 +376,28 @@ between the image and the menu */
     transition: 500ms;
 }
 
-.chat-display-container {
+#messageBoard {
+    margin: 30px;
+}
+.msgboard-innerContainer {
     background-color: royalblue;
-    height: 200px;
+    padding: 20px;
+    height: 500px;
     width: 75vw;
     overflow-y: scroll;
+}
+
+.message img {
+    width: 50px;
+}
+
+.message .authorName {
+    font-weight: bold;
+}
+.message .message-box {
+    background-color: thistle;
+    border-radius: 5px;
+    width: 80%;
+    padding: 2px;
+    margin-bottom: 20px;
 }

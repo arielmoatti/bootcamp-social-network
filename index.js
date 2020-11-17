@@ -535,63 +535,96 @@ if (require.main == module) {
 io.on("connection", (socket) => {
     if (!socket.request.session.userId) {
         return socket.disconnect(true);
-    } //making sure that only
-    // const { userId } = request.session;
-    // const userId = req.session.userId;
-    // const userId = socket.req.session.userId;
+    } // we are technically adding a double layer of protection, and just making sure
+    //that only users with the right cookie are recognised as connected sockets
+
     const { userId } = socket.request.session;
-    console.log(`socket with the id ${socket.id} is now connected`);
-    console.log("connected userId is: ", userId);
+    console.log(`connected socket id (${socket.id}) / userId (${userId})`);
+    // retrieveing our chat history
+    // 1. need to get our chat history from the db (async db.getChatHistory().)
+    // 2. once we have our chat history we want to emit the chats to all our clients
 
-    //invoke a db.query
-    //async db.getChatHistory()....
-    //2. emit the chats to all our clients
+    io.sockets.emit("mbdbHistory", [
+        {
+            msgId: 1,
+            message:
+                "first message bla bla bla. Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque repudiandae, natus obcaecati corporis tempora veniam repellendus quo ipsam dolorum molestiae cupiditate perspiciatis esse hic maxime. Eum accusamus eveniet odit alias!",
+            userId: 1,
+            avatar: "https://randomuser.me/api/portraits/men/46.jpg",
+            first: "Joe",
+            last: "Biden",
+        },
+        {
+            msgId: 2,
+            message:
+                "second message bla bla bla. Lorem ipsum dolor sit amet consectetur adipisicing elit. ",
+            userId: 1,
+            avatar: "https://randomuser.me/api/portraits/men/46.jpg",
+            first: "Joe",
+            last: "Biden",
+        },
+        {
+            msgId: 3,
+            message:
+                "third message bla bla bla. Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque repudiandae, natus obcaecati",
+            userId: 2,
+            avatar:
+                "https://s3.amazonaws.com/pimento-socialnetwork/e4JuZXWu5MU7Xxm2qPKp3A39qQozPpje.jpg",
+            first: "Ariel",
+            last: "Moatti",
+        },
+    ]);
+    //here we will ultimately send back a bunch of objects in an array that we got from our DB, it will be the last ten messages and probably look something like this: data.rows.reverse()
+    // 1st argument is what we will have to listen for on the client side,
+    // 2nd argument is the dataload we want to send along
 
-    // io.emit(
-    //     "chatHistory",
-    //     "this is a placeholder for the data, like array of objects of the last 10 messages data.rows.reverse() "
-    // );
+    // receiving a new message from a connected socket
 
-    //receiving a new messgae from a connected socket
-
-    socket.on("message from client", (newMsg) => {
+    socket.on("newMsgFromClient", (newMsg) => {
         //we want to find out who sent the message
-        console.log("chat received!", newMsg, "from user: ", userId);
-        //author of the message is the "userId"
+        console.log(`userId ${userId} just added this message: ${newMsg}`);
+        // we need to add this msg to the chat table
+        // we also want to retrieve the information of the author of the msg specifically first, maybe last (?), and IMAGE url from our users table
+        // compose an msg object containing the user info and the new message that
+        // got send make sure it structurally matches with what your message
+        // objects in the chat history look like
+        io.sockets.emit("mbdbNewEntry", newMsg);
     });
 
+    /*
     //sending a message - emitting an event with a payload
     //first argument is a message as string, second is data sent to the client
     //we need to LISTEN to this emitted event
     //sends ONLY the one client
 
-    // socket.emit("welcome", {
-    //     name: "Ariel",
-    // });
+    socket.emit("welcome", {
+        name: "Ariel",
+    });
 
     //io.emit takes 2 arguments: the name of the message, 2nd is the data sent to the client
     //will send to EVERY logged in USERS
 
-    // io.emit("messageWithIoEmit", {
-    //     id: socket.id,
-    // });
+    io.emit("messageWithIoEmit", {
+        id: socket.id,
+    });
 
     //broadcast.emit
     //sends a message to ALL USERS except the client who just connected
 
-    // socket.broadcast.emit("broadcastEmitTest", {
-    //     id: socket.id,
-    // });
+    socket.broadcast.emit("broadcastEmitTest", {
+        id: socket.id,
+    });
 
     //here we listen to events emitted by the client
 
-    // socket.on("messageFromClient", (data) => {
-    //     console.log("data from client through sockets: ", data);
-    // });
+    socket.on("messageFromClient", (data) => {
+        console.log("data from client through sockets: ", data);
+    });
+    */
 
     //user leave or logged out?
     //reserved string or EVENT for disconnect
     socket.on("disconnect", () => {
-        console.log(`user id ${socket.id} has just disconnected`);
+        console.log(`disconnected! (${socket.id}) / userId (${userId})`);
     });
 });

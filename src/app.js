@@ -11,7 +11,7 @@ import OtherProfile from "./OtherProfile";
 import FindPeople from "./FindPeople";
 import Friends from "./friends";
 import NavBar from "./NavBar";
-import Chat from "./Chat";
+import MessageBoard from "./MessageBoard";
 
 export default class App extends React.Component {
     constructor() {
@@ -135,7 +135,7 @@ export default class App extends React.Component {
                 </div>
 
                 <Route exact path="/friends" render={() => <Friends />} />
-                <Route exact path="/chat" render={() => <Chat />} />
+                <Route exact path="/msgboard" render={() => <MessageBoard />} />
 
                 {this.state.uploaderIsVisible && (
                     <Uploader
