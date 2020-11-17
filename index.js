@@ -1,7 +1,10 @@
 const express = require("express");
 const app = (exports.app = express());
+//setup for sockets
 const server = require("http").Server(app);
 const io = require("socket.io")(server, { origins: "localhost:8080" });
+// const io = require("socket.io")(server, { origins: "localhost:8080 https://more-cowbell.heruko.com:*" });
+////////////////////
 const compression = require("compression");
 const cookieSession = require("cookie-session");
 const csurf = require("csurf");
@@ -42,13 +45,22 @@ const uploader = multer({
 ////////////////////////////////////////////
 
 ////////////////////// MIDDLEWARE //////////////////////
-app.use(
-    cookieSession({
-        secret: `we need more cowbell!`,
-        maxAge: 1000 * 60 * 60 * 24 * 14,
-    })
-);
+// app.use(
+//     cookieSession({
+//         secret: `we need more cowbell!`,
+//         maxAge: 1000 * 60 * 60 * 24 * 14,
+//     })
+// );
 
+const cookieSessionMiddleware = cookieSession({
+    secret: `we need more cowbell!`,
+    maxAge: 1000 * 60 * 60 * 24 * 14,
+});
+
+app.use(cookieSessionMiddleware);
+io.use(function (socket, next) {
+    cookieSessionMiddleware(socket.request, socket.request.res, next);
+});
 // app.use(
 //     express.urlencoded({
 //         extended: false,
@@ -520,9 +532,33 @@ if (require.main == module) {
 ////////////////// SOCKETS GO HERE ///////////////////////
 //////////////////////////////////////////////////////////
 
-/*
 io.on("connection", (socket) => {
+    if (!socket.request.session.userId) {
+        return socket.disconnect(true);
+    } //making sure that only
+    // const { userId } = request.session;
+    // const userId = req.session.userId;
+    // const userId = socket.req.session.userId;
+    const { userId } = socket.request.session;
     console.log(`socket with the id ${socket.id} is now connected`);
+    console.log("connected userId is: ", userId);
+
+    //invoke a db.query
+    //async db.getChatHistory()....
+    //2. emit the chats to all our clients
+
+    // io.emit(
+    //     "chatHistory",
+    //     "this is a placeholder for the data, like array of objects of the last 10 messages data.rows.reverse() "
+    // );
+
+    //receiving a new messgae from a connected socket
+
+    socket.on("message from client", (newMsg) => {
+        //we want to find out who sent the message
+        console.log("chat received!", newMsg, "from user: ", userId);
+        //author of the message is the "userId"
+    });
 
     //sending a message - emitting an event with a payload
     //first argument is a message as string, second is data sent to the client
@@ -559,4 +595,3 @@ io.on("connection", (socket) => {
         console.log(`user id ${socket.id} has just disconnected`);
     });
 });
-*/

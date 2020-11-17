@@ -22,7 +22,7 @@ const userIsLoggedIn = location.pathname != "/welcome";
 if (!userIsLoggedIn) {
     elem = <Welcome />;
 } else {
-    init(store); //sockets!
+    init(store); //we pass the sockets the global redux store
     elem = (
         <Provider store={store}>
             <App />

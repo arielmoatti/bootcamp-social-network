@@ -13,8 +13,8 @@ export default function NavBar({
     let logOut = async () => {
         try {
             console.log("log out fired!");
-            // await axios.get("/api/logout");
-            // location.replace("/welcome#/login");
+            await axios.get("/api/logout");
+            location.replace("/welcome#/login");
         } catch (err) {
             console.log("error in axios GET /api/logout ", err);
         }

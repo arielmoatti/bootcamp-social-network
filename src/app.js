@@ -11,6 +11,7 @@ import OtherProfile from "./OtherProfile";
 import FindPeople from "./FindPeople";
 import Friends from "./friends";
 import NavBar from "./NavBar";
+import Chat from "./Chat";
 
 export default class App extends React.Component {
     constructor() {
@@ -134,6 +135,7 @@ export default class App extends React.Component {
                 </div>
 
                 <Route exact path="/friends" render={() => <Friends />} />
+                <Route exact path="/chat" render={() => <Chat />} />
 
                 {this.state.uploaderIsVisible && (
                     <Uploader
