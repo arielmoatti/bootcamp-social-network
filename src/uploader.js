@@ -24,6 +24,7 @@ export default class Uploader extends React.Component {
     submit() {
         let formData = new FormData();
         formData.append("file", this.state.file);
+
         (async () => {
             try {
                 let response = await axios.post("/upload/profilepic", formData);
@@ -41,9 +42,18 @@ export default class Uploader extends React.Component {
             <>
                 <div className="uploaderModal">
                     <h2>click below to update your profile picture</h2>
-                    <label htmlFor="file-upload" className="custom-file-upload">
-                        <i className="fa fa-cloud-upload"></i>
-                        {this.state.file ? "ready" : "select image"}
+                    <label
+                        htmlFor="file-upload"
+                        className={
+                            this.state.file
+                                ? "file-loaded custom-file-upload"
+                                : "custom-file-upload"
+                        }
+                    >
+                        <i className="fas fa-cloud-upload-alt">&nbsp;&nbsp;</i>
+                        {this.state.file
+                            ? this.state.file.name
+                            : "select image"}
                     </label>
                     <input
                         id="file-upload"

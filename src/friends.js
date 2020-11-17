@@ -35,7 +35,7 @@ export default function Friends() {
                 )}
                 {friends && (
                     <div className="friends-container">
-                        <h2>my friends</h2>
+                        <h2>your friends</h2>
                         <div className="items">
                             {friends.map((friend) => (
                                 <div className="member" key={friend.id}>
@@ -72,7 +72,7 @@ export default function Friends() {
                 )}
                 {wannabes && (
                     <div className="wannabes-container">
-                        <h2>wannabes</h2>
+                        <h2>members who wish to befreind you</h2>
                         <div className="items">
                             {wannabes.map((wannabe) => (
                                 <div className="member" key={wannabe.id}>
@@ -116,7 +116,7 @@ export default function Friends() {
                 )}
                 {pendings && (
                     <div className="pendings-container">
-                        <h2>my pending requests</h2>
+                        <h2>your pending friendship requests</h2>
                         <div className="items">
                             {pendings.map((pending) => (
                                 <div className="member" key={pending.id}>
