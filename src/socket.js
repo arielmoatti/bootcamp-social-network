@@ -10,12 +10,12 @@ export const init = (store) => {
 
         socket.on("mbdbHistory", (msgs) => {
             store.dispatch(mbdbHistory(msgs));
-            console.log("array to be dispatched: ", msgs);
+            // console.log("array to be dispatched: ", msgs);
         });
 
         socket.on("mbdbNewEntry", (msg) => {
             store.dispatch(mbdbNewEntry(msg));
-            console.log("new msg to add to chat", msg);
+            // console.log("new msg to add to chat", msg);
         });
         /*
         //receiving a message from server

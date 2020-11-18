@@ -1,27 +1,30 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { socket } from "./socket";
 import { useSelector } from "react-redux";
 
 export default function MessageBoard() {
     const boardMessages = useSelector((state) => state && state.boardMessages);
-    console.log("boardMessages", boardMessages);
-    // boardMessages && console.log("boardMessages", boardMessages);
-
+    const [scrolled, setScrolled] = useState(false);
+    const [msgEntry, setMsgEntry] = useState(false);
     const elemRef = useRef();
 
     useEffect(() => {
+        setMsgEntry(false);
+        boardMessages && !scrolled && (scrollFn(), setScrolled(true));
+        msgEntry && scrollFn();
+    }, [boardMessages]);
+
+    function scrollFn() {
         elemRef.current.scrollTop =
             elemRef.current.scrollHeight - elemRef.current.clientHeight;
-        // boardMessages &&
-        //     (elemRef.current.scrollTop =
-        //         elemRef.current.scrollHeight - elemRef.current.clientHeight);
-    }, []);
+    }
 
     const keyCheck = (e) => {
         if (e.key === "Enter") {
             e.preventDefault();
             socket.emit("newMsgFromClient", e.target.value);
             e.target.value = "";
+            setMsgEntry(true);
         }
     };
 
@@ -58,7 +61,7 @@ export default function MessageBoard() {
                 <textarea
                     autoFocus={true}
                     rows="2"
-                    cols="100"
+                    cols="50"
                     onKeyDown={keyCheck}
                 />
                 <p>

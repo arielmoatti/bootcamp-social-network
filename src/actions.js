@@ -84,7 +84,7 @@ export async function cancel(id) {
 ///////////////////// MESSAGE BOARD /////////////////////
 
 export function mbdbHistory(msgs) {
-    console.log("action: bringing up the list!");
+    // console.log("action: bringing up the list!");
     return {
         type: "RETRIEVED_MSGS",
         msgsHistory: msgs,
@@ -92,7 +92,7 @@ export function mbdbHistory(msgs) {
 }
 
 export function mbdbNewEntry(msg) {
-    console.log("action: adding a new message!");
+    // console.log("action: adding a new message!");
     return {
         type: "NEW_MSG",
         newestMessage: msg,

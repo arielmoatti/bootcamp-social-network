@@ -532,7 +532,7 @@ if (require.main == module) {
 ////////////////// SOCKETS GO HERE ///////////////////////
 //////////////////////////////////////////////////////////
 
-io.on("connection", (socket) => {
+io.on("connection", async (socket) => {
     if (!socket.request.session.userId) {
         return socket.disconnect(true);
     } // we are technically adding a double layer of protection, and just making sure
@@ -540,238 +540,40 @@ io.on("connection", (socket) => {
 
     const { userId } = socket.request.session;
     console.log(`connected socket id (${socket.id}) / userId (${userId})`);
-    // retrieveing our chat history
 
-    (async () => {
-        try {
-            let data = await db.getMsgBrdHistory();
-            // console.log("rows", rows.reverse());
-            let payload = data.rows.reverse();
-            io.emit("mbdbHistory", payload);
-        } catch (err) {
-            console.log("Error in SOCKET io.emit mbdbHistory", err);
-        }
-    })();
-    // 1. need to get our chat history from the db (async db.getChatHistory().)
-    // 2. once we have our chat history we want to emit the chats to all our clients
+    ///////////////// retrieving our messages history
 
-    /*
-    io.emit(
-        "mbdbHistory",
-
-        [
-            {
-                msgId: 1,
-                message:
-                    "first message bla bla bla. Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque repudiandae, natus obcaecati corporis tempora veniam repellendus quo ipsam dolorum molestiae cupiditate perspiciatis esse hic maxime. Eum accusamus eveniet odit alias!",
-                userId: 1,
-                avatar: "https://randomuser.me/api/portraits/men/46.jpg",
-                first: "Joe",
-                last: "Biden",
-            },
-            {
-                msgId: 2,
-                message:
-                    "second message bla bla bla. Lorem ipsum dolor sit amet consectetur adipisicing elit. ",
-                userId: 1,
-                avatar: "https://randomuser.me/api/portraits/men/46.jpg",
-                first: "Joe",
-                last: "Biden",
-            },
-            {
-                msgId: 3,
-                message:
-                    "third message bla bla bla. Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque repudiandae, natus obcaecati",
-                userId: 2,
-                avatar:
-                    "https://s3.amazonaws.com/pimento-socialnetwork/e4JuZXWu5MU7Xxm2qPKp3A39qQozPpje.jpg",
-                first: "Ariel",
-                last: "Moatti",
-            },
-            {
-                msgId: 4,
-                message:
-                    "first message bla bla bla. Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque repudiandae, natus obcaecati corporis tempora veniam repellendus quo ipsam dolorum molestiae cupiditate perspiciatis esse hic maxime. Eum accusamus eveniet odit alias!",
-                userId: 1,
-                avatar: "https://randomuser.me/api/portraits/men/46.jpg",
-                first: "Joe",
-                last: "Biden",
-            },
-            {
-                msgId: 5,
-                message:
-                    "second message bla bla bla. Lorem ipsum dolor sit amet consectetur adipisicing elit. ",
-                userId: 1,
-                avatar: "https://randomuser.me/api/portraits/men/46.jpg",
-                first: "Joe",
-                last: "Biden",
-            },
-            {
-                msgId: 6,
-                message:
-                    "third message bla bla bla. Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque repudiandae, natus obcaecati",
-                userId: 2,
-                avatar:
-                    "https://s3.amazonaws.com/pimento-socialnetwork/e4JuZXWu5MU7Xxm2qPKp3A39qQozPpje.jpg",
-                first: "Ariel",
-                last: "Moatti",
-            },
-            {
-                msgId: 7,
-                message:
-                    "first message bla bla bla. Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque repudiandae, natus obcaecati corporis tempora veniam repellendus quo ipsam dolorum molestiae cupiditate perspiciatis esse hic maxime. Eum accusamus eveniet odit alias!",
-                userId: 1,
-                avatar: "https://randomuser.me/api/portraits/men/46.jpg",
-                first: "Joe",
-                last: "Biden",
-            },
-            {
-                msgId: 8,
-                message:
-                    "second message bla bla bla. Lorem ipsum dolor sit amet consectetur adipisicing elit. ",
-                userId: 1,
-                avatar: "https://randomuser.me/api/portraits/men/46.jpg",
-                first: "Joe",
-                last: "Biden",
-            },
-            {
-                msgId: 9,
-                message:
-                    "third message bla bla bla. Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque repudiandae, natus obcaecati",
-                userId: 2,
-                avatar:
-                    "https://s3.amazonaws.com/pimento-socialnetwork/e4JuZXWu5MU7Xxm2qPKp3A39qQozPpje.jpg",
-                first: "Ariel",
-                last: "Moatti",
-            },
-            {
-                msgId: 10,
-                message:
-                    "first message bla bla bla. Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque repudiandae, natus obcaecati corporis tempora veniam repellendus quo ipsam dolorum molestiae cupiditate perspiciatis esse hic maxime. Eum accusamus eveniet odit alias!",
-                userId: 1,
-                avatar: "https://randomuser.me/api/portraits/men/46.jpg",
-                first: "Joe",
-                last: "Biden",
-            },
-        ]
-    );
-    */
-    //here we will ultimately send back a bunch of objects in an array that we got from our DB, it will be the last ten messages and probably look something like this: data.rows.reverse()
-    // 1st argument is what we will have to listen for on the client side,
-    // 2nd argument is the dataload we want to send along
+    try {
+        let data = await db.getMsgBrdHistory();
+        let payload = data.rows.reverse();
+        io.emit("mbdbHistory", payload);
+    } catch (err) {
+        console.log("Error in SOCKET io.emit mbdbHistory", err);
+    }
 
     // receiving a new message from a connected socket
 
-    socket.on("newMsgFromClient", (newMsg) => {
-        //we want to find out who sent the message
+    socket.on("newMsgFromClient", async (newMsg) => {
         console.log(`userId ${userId} just added this message: ${newMsg}`);
+        try {
+            await db.addBoardMessage(userId, newMsg);
+            let data = await db.getMsgBrdHistory();
+            let payload = data.rows.reverse();
+            io.emit("mbdbHistory", payload);
+        } catch (err) {
+            console.log("Error in SOCKET io.emit newMsgFromClient", err);
+        }
 
         // we need to add this msg to the chat table
         // we also want to retrieve the information of the author of the msg specifically first, maybe last (?), and IMAGE url from our users table
         // compose an msg object containing the user info and the new message that
         // got send make sure it structurally matches with what your message
         // objects in the chat history look like
-        io.sockets.emit("mbdbNewEntry", [
-            {
-                msgId: 2,
-                message:
-                    "second message bla bla bla. Lorem ipsum dolor sit amet consectetur adipisicing elit. ",
-                userId: 1,
-                avatar: "https://randomuser.me/api/portraits/men/46.jpg",
-                first: "Joe",
-                last: "Biden",
-            },
-            {
-                msgId: 3,
-                message:
-                    "third message bla bla bla. Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque repudiandae, natus obcaecati",
-                userId: 2,
-                avatar:
-                    "https://s3.amazonaws.com/pimento-socialnetwork/e4JuZXWu5MU7Xxm2qPKp3A39qQozPpje.jpg",
-                first: "Ariel",
-                last: "Moatti",
-            },
-            {
-                msgId: 4,
-                message:
-                    "first message bla bla bla. Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque repudiandae, natus obcaecati corporis tempora veniam repellendus quo ipsam dolorum molestiae cupiditate perspiciatis esse hic maxime. Eum accusamus eveniet odit alias!",
-                userId: 1,
-                avatar: "https://randomuser.me/api/portraits/men/46.jpg",
-                first: "Joe",
-                last: "Biden",
-            },
-            {
-                msgId: 5,
-                message:
-                    "second message bla bla bla. Lorem ipsum dolor sit amet consectetur adipisicing elit. ",
-                userId: 1,
-                avatar: "https://randomuser.me/api/portraits/men/46.jpg",
-                first: "Joe",
-                last: "Biden",
-            },
-            {
-                msgId: 6,
-                message:
-                    "third message bla bla bla. Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque repudiandae, natus obcaecati",
-                userId: 2,
-                avatar:
-                    "https://s3.amazonaws.com/pimento-socialnetwork/e4JuZXWu5MU7Xxm2qPKp3A39qQozPpje.jpg",
-                first: "Ariel",
-                last: "Moatti",
-            },
-            {
-                msgId: 7,
-                message:
-                    "first message bla bla bla. Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque repudiandae, natus obcaecati corporis tempora veniam repellendus quo ipsam dolorum molestiae cupiditate perspiciatis esse hic maxime. Eum accusamus eveniet odit alias!",
-                userId: 1,
-                avatar: "https://randomuser.me/api/portraits/men/46.jpg",
-                first: "Joe",
-                last: "Biden",
-            },
-            {
-                msgId: 8,
-                message:
-                    "second message bla bla bla. Lorem ipsum dolor sit amet consectetur adipisicing elit. ",
-                userId: 1,
-                avatar: "https://randomuser.me/api/portraits/men/46.jpg",
-                first: "Joe",
-                last: "Biden",
-            },
-            {
-                msgId: 9,
-                message:
-                    "third message bla bla bla. Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque repudiandae, natus obcaecati",
-                userId: 2,
-                avatar:
-                    "https://s3.amazonaws.com/pimento-socialnetwork/e4JuZXWu5MU7Xxm2qPKp3A39qQozPpje.jpg",
-                first: "Ariel",
-                last: "Moatti",
-            },
-            {
-                msgId: 10,
-                message:
-                    "first message bla bla bla. Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque repudiandae, natus obcaecati corporis tempora veniam repellendus quo ipsam dolorum molestiae cupiditate perspiciatis esse hic maxime. Eum accusamus eveniet odit alias!",
-                userId: 1,
-                avatar: "https://randomuser.me/api/portraits/men/46.jpg",
-                first: "Joe",
-                last: "Biden",
-            },
-            {
-                msgId: 11,
-                message: newMsg,
-                userId: userId,
-                avatar: "https://randomuser.me/api/portraits/men/43.jpg",
-                first: "new",
-                last: "user",
-            },
-        ]);
         // io.sockets.emit("mbdbNewEntry", newMsg);
     });
 
     /*
-    //sending a message - emitting an event with a payload
-    //first argument is a message as string, second is data sent to the client
-    //we need to LISTEN to this emitted event
+    
     //sends ONLY the one client
 
     socket.emit("welcome", {

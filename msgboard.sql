@@ -26,11 +26,12 @@ VALUES
     ;
 
 
-SELECT * FROM msgboard ORDER BY created_at DESC;
 
-SELECT msgboard.id, message, first, last, avatar, msgboard.created_at
-        FROM msgboard
-        JOIN users
-        ON author = users.id
-        ORDER BY msgboard.created_at DESC
-        LIMIT 10;
+-- SELECT * FROM msgboard ORDER BY created_at DESC;
+
+-- SELECT msgboard.id, message, first, last, avatar, msgboard.created_at
+--         FROM msgboard
+--         JOIN users
+--         ON author = users.id
+--         ORDER BY msgboard.created_at DESC
+--         LIMIT 10;

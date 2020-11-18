@@ -29,7 +29,7 @@ CREATE TABLE friendships(
 DROP TABLE IF EXISTS msgboard CASCADE;
 CREATE TABLE msgboard(
     id          SERIAL PRIMARY KEY,
-    msg         TEXT,
+    message     TEXT,
     author      INT REFERENCES users(id) NOT NULL,
     created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );

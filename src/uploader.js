@@ -16,6 +16,7 @@ export default class Uploader extends React.Component {
     }
 
     handleFileChange(e) {
+        console.log(e.target.files[0].size);
         this.setState({
             file: e.target.files[0],
         });
