@@ -7,6 +7,7 @@ export default class Uploader extends React.Component {
         this.state = {
             imgUrl: props.profilePicUrl,
             file: null,
+            errMsg: null,
         };
         this.handleFileChange = this.handleFileChange.bind(this);
     }
@@ -16,10 +17,17 @@ export default class Uploader extends React.Component {
     }
 
     handleFileChange(e) {
-        console.log(e.target.files[0].size);
-        this.setState({
-            file: e.target.files[0],
-        });
+        console.log("file size: ", e.target.files[0].size);
+        this.setState({ errMsg: null });
+        if (e.target.files[0].size > 2000000) {
+            this.setState({
+                errMsg: "File is too big... keep it under 2Mb",
+            });
+        } else {
+            this.setState({
+                file: e.target.files[0],
+            });
+        }
     }
 
     submit() {
@@ -69,6 +77,7 @@ export default class Uploader extends React.Component {
                     <button onClick={() => this.methodInUploader()}>
                         cancel
                     </button>
+                    <p>{this.state.errMsg}</p>
                 </div>
             </>
         );
