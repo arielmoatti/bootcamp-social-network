@@ -539,14 +539,13 @@ io.on("connection", async (socket) => {
     //that only users with the right cookie are recognised as connected sockets
 
     const { userId } = socket.request.session;
-    console.log(`connected socket id (${socket.id}) / userId (${userId})`);
+    // console.log(`connected socket id (${socket.id}) / userId (${userId})`);
 
     ///////////////// retrieving our messages history
 
     try {
-        let data = await db.getMsgBrdHistory();
-        let payload = data.rows.reverse();
-        io.emit("mbdbHistory", payload);
+        const data = await db.getMsgBrdHistory();
+        socket.emit("mbdbHistory", data.rows.reverse());
     } catch (err) {
         console.log("Error in SOCKET io.emit mbdbHistory", err);
     }
@@ -554,56 +553,29 @@ io.on("connection", async (socket) => {
     // receiving a new message from a connected socket
 
     socket.on("newMsgFromClient", async (newMsg) => {
-        console.log(`userId ${userId} just added this message: ${newMsg}`);
+        // console.log(`userId ${userId} just added this message: ${newMsg}`);
         try {
-            await db.addBoardMessage(userId, newMsg);
-            let data = await db.getMsgBrdHistory();
-            let payload = data.rows.reverse();
-            io.emit("mbdbHistory", payload);
+            const storedMessage = await db.addBoardMessage(userId, newMsg);
+            const userInfo = await db.getUserDataById(userId);
+            const { first, last, avatar } = userInfo.rows[0];
+            const { id, created_at, message } = storedMessage.rows[0];
+
+            const payload = {
+                id: id,
+                message: message,
+                created_at: created_at,
+                first: first,
+                last: last,
+                avatar: avatar,
+            };
+            io.sockets.emit("mbdbNewEntry", payload);
         } catch (err) {
             console.log("Error in SOCKET io.emit newMsgFromClient", err);
         }
-
-        // we need to add this msg to the chat table
-        // we also want to retrieve the information of the author of the msg specifically first, maybe last (?), and IMAGE url from our users table
-        // compose an msg object containing the user info and the new message that
-        // got send make sure it structurally matches with what your message
-        // objects in the chat history look like
-        // io.sockets.emit("mbdbNewEntry", newMsg);
     });
-
-    /*
-    
-    //sends ONLY the one client
-
-    socket.emit("welcome", {
-        name: "Ariel",
-    });
-
-    //io.emit takes 2 arguments: the name of the message, 2nd is the data sent to the client
-    //will send to EVERY logged in USERS
-
-    io.emit("messageWithIoEmit", {
-        id: socket.id,
-    });
-
-    //broadcast.emit
-    //sends a message to ALL USERS except the client who just connected
-
-    socket.broadcast.emit("broadcastEmitTest", {
-        id: socket.id,
-    });
-
-    //here we listen to events emitted by the client
-
-    socket.on("messageFromClient", (data) => {
-        console.log("data from client through sockets: ", data);
-    });
-    */
-
     //user leave or logged out?
     //reserved string or EVENT for disconnect
     socket.on("disconnect", () => {
-        console.log(`disconnected! (${socket.id}) / userId (${userId})`);
+        // console.log(`disconnected! (${socket.id}) / userId (${userId})`);
     });
 });

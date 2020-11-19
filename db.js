@@ -204,7 +204,8 @@ exports.addBoardMessage = (userId, msg) => {
         `
         INSERT INTO msgboard
         (author, message)
-        VALUES ($1, $2);
+        VALUES ($1, $2)
+        RETURNING *;        
         `,
         [userId, msg]
     );

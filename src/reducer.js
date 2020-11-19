@@ -52,14 +52,10 @@ export default (state = {}, action) => {
             }));
 
         case "NEW_MSG":
-            return (state = Object.assign({}, state, {
-                boardMessages: action.newestMessage,
-            }));
-        // case "NEW_MSG":
-        //     return (state = {
-        //         ...state,
-        //         boardMessages: action.newestMessage,
-        //     });
+            return (state = {
+                ...state,
+                boardMessages: [...state.boardMessages, action.newestMessage],
+            });
 
         default:
             return state;

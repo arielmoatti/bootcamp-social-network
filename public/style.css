@@ -397,7 +397,7 @@ between the image and the menu */
 .message .message-box {
     background-color: thistle;
     border-radius: 5px;
-    width: 80%;
-    padding: 2px;
+    width: fit-content;
+    padding: 2px 10px;
     margin-bottom: 20px;
 }
