@@ -9,6 +9,7 @@ export default function NavBar({
     profilePicUrl,
     toggleUploader,
     navVisible,
+    hideNavbarFromItem,
 }) {
     let logOut = async () => {
         try {
@@ -24,6 +25,7 @@ export default function NavBar({
         <>
             <div
                 id="navbar"
+                onClick={hideNavbarFromItem}
                 className={navVisible ? "nav-visible" : "nav-hidden"}
             >
                 <Link to={"/"} className="navProf navItem">

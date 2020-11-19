@@ -373,7 +373,7 @@ between the image and the menu */
 .nav-hidden {
     visibility: hidden;
     opacity: 0;
-    transition: 500ms;
+    transition: 300ms;
 }
 
 #messageBoard {
@@ -400,4 +400,5 @@ between the image and the menu */
     width: fit-content;
     padding: 2px 10px;
     margin-bottom: 20px;
+    filter: drop-shadow(2px 2px 2px #222);
 }

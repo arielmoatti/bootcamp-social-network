@@ -19,6 +19,7 @@ export default class App extends React.Component {
         this.state = {
             uploaderIsVisible: false,
             navbarIsVisible: false,
+            flagHide: false,
         };
         this.methodInApp = this.methodInApp.bind(this);
         this.methodInAppBio = this.methodInAppBio.bind(this);
@@ -60,9 +61,11 @@ export default class App extends React.Component {
     }
 
     hideNavBar() {
-        this.setState({
-            navbarIsVisible: false,
-        });
+        this.state.flagHide && this.setState({ navbarIsVisible: false });
+    }
+
+    hideNavbarFromItem() {
+        this.setState({ navbarIsVisible: false });
     }
 
     methodInAppBio(arg) {
@@ -81,8 +84,13 @@ export default class App extends React.Component {
                     <Logo />
                     <div
                         id="nav-container"
-                        // onMouseEnter={() => this.showNavBar()}
-                        onMouseLeave={() => this.hideNavBar()}
+                        onMouseEnter={() => this.setState({ flagHide: false })}
+                        onMouseLeave={() => {
+                            this.setState({ flagHide: true });
+                            setTimeout(() => {
+                                this.hideNavBar();
+                            }, 400);
+                        }}
                         // tabIndex="0"
                         // onBlur={() => this.hideNavBar()}
                     >
@@ -101,6 +109,7 @@ export default class App extends React.Component {
                             profilePicUrl={this.state.profilePicUrl}
                             toggleUploader={() => this.toggleUploader()}
                             navVisible={this.state.navbarIsVisible}
+                            hideNavbarFromItem={() => this.hideNavbarFromItem()}
                         />
                         {/* )} */}
                     </div>

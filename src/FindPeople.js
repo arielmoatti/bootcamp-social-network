@@ -39,10 +39,9 @@ export default function FindPeople() {
             }
         })();
         return () => {
-            abort = true;
+            abort = true; //to make sure the results come in the right order, ignoring fast typing
         };
     }, [userSearch]);
-
     return (
         <div className="lastThreeContainer profileContainer">
             <h1>check out our most recent members:</h1>

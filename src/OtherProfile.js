@@ -22,7 +22,9 @@ export default class OtherProfile extends React.Component {
                         bio: bio,
                     });
                 } else {
-                    this.props.history.push("/");
+                    setTimeout(() => {
+                        this.props.history.push("/");
+                    }, 10);
                 }
             } catch (err) {
                 console.log("error in axios GET /user/id: ", err);
