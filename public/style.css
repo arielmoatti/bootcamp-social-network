@@ -1,3 +1,13 @@
+:root {
+    --lightBlue: #2274a5;
+    --darkBlue: #053276;
+    --darkGrey: #3d3829;
+    --lightGrey: #738087;
+    --beige: #e3e3ca;
+    --lilac: #8f95d3;
+    --green: #447604;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -18,7 +28,8 @@ a {
 }
 
 header {
-    background-color: seagreen;
+    /* background-color: seagreen; */
+    background-image: url("/coffee_background_Header.jpg");
     height: 200px;
     padding: 20px;
     display: flex;
@@ -59,9 +70,9 @@ header {
 } */
 
 .logo {
-    width: 400px;
-    -webkit-filter: drop-shadow(5px 5px 5px #222);
-    filter: drop-shadow(5px 5px 5px #222);
+    height: 150px;
+    /* -webkit-filter: drop-shadow(5px 5px 5px #222); */
+    filter: drop-shadow(5px 5px 3px #222);
 }
 /* 
 #logo {
@@ -153,6 +164,10 @@ button:hover {
     transition: 400ms ease-in-out;
 }
 
+#app-wrapper {
+    background-color: var(--darkGrey);
+}
+
 #file-upload {
     display: none;
 }
@@ -229,7 +244,7 @@ input:-webkit-autofill {
 .profileContainer {
     display: flex;
     flex-direction: column;
-    padding: 20px;
+    padding: 30px;
 }
 
 .profileInner {
@@ -239,25 +254,30 @@ input:-webkit-autofill {
 .profileInner > .profileImage,
 .profilePicture {
     width: 250px;
-    border: 1px solid whitesmoke;
+    border: 3px solid var(--lightBlue);
     border-radius: 5px;
     margin-top: 20px;
 }
 
 .profileInner > h3 {
     padding: 30px;
+    /* color: red; */
 }
 
 .personalProfile {
-    background-color: tomato;
+    /* background-color: tomato; */
+    /* background-color: var(--darkGrey); */
+    color: var(--beige);
 }
 
 .otherProfile {
-    background-color: lightskyblue;
+    background-color: var(--lightGrey);
 }
 
 .lastThreeContainer {
-    background-color: orange;
+    background-color: var(--lightGrey);
+    text-shadow: 5px 5px 8px #000000;
+    color: var(--beige);
 }
 
 .lastThreeContainer img {
@@ -273,6 +293,14 @@ input:-webkit-autofill {
     font-size: 20px;
     padding: 30px;
 }
+textarea {
+    border-radius: 5px;
+    background-color: var(--beige);
+    color: var(--lightBlue);
+    font-size: 15px;
+    font-weight: bold;
+    font-family: "Nunito", sans-serif;
+}
 
 .profileEditor > .bioText {
     padding: 0 0 10px 0;
@@ -287,13 +315,15 @@ input:-webkit-autofill {
 }
 
 #friendsList-wrapper {
-    /* background-color: teal; */
+    background-color: var(--darkBlue);
+    color: var(--beige);
+    padding: 30px;
     display: flex;
     flex-direction: column;
 }
 
 .friends-container {
-    background-color: royalblue;
+    /* background-color: royalblue; */
     display: flex;
     flex-direction: column;
     /* flex-wrap: wrap; */
@@ -301,14 +331,38 @@ input:-webkit-autofill {
     /* overflow: auto; */
 }
 
+.img-container {
+    height: 100px;
+    width: 100px;
+    display: flex;
+    margin: 10px 0px;
+    border: 2px solid var(--green);
+    border-radius: 5px;
+    justify-content: center;
+    filter: saturate(100%);
+    transition: filter 0.5s;
+    transition: transform 400ms;
+}
+
+.img-container:hover {
+    filter: saturate(20%);
+    transform: scale(1.05);
+}
+
+.img-container img {
+    /* max-height: 100%; */
+    object-fit: cover;
+    min-width: 100%;
+}
+
 .wannabes-container {
-    background-color: saddlebrown;
+    /* background-color: saddlebrown; */
     display: flex;
     flex-direction: column;
 }
 
 .pendings-container {
-    background-color: violet;
+    /* background-color: violet; */
     display: flex;
     flex-direction: column;
 }
@@ -336,8 +390,8 @@ input:-webkit-autofill {
     /* line-break: normal; */
 }
 .member img {
-    width: 100px;
-    height: 100px;
+    /* width: 100px;
+    height: 100px; */
     /* justify-self: flex-end; */
 }
 
@@ -349,8 +403,9 @@ input:-webkit-autofill {
 }
 
 #nav-container > .profileImage {
-    border: 2px solid whitesmoke;
+    border: 2px solid var(--lightBlue);
     border-radius: 50%;
+    transition: all 0.2s ease-in-out;
     width: 60px;
     height: 60px;
     align-self: flex-end;
@@ -364,10 +419,13 @@ between the image and the menu */
 
 #nav-container > .profileImage:hover {
     cursor: pointer;
+    transform: scale(1.05);
+    filter: saturate(0.5);
 }
 
 #navbar {
     background-color: whitesmoke;
+
     border-radius: 5px;
     padding: 10px;
     height: fit-content;
@@ -392,7 +450,8 @@ between the image and the menu */
 .navItem {
     padding: 10px 10px;
     border-radius: 5px;
-    color: black;
+    color: var(--darkBlue);
+    /* color: black; */
 }
 
 .navItem .fas {
@@ -400,9 +459,10 @@ between the image and the menu */
 }
 
 .navItem:hover {
-    background-color: lightgray;
+    background-color: var(--lightBlue);
     transition: 300ms;
     cursor: pointer;
+    color: var(--beige);
 }
 
 .nav-visible {

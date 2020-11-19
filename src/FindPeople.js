@@ -45,8 +45,8 @@ export default function FindPeople() {
 
     return (
         <div className="lastThreeContainer profileContainer">
-            <h1>check out our most recent members:</h1>
-            <h3>or if you want to search for someone, type name below</h3>
+            <h1>check out our three most recent members</h1>
+            <h3>or if you wish to search for someone, type their name below</h3>
             <input
                 autoComplete="off"
                 onChange={(e) => setUserSearch(e.target.value)}
@@ -72,7 +72,6 @@ export default function FindPeople() {
                                         alt={`${user.first} ${user.last}`}
                                     />
                                 </Link>
-                                {/* <br /> */}
                                 <h3>
                                     {user.first} {user.last}
                                 </h3>

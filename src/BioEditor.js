@@ -55,8 +55,8 @@ export default class BioEditor extends Component {
                         <textarea
                             autoFocus={true}
                             defaultValue={this.props.bio}
-                            rows="2"
-                            cols="100"
+                            rows="3"
+                            cols="50"
                             onChange={(e) => this.handleChange(e)}
                         />
                     )}

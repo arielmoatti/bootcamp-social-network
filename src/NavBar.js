@@ -49,12 +49,12 @@ export default function NavBar({
                 </div>
 
                 <Link to={"/users"} className="navItem">
-                    <i className="fas fa-address-book"></i>
-                    See other members
+                    <i className="fas fa-search"></i>
+                    Find other members
                 </Link>
                 <Link to={"/friends"} className="navItem">
                     <i className="fas fa-user-friends"></i>
-                    Manage your friendships
+                    Manage friendships
                 </Link>
                 <Link to={"/msgboard"} className="navItem">
                     <i className="fas fa-comments"></i>

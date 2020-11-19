@@ -37,7 +37,7 @@ export default function FriendButton({ otherId }) {
 
     return (
         <button
-            name="friendship"
+            name="friendshipMain"
             onClick={() => {
                 handleClick();
             }}

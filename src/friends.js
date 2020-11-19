@@ -30,12 +30,13 @@ export default function Friends() {
     return (
         <>
             <div id="friendsList-wrapper">
+                <h1>manage your friendships and requests</h1>
                 {!friends && !wannabes && !pendings && (
                     <h1>no friendships to show...</h1>
                 )}
                 {friends && (
                     <div className="friends-container">
-                        <h2>your friends</h2>
+                        <h2>your current friends</h2>
                         <div className="items">
                             {friends.map((friend) => (
                                 <div className="member" key={friend.id}>
@@ -43,18 +44,20 @@ export default function Friends() {
                                         {friend.first} {friend.last}
                                     </p>
                                     <Link to={`/user/${friend.id}`}>
-                                        <img
-                                            src={
-                                                friend.avatar ||
-                                                "/fallback-profile.png"
-                                            }
-                                            onError={(e) => {
-                                                e.target.onerror = null;
-                                                e.target.src =
-                                                    "/fallback-profile.png";
-                                            }}
-                                            alt={`${friend.first} ${friend.last}`}
-                                        />
+                                        <div className="img-container">
+                                            <img
+                                                src={
+                                                    friend.avatar ||
+                                                    "/fallback-profile.png"
+                                                }
+                                                onError={(e) => {
+                                                    e.target.onerror = null;
+                                                    e.target.src =
+                                                        "/fallback-profile.png";
+                                                }}
+                                                alt={`${friend.first} ${friend.last}`}
+                                            />
+                                        </div>
                                     </Link>
                                     <div className="buttons">
                                         <button
@@ -64,6 +67,8 @@ export default function Friends() {
                                             }
                                         >
                                             unfriend
+                                            <span>&nbsp;&nbsp;</span>
+                                            <i className="fas fa-user-slash"></i>
                                         </button>
                                     </div>
                                 </div>
@@ -81,18 +86,20 @@ export default function Friends() {
                                         {wannabe.first} {wannabe.last}
                                     </p>
                                     <Link to={`/user/${wannabe.id}`}>
-                                        <img
-                                            src={
-                                                wannabe.avatar ||
-                                                "/fallback-profile.png"
-                                            }
-                                            onError={(e) => {
-                                                e.target.onerror = null;
-                                                e.target.src =
-                                                    "/fallback-profile.png";
-                                            }}
-                                            alt={`${wannabe.first} ${wannabe.last}`}
-                                        />
+                                        <div className="img-container">
+                                            <img
+                                                src={
+                                                    wannabe.avatar ||
+                                                    "/fallback-profile.png"
+                                                }
+                                                onError={(e) => {
+                                                    e.target.onerror = null;
+                                                    e.target.src =
+                                                        "/fallback-profile.png";
+                                                }}
+                                                alt={`${wannabe.first} ${wannabe.last}`}
+                                            />
+                                        </div>
                                     </Link>
                                     <div className="buttons">
                                         <button
@@ -102,6 +109,8 @@ export default function Friends() {
                                             }
                                         >
                                             accept
+                                            <span>&nbsp;&nbsp;</span>
+                                            <i className="fas fa-thumbs-up"></i>
                                         </button>
                                         <button
                                             name="friendship"
@@ -110,6 +119,8 @@ export default function Friends() {
                                             }
                                         >
                                             reject
+                                            <span>&nbsp;&nbsp;</span>
+                                            <i className="fas fa-thumbs-down"></i>
                                         </button>
                                     </div>
                                 </div>
@@ -127,18 +138,20 @@ export default function Friends() {
                                         {pending.first} {pending.last}
                                     </p>
                                     <Link to={`/user/${pending.id}`}>
-                                        <img
-                                            src={
-                                                pending.avatar ||
-                                                "/fallback-profile.png"
-                                            }
-                                            onError={(e) => {
-                                                e.target.onerror = null;
-                                                e.target.src =
-                                                    "/fallback-profile.png";
-                                            }}
-                                            alt={`${pending.first} ${pending.last}`}
-                                        />
+                                        <div className="img-container">
+                                            <img
+                                                src={
+                                                    pending.avatar ||
+                                                    "/fallback-profile.png"
+                                                }
+                                                onError={(e) => {
+                                                    e.target.onerror = null;
+                                                    e.target.src =
+                                                        "/fallback-profile.png";
+                                                }}
+                                                alt={`${pending.first} ${pending.last}`}
+                                            />
+                                        </div>
                                     </Link>
                                     <div className="buttons">
                                         <button
@@ -148,6 +161,8 @@ export default function Friends() {
                                             }
                                         >
                                             cancel
+                                            <span>&nbsp;&nbsp;</span>
+                                            <i className="fas fa-window-close"></i>
                                         </button>
                                     </div>
                                 </div>
