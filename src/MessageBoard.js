@@ -94,7 +94,10 @@ export default function MessageBoard() {
                                     <p className="authorName">
                                         {msg.first} {msg.last}
                                     </p>
-                                    <p>{msg.created_at}</p>
+                                    <p>
+                                        {msg.created_at.slice(11, 16)}{" "}
+                                        {msg.created_at.slice(0, 10)}
+                                    </p>
                                     <img
                                         src={
                                             msg.avatar ||

@@ -3,7 +3,13 @@ import React from "react";
 import BioEditor from "./BioEditor";
 import ProfilePic from "./ProfilePic";
 
-export default function Profile({ first, last, profilePicUrl }, props) {
+export default function Profile({
+    first,
+    last,
+    profilePicUrl,
+    bio,
+    methodInAppBio,
+}) {
     return (
         <>
             <div className="personalProfile profileContainer">
@@ -17,10 +23,7 @@ export default function Profile({ first, last, profilePicUrl }, props) {
                         key={profilePicUrl}
                         profilePicUrl={profilePicUrl}
                     />
-                    <BioEditor
-                        bio={props.bio}
-                        methodInAppBio={props.methodInAppBio}
-                    />
+                    <BioEditor bio={bio} methodInAppBio={methodInAppBio} />
                 </div>
             </div>
         </>

@@ -6,6 +6,9 @@ export default function ProfilePic({
     profilePicUrl,
     toggleNavBar,
 }) {
+    let alert = () => {
+        console.log("change photo!");
+    };
     return (
         <>
             <img
@@ -15,6 +18,8 @@ export default function ProfilePic({
                 onError={(e) => {
                     e.target.onerror = null;
                     e.target.src = "/fallback-profile.png";
+                    e.target.id = "fallback";
+                    alert();
                 }}
                 alt={`${first} ${last}`}
                 onClick={toggleNavBar}

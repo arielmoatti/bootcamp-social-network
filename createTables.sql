@@ -31,5 +31,5 @@ CREATE TABLE msgboard(
     id          SERIAL PRIMARY KEY,
     message     TEXT,
     author      INT REFERENCES users(id) NOT NULL,
-    created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at  TIMESTAMP DEFAULT TIMEZONE('MEST', NOW())
     );
