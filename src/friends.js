@@ -58,6 +58,7 @@ export default function Friends() {
                                     </Link>
                                     <div className="buttons">
                                         <button
+                                            name="friendship"
                                             onClick={() =>
                                                 dispatch(unfriend(friend.id))
                                             }
@@ -95,6 +96,7 @@ export default function Friends() {
                                     </Link>
                                     <div className="buttons">
                                         <button
+                                            name="friendship"
                                             onClick={() =>
                                                 dispatch(accept(wannabe.id))
                                             }
@@ -102,6 +104,7 @@ export default function Friends() {
                                             accept
                                         </button>
                                         <button
+                                            name="friendship"
                                             onClick={() =>
                                                 dispatch(reject(wannabe.id))
                                             }
@@ -139,6 +142,7 @@ export default function Friends() {
                                     </Link>
                                     <div className="buttons">
                                         <button
+                                            name="friendship"
                                             onClick={() =>
                                                 dispatch(cancel(pending.id))
                                             }

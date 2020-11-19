@@ -80,76 +80,90 @@ export default class App extends React.Component {
     render() {
         return (
             <BrowserRouter>
-                <header>
-                    <Logo />
-                    <div
-                        id="nav-container"
-                        onMouseEnter={() => this.setState({ flagHide: false })}
-                        onMouseLeave={() => {
-                            this.setState({ flagHide: true });
-                            setTimeout(() => {
-                                this.hideNavBar();
-                            }, 400);
-                        }}
-                        // tabIndex="0"
-                        // onBlur={() => this.hideNavBar()}
-                    >
-                        <ProfilePic
-                            first={this.state.first}
-                            last={this.state.last}
-                            key={this.state.profilePicUrl}
-                            profilePicUrl={this.state.profilePicUrl}
-                            toggleNavBar={() => this.toggleNavBar()}
-                        />
-                        <div className="spacer"></div>
-                        <NavBar
-                            first={this.state.first}
-                            last={this.state.last}
-                            profilePicUrl={this.state.profilePicUrl}
-                            toggleUploader={() => this.toggleUploader()}
-                            navVisible={this.state.navbarIsVisible}
-                            hideNavbarFromItem={() => this.hideNavbarFromItem()}
-                        />
-                    </div>
-                </header>
-
-                <div id="profileRoute">
-                    <Route
-                        exact
-                        path="/"
-                        render={() => (
-                            <Profile
-                                id={this.state.id}
+                <div id="app-wrapper">
+                    <header>
+                        <Logo />
+                        <div
+                            id="nav-container"
+                            onMouseEnter={() =>
+                                this.setState({ flagHide: false })
+                            }
+                            onMouseLeave={() => {
+                                this.setState({ flagHide: true });
+                                setTimeout(() => {
+                                    this.hideNavBar();
+                                }, 400);
+                            }}
+                            // tabIndex="0"
+                            // onBlur={() => this.hideNavBar()}
+                        >
+                            <ProfilePic
+                                first={this.state.first}
+                                last={this.state.last}
+                                key={this.state.profilePicUrl}
+                                profilePicUrl={this.state.profilePicUrl}
+                                toggleNavBar={() => this.toggleNavBar()}
+                            />
+                            <div className="spacer"></div>
+                            <NavBar
                                 first={this.state.first}
                                 last={this.state.last}
                                 profilePicUrl={this.state.profilePicUrl}
-                                bio={this.state.bio}
-                                methodInAppBio={this.methodInAppBio}
+                                toggleUploader={() => this.toggleUploader()}
+                                navVisible={this.state.navbarIsVisible}
+                                hideNavbarFromItem={() =>
+                                    this.hideNavbarFromItem()
+                                }
                             />
-                        )}
-                    />
+                        </div>
+                    </header>
+
+                    <div id="profileRoute">
+                        <Route
+                            exact
+                            path="/"
+                            render={() => (
+                                <Profile
+                                    id={this.state.id}
+                                    first={this.state.first}
+                                    last={this.state.last}
+                                    profilePicUrl={this.state.profilePicUrl}
+                                    bio={this.state.bio}
+                                    methodInAppBio={this.methodInAppBio}
+                                />
+                            )}
+                        />
+                        <Route
+                            path="/user/:id"
+                            render={(props) => (
+                                <OtherProfile
+                                    key={props.match.url}
+                                    match={props.match}
+                                    history={props.history}
+                                />
+                            )}
+                        />
+                        <Route
+                            exact
+                            path="/users"
+                            render={() => <FindPeople />}
+                        />
+                    </div>
+
+                    <Route exact path="/friends" render={() => <Friends />} />
                     <Route
-                        path="/user/:id"
-                        render={(props) => (
-                            <OtherProfile
-                                key={props.match.url}
-                                match={props.match}
-                                history={props.history}
-                            />
-                        )}
+                        exact
+                        path="/msgboard"
+                        render={() => <MessageBoard />}
                     />
-                    <Route exact path="/users" render={() => <FindPeople />} />
+
+                    {this.state.uploaderIsVisible && (
+                        <Uploader
+                            methodInApp={this.methodInApp}
+                            profilePicUrl={this.state.profilePicUrl}
+                        />
+                    )}
                 </div>
-
-                <Route exact path="/friends" render={() => <Friends />} />
-                <Route exact path="/msgboard" render={() => <MessageBoard />} />
-
-                {this.state.uploaderIsVisible && (
-                    <Uploader
-                        methodInApp={this.methodInApp}
-                        profilePicUrl={this.state.profilePicUrl}
-                    />
-                )}
             </BrowserRouter>
         );
     }

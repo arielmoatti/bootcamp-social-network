@@ -11,12 +11,19 @@ a {
     text-decoration: none;
 }
 
+#app-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
 header {
     background-color: seagreen;
     height: 200px;
     padding: 20px;
     display: flex;
     justify-content: space-between;
+    /* display: none; */
     /* align-items: center; */
 }
 
@@ -24,76 +31,101 @@ header {
     display: flex;
 } */
 
-.welcome-wrap {
+/* .welcome-wrap {
     display: flex;
-}
-.errMsg {
-    color: tomato;
-    background-color: olive;
+    justify-content: space-around;
+} */
+
+#welcomeElement {
+    position: absolute;
+    left: 50%;
+    top: 60%;
+    transform: translate(-50%, -50%);
 }
 
 .bgImg {
-    object-fit: cover;
-    width: 100%;
-    /* position: absolute; */
+    /* object-fit: cover; */
+    background-size: cover;
+    max-height: 100vh;
     z-index: -1;
+    /* overflow: hidden; */
 }
 
-.topLeft {
+/* .topLeft {
     position: absolute;
     left: 5%;
     top: 5%;
-    /* margin: 50px; */
-}
+    margin: 50px;
+} */
 
 .logo {
-    width: 150px;
+    width: 400px;
+    -webkit-filter: drop-shadow(5px 5px 5px #222);
+    filter: drop-shadow(5px 5px 5px #222);
 }
+/* 
 #logo {
     height: 450px;
     -webkit-filter: drop-shadow(5px 5px 5px #222);
     filter: drop-shadow(5px 5px 5px #222);
-}
-
-.formContainer {
-    background-color: rgba(0, 0, 0, 0.5);
-    border-radius: 5%;
-    /* position: absolute; */
-    margin-right: 40px;
-    padding: 10px;
-    /* right: 0%;
-    bottom: 10%; */
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    max-width: max-content;
-}
-
-.formContainer h1,
-.formContainer h3,
-.title {
-    font-weight: 400;
-    color: #ccc5b9;
-    text-shadow: 5px 5px 8px #000000;
-}
-
-/* 
-.formLower {
-    background-color: royalblue;
-    display: flex;
-    flex-direction: column;
-    width: 70%;
-    justify-content: center;
-    flex-wrap: wrap;
 } */
 
-.title {
-    font-size: 40px;
-    font-weight: 800;
+.formContainer {
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    font-weight: 100;
+    color: #ccc5b9;
+    text-shadow: 5px 5px 8px #000000;
+    width: 24rem;
+    /* height: 20rem; */
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    /* justify-content: center; */
+    /* align-content: center; */
+    /* justify-items: center; */
+    /* max-width: max-content; */
 }
 
-/* button[name="submit"] { */
+/* .formContainer h1,
+.formContainer h3, */
+
+.formLower {
+    /* background-color: royalblue; */
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* width: 70%; */
+    /* justify-content: center; */
+    /* flex-wrap: wrap; */
+}
+
+.formLower button {
+    margin: 5px;
+}
+
+.errMsg {
+    color: #22241f;
+    background-color: #ccc5b9;
+    font-size: 16px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 2px solid #de541e;
+    text-shadow: none;
+    margin-top: 20px;
+    text-align: center;
+    /* position: absolute;
+    bottom: 0px; */
+}
+
+/* .title {
+    font-size: 40px;
+    font-weight: 800;
+} */
+
 button {
     font-family: "Nunito", sans-serif;
     font-size: 18px;
@@ -104,6 +136,15 @@ button {
     color: #ccc5b9;
     border-radius: 5px;
     cursor: pointer;
+}
+
+button[name="friendship"] {
+    font-size: 12px;
+}
+
+button[name="submit"] {
+    font-size: 22px;
+    padding: 0.1rem 1rem;
 }
 
 button:hover {

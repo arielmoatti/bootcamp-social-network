@@ -38,7 +38,7 @@ export default class Login extends React.Component {
         return (
             <div className="formContainer">
                 <h1>welcome back!</h1>
-                <h1>please log in</h1>
+                <h2>please log in</h2>
                 <input
                     name="email"
                     placeholder="Email Address *"
@@ -55,20 +55,19 @@ export default class Login extends React.Component {
                     onClick={() => this.clearErrMsg()}
                 ></input>
                 <button name="submit" onClick={() => this.submit()}>
-                    log in!
+                    log in
                 </button>
                 {this.state.error && (
                     <h1 className="errMsg">{this.state.message}</h1>
                 )}
                 <div className="formLower">
-                    <h3>not yet a member?</h3>
-                    <h3>
-                        then please
-                        <Link to="/"> register</Link>
-                    </h3>
-                    <h3>
-                        <Link to="/reset-password"> forgot password?</Link>
-                    </h3>
+                    <h3>not yet a member? then please</h3>
+                    <Link to="/">
+                        <button>register</button>
+                    </Link>
+                    <Link to="/reset-password">
+                        <button>forgot password?</button>
+                    </Link>
                 </div>
             </div>
         );

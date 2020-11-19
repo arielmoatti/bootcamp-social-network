@@ -43,54 +43,60 @@ export default class Registration extends React.Component {
 
     render() {
         return (
-            <div className="formContainer">
-                <h1>please take a moment</h1>
-                <h1>to register</h1>
-                <input
-                    name="firstname"
-                    placeholder="First Name *"
-                    autoComplete="off"
-                    pattern="^[a-zA-Z ]+$"
-                    onChange={(e) => this.handleChange(e)}
-                    onClick={() => this.clearErrMsg()}
-                ></input>
-                <input
-                    name="lastname"
-                    placeholder="Last Name *"
-                    autoComplete="off"
-                    pattern="^[a-zA-Z ]+$"
-                    onChange={(e) => this.handleChange(e)}
-                    onClick={() => this.clearErrMsg()}
-                ></input>
-                <input
-                    name="email"
-                    placeholder="Email Address *"
-                    autoComplete="off"
-                    onChange={(e) => this.handleChange(e)}
-                    onClick={() => this.clearErrMsg()}
-                ></input>
-                <input
-                    name="password"
-                    placeholder="Password *"
-                    autoComplete="off"
-                    type="password"
-                    onChange={(e) => this.handleChange(e)}
-                    onClick={() => this.clearErrMsg()}
-                ></input>
-                <button name="submit" onClick={() => this.submit()}>
-                    register!
-                </button>
-                {this.state.error && (
-                    <h1 className="errMsg">{this.state.message}</h1>
-                )}
-                <div className="formLower">
-                    <h3>already a member?</h3>
+            <>
+                <div className="formContainer">
+                    <h1>welcome to cool beans!</h1>
                     <h3>
-                        then please
-                        <Link to="/login"> log in</Link>
+                        please take a moment to
+                        <br />
+                        register with us
                     </h3>
+
+                    <input
+                        name="firstname"
+                        placeholder="First Name *"
+                        autoComplete="off"
+                        pattern="^[a-zA-Z ]+$"
+                        onChange={(e) => this.handleChange(e)}
+                        onClick={() => this.clearErrMsg()}
+                    ></input>
+                    <input
+                        name="lastname"
+                        placeholder="Last Name *"
+                        autoComplete="off"
+                        pattern="^[a-zA-Z ]+$"
+                        onChange={(e) => this.handleChange(e)}
+                        onClick={() => this.clearErrMsg()}
+                    ></input>
+                    <input
+                        name="email"
+                        placeholder="Email Address *"
+                        autoComplete="off"
+                        onChange={(e) => this.handleChange(e)}
+                        onClick={() => this.clearErrMsg()}
+                    ></input>
+                    <input
+                        name="password"
+                        placeholder="Password *"
+                        autoComplete="off"
+                        type="password"
+                        onChange={(e) => this.handleChange(e)}
+                        onClick={() => this.clearErrMsg()}
+                    ></input>
+                    <button name="submit" onClick={() => this.submit()}>
+                        register
+                    </button>
+                    {this.state.error && (
+                        <h1 className="errMsg">{this.state.message}</h1>
+                    )}
+                    <div className="formLower">
+                        <h3>already a member? then please</h3>
+                        <Link to="/login">
+                            <button>log in</button>
+                        </Link>
+                    </div>
                 </div>
-            </div>
+            </>
         );
     }
 }

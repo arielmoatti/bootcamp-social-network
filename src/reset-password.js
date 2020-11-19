@@ -65,7 +65,8 @@ export default class ResetPassword extends React.Component {
         if (step == "provideEmail") {
             return (
                 <div className="formContainer">
-                    <h1>please enter your email</h1>
+                    <h1>forgot your password?</h1>
+                    <h2>please enter your email</h2>
                     <input
                         name="email"
                         placeholder="Email Address *"
@@ -79,15 +80,22 @@ export default class ResetPassword extends React.Component {
                     {this.state.error && (
                         <h1 className="errMsg">{this.state.message}</h1>
                     )}
+                    <div className="formLower">
+                        <h3>know your password? then please</h3>
+                        <Link to="/login">
+                            <button> log in</button>
+                        </Link>
+                    </div>
                 </div>
             );
         } else if (step == "provideCodePW") {
             return (
                 <div className="formContainer">
-                    <h3>
-                        email was sent! please check your mailbox for the
-                        recovery code, and fill out these fields
-                    </h3>
+                    <h3>email was sent! </h3>
+                    <p>
+                        please check your mailbox for the recovery code, and
+                        fill out these fields
+                    </p>
                     <input
                         name="secretCode"
                         placeholder="Recovery Code *"
@@ -100,6 +108,7 @@ export default class ResetPassword extends React.Component {
                         name="password"
                         placeholder="New Password *"
                         autoComplete="off"
+                        key={this.state.step}
                         type="password"
                         onChange={(e) => this.handleChange(e)}
                         onClick={() => this.clearErrMsg()}
@@ -117,11 +126,14 @@ export default class ResetPassword extends React.Component {
                 <div className="formContainer">
                     <h1>password reset successfully!</h1>
                     <div className="formLower">
-                        <h3>now you can go ahead</h3>
-                        <h3>
-                            and <Link to="/login"> log in</Link>
-                            with your new password
-                        </h3>
+                        <p>
+                            now you can go ahead
+                            <br />
+                            and log in with your new password
+                        </p>
+                        <Link to="/login">
+                            <button>log in</button>
+                        </Link>
                     </div>
                 </div>
             );
