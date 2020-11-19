@@ -63,7 +63,8 @@ exports.searchUser = (search) => {
         ORDER BY first ASC 
         LIMIT 15;
         `,
-        ["%" + search + "%"]
+        // ["%" + search + "%"]
+        [search + "%"]
     );
 };
 

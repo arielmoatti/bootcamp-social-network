@@ -557,9 +557,13 @@ io.on("connection", async (socket) => {
         try {
             const storedMessage = await db.addBoardMessage(userId, newMsg);
             const userInfo = await db.getUserDataById(userId);
+            const payload = Object.assign(
+                userInfo.rows[0],
+                storedMessage.rows[0]
+            );
+            /*
             const { first, last, avatar } = userInfo.rows[0];
             const { id, created_at, message } = storedMessage.rows[0];
-
             const payload = {
                 id: id,
                 message: message,
@@ -568,6 +572,7 @@ io.on("connection", async (socket) => {
                 last: last,
                 avatar: avatar,
             };
+            */
             io.sockets.emit("mbdbNewEntry", payload);
         } catch (err) {
             console.log("Error in SOCKET io.emit newMsgFromClient", err);

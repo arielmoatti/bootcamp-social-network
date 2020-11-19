@@ -5,10 +5,11 @@ export default function ProfilePic({
     last,
     profilePicUrl,
     toggleNavBar,
+    alertBrokenImg,
 }) {
-    let alert = () => {
-        console.log("change photo!");
-    };
+    // if (!alertBrokenImg) {
+    //     return null;
+    // }
     return (
         <>
             <img
@@ -18,8 +19,10 @@ export default function ProfilePic({
                 onError={(e) => {
                     e.target.onerror = null;
                     e.target.src = "/fallback-profile.png";
-                    e.target.id = "fallback";
-                    alert();
+                    // alertBrokenImg();
+                    alert(
+                        "Oops... it appears like your profile picture is missing. Use the menu to upload a new one"
+                    );
                 }}
                 alt={`${first} ${last}`}
                 onClick={toggleNavBar}

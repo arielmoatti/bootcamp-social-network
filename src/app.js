@@ -102,7 +102,6 @@ export default class App extends React.Component {
                             toggleNavBar={() => this.toggleNavBar()}
                         />
                         <div className="spacer"></div>
-                        {/* {this.state.navbarIsVisible && ( */}
                         <NavBar
                             first={this.state.first}
                             last={this.state.last}
@@ -111,7 +110,6 @@ export default class App extends React.Component {
                             navVisible={this.state.navbarIsVisible}
                             hideNavbarFromItem={() => this.hideNavbarFromItem()}
                         />
-                        {/* )} */}
                     </div>
                 </header>
 

@@ -402,3 +402,16 @@ between the image and the menu */
     margin-bottom: 20px;
     filter: drop-shadow(2px 2px 2px #222);
 }
+
+.brokenImage {
+    background-color: seashell;
+    border-radius: 5px;
+    padding: 2px;
+    margin-top: 10px;
+}
+
+.help {
+    position: absolute;
+    top: 200px;
+    left: 200px;
+}

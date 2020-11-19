@@ -22,9 +22,7 @@ export default class OtherProfile extends React.Component {
                         bio: bio,
                     });
                 } else {
-                    setTimeout(() => {
-                        this.props.history.push("/");
-                    }, 10);
+                    this.props.history.push("/");
                 }
             } catch (err) {
                 console.log("error in axios GET /user/id: ", err);
@@ -33,6 +31,9 @@ export default class OtherProfile extends React.Component {
     }
 
     render() {
+        if (!this.state.first) {
+            return null;
+        }
         return (
             <>
                 <div className="otherProfile profileContainer">
