@@ -15,6 +15,7 @@
 
 body {
     font-family: "Nunito", sans-serif;
+    background-color: var(--darkGrey);
 }
 
 a {
@@ -166,7 +167,7 @@ button:hover {
 }
 
 #app-wrapper {
-    background-color: var(--darkGrey);
+    /* background-color: var(--darkGrey); */
 }
 
 input {
@@ -221,7 +222,7 @@ input:-webkit-autofill {
     padding: 20px;
     position: fixed;
     width: 50%;
-    height: 30%;
+    height: 40%;
 
     left: 50%;
     top: 50%;
@@ -518,7 +519,10 @@ between the image and the menu */
 
 #messageBoard {
     margin: 30px;
+    /* padding: 20px;
+    background-color: var(--darkBlue); */
 }
+
 .msgboard-innerContainer {
     background-color: var(--lightGrey);
     border-radius: 5px;
@@ -555,10 +559,6 @@ between the image and the menu */
 
 #messageBoard p {
     color: var(--beige);
-}
-
-.msgTextarea {
-    /* display: inline-block; */
 }
 
 .msgLower {
