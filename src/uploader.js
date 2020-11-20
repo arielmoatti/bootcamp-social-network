@@ -50,34 +50,55 @@ export default class Uploader extends React.Component {
         return (
             <>
                 <div className="uploaderModal">
-                    <h2>click below to update your profile picture</h2>
-                    <label
-                        htmlFor="file-upload"
-                        className={
-                            this.state.file
-                                ? "file-loaded custom-file-upload"
-                                : "custom-file-upload"
-                        }
+                    <button
+                        name="cancel"
+                        onClick={() => this.methodInUploader()}
                     >
-                        <i className="fas fa-cloud-upload-alt">&nbsp;&nbsp;</i>
-                        {this.state.file
-                            ? this.state.file.name
-                            : "select image"}
-                    </label>
-                    <input
-                        id="file-upload"
-                        type="file"
-                        name="file"
-                        accept="image/*"
-                        onChange={this.handleFileChange}
-                    ></input>
-                    {this.state.file && (
-                        <button onClick={() => this.submit()}>upload</button>
-                    )}
-                    <button onClick={() => this.methodInUploader()}>
-                        cancel
+                        x
                     </button>
-                    <p>{this.state.errMsg}</p>
+                    <div className="modalInner">
+                        <h2>click below to update your profile picture</h2>
+                        <div className="fileButtons">
+                            <label
+                                htmlFor="file-upload"
+                                className={
+                                    this.state.file
+                                        ? "file-loaded custom-file-upload"
+                                        : "custom-file-upload"
+                                }
+                            >
+                                <i className="fas fa-cloud-upload-alt">
+                                    &nbsp;&nbsp;
+                                </i>
+                                {this.state.file
+                                    ? this.state.file.name
+                                    : "select file"}
+                            </label>
+                            <input
+                                id="file-upload"
+                                type="file"
+                                name="file"
+                                accept="image/*"
+                                onChange={this.handleFileChange}
+                            ></input>
+                            {this.state.file && (
+                                <button
+                                    name="upload"
+                                    onClick={() => this.submit()}
+                                >
+                                    upload
+                                </button>
+                            )}
+                        </div>
+                        {this.state.errMsg && (
+                            <p className="errMsg">
+                                <i className="fas fa-exclamation-triangle">
+                                    &nbsp;&nbsp;
+                                </i>
+                                {this.state.errMsg}
+                            </p>
+                        )}
+                    </div>
                 </div>
             </>
         );

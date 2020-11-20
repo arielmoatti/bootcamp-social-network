@@ -158,10 +158,13 @@ export default class App extends React.Component {
                     />
 
                     {this.state.uploaderIsVisible && (
-                        <Uploader
-                            methodInApp={this.methodInApp}
-                            profilePicUrl={this.state.profilePicUrl}
-                        />
+                        <>
+                            <div className="overlay"></div>
+                            <Uploader
+                                methodInApp={this.methodInApp}
+                                profilePicUrl={this.state.profilePicUrl}
+                            />
+                        </>
                     )}
                 </div>
             </BrowserRouter>
