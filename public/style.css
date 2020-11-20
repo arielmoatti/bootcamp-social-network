@@ -39,9 +39,11 @@ header {
     /* align-items: center; */
 }
 
-/* #welcome-container {
-    display: flex;
-} */
+#welcome-container {
+    /* display: flex; */
+    overflow: hidden;
+    height: 99vh;
+}
 
 /* .welcome-wrap {
     display: flex;
@@ -519,15 +521,13 @@ between the image and the menu */
 
 #messageBoard {
     margin: 30px;
-    /* padding: 20px;
-    background-color: var(--darkBlue); */
 }
 
 .msgboard-innerContainer {
     background-color: var(--lightGrey);
     border-radius: 5px;
     padding: 20px;
-    height: 500px;
+    height: 450px;
     width: 75vw;
     overflow-y: scroll;
     margin-bottom: 20px;
@@ -555,10 +555,13 @@ between the image and the menu */
 .message .timestamp {
     float: right;
     font-size: 12px;
+    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
 }
 
-#messageBoard p {
+#messageBoard p,
+h1 {
     color: var(--beige);
+    margin-bottom: 10px;
 }
 
 .msgLower {

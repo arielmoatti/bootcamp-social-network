@@ -15,10 +15,8 @@ VALUES
     (201, 6, false),
     (7, 201, false),    
     (201, 9, true),
-    (10, 201, false),
     (201, 11, false),    
     (13, 201, true),
-    (201, 14, false),
     (15, 201, false),
     (201, 16, true),
     (202, 201, false);

@@ -86,6 +86,7 @@ export default function MessageBoard() {
     return (
         <>
             <div id="messageBoard">
+                <h1>let's talk about coffee!</h1>
                 <div className="msgboard-innerContainer" ref={elemRef}>
                     {boardMessages && (
                         <div className="msg-items">
@@ -109,8 +110,8 @@ export default function MessageBoard() {
                                     />
                                     <p className="message-box">{msg.message}</p>
                                     <p className="timestamp">
-                                        {msg.created_at.slice(11, 16)}{" "}
-                                        {msg.created_at.slice(0, 10)}
+                                        [{msg.created_at.slice(11, 16)}{" "}
+                                        {msg.created_at.slice(0, 10)}]
                                     </p>
                                 </div>
                             ))}
