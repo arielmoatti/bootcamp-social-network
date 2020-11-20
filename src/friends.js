@@ -78,7 +78,7 @@ export default function Friends() {
                 )}
                 {wannabes && (
                     <div className="wannabes-container">
-                        <h2>members who wish to befreind you</h2>
+                        <h2>members who wish to befriend you</h2>
                         <div className="items">
                             {wannabes.map((wannabe) => (
                                 <div className="member" key={wannabe.id}>

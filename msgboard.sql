@@ -18,13 +18,13 @@ VALUES
     ('The fish listened intently to what the frogs had to say. Nobody questions who built the pyramids in Mexico.', 23, '2020-11-17 23:10:58'),
     ('The tattered work gloves speak of the many hours of hard labor he endured throughout his life.', 23, '2020-11-16 23:11:58'),
     ('The body piercing didnt go exactly as he expected. Karen realized the only way she was getting into heaven was to cheat.', 201, '2020-11-17 23:12:58'),
-    ('Wisdom is easily acquired when hiding under the bed with a saucepan on your head. He always wore his sunglasses at night.', 201, '2020-11-17 23:13:58'),
-    ('he two walked down the slot canyon oblivious to the sound of thunder in the distance. He is no James Bond', 64, '2020-11-17 23:14:58'),
+    ('Wisdom is easily acquired when hiding under the bed with a saucepan on your head', 201, '2020-11-17 23:13:58'),
+    ('He is no James Bond', 64, '2020-11-17 23:14:58'),
     ('She felt that chill that makes the hairs on the back of your neck when he walked into the room. Doris enjoyed tapping her nails on the table to annoy everyone.', 3, '2020-10-13 23:05:58'),
-    ('Nobody questions who built the pyramids in Mexico. Doris enjoyed tapping her nails on the table to annoy everyone.', 201, '2020-11-17 22:05:58'),
+    ('Nobody questions who built the pyramids in Mexico!', 201, '2020-11-17 22:05:58'),
     ('She used her own hair in the soup to give it more flavor. You cannot compare apples and oranges, but what about bananas and plantains?', 64, '2020-11-17 23:05:58'),
     ('The father died during childbirth. She tilted her head back and let whip cream stream into her mouth while taking a bath.', 23, '2020-11-17 21:35:58'),
-    ('The fish dreamed of escaping the fishbowl and into the toilet where he saw his friend go.', 3, '2020-11-13 23:05:58')
+    ('The fish dreamed of escaping the fishbowl...', 3, '2020-11-13 23:05:58')
     ;
 
 

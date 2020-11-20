@@ -94,10 +94,7 @@ export default function MessageBoard() {
                                     <p className="authorName">
                                         {msg.first} {msg.last}
                                     </p>
-                                    <p>
-                                        {msg.created_at.slice(11, 16)}{" "}
-                                        {msg.created_at.slice(0, 10)}
-                                    </p>
+
                                     <img
                                         src={
                                             msg.avatar ||
@@ -111,34 +108,35 @@ export default function MessageBoard() {
                                         alt={`${msg.first} ${msg.last}`}
                                     />
                                     <p className="message-box">{msg.message}</p>
+                                    <p className="timestamp">
+                                        {msg.created_at.slice(11, 16)}{" "}
+                                        {msg.created_at.slice(0, 10)}
+                                    </p>
                                 </div>
                             ))}
                         </div>
                     )}
                 </div>
-                <textarea
-                    autoFocus={true}
-                    rows="2"
-                    cols="50"
-                    onKeyDown={keyCheck}
-                />
-                <p>
-                    hit <strong>Enter</strong> to send
-                </p>
-                {unreadMsgs > 0 && flagUnscrolled && (
-                    <div>
+                <div className="msgLower">
+                    <div className="msgTextarea">
+                        <textarea
+                            autoFocus={true}
+                            rows="2"
+                            cols="50"
+                            onKeyDown={keyCheck}
+                        />
                         <p>
-                            you have <strong>{unreadMsgs}</strong> new unread
-                            {unreadMsgs == 1 ? (
-                                <span> message below!</span>
-                            ) : (
-                                <span> messages below!</span>
-                            )}
+                            hit <strong>Enter</strong> to send
                         </p>
-                        <button onClick={showNewFn}>show me</button>
-                        <button onClick={dismissedFn}>hide</button>
                     </div>
-                )}
+                    {unreadMsgs > 0 && flagUnscrolled && (
+                        <div id="unreadBox" onClick={showNewFn}>
+                            <p>{unreadMsgs}</p>
+                            {/* <button onClick={showNewFn}>show me</button> */}
+                            {/* <button onClick={dismissedFn}>hide</button> */}
+                        </div>
+                    )}
+                </div>
             </div>
         </>
     );

@@ -151,6 +151,7 @@ button {
 
 button[name="friendship"] {
     font-size: 12px;
+    margin-bottom: 8px;
 }
 
 button[name="submit"] {
@@ -322,21 +323,12 @@ textarea {
     flex-direction: column;
 }
 
-.friends-container {
-    /* background-color: royalblue; */
-    display: flex;
-    flex-direction: column;
-    /* flex-wrap: wrap; */
-    /* width: 100vw; */
-    /* overflow: auto; */
-}
-
 .img-container {
     height: 100px;
     width: 100px;
     display: flex;
     margin: 10px 0px;
-    border: 2px solid var(--green);
+    border: 2px solid var(--lilac);
     border-radius: 5px;
     justify-content: center;
     filter: saturate(100%);
@@ -355,16 +347,17 @@ textarea {
     min-width: 100%;
 }
 
-.wannabes-container {
-    /* background-color: saddlebrown; */
-    display: flex;
-    flex-direction: column;
-}
-
+.friends-container,
+.wannabes-container,
 .pendings-container {
-    /* background-color: violet; */
+    /* background-color: royalblue; */
     display: flex;
     flex-direction: column;
+    margin-bottom: 40px;
+    border-bottom: 1px solid var(--lilac);
+    /* flex-wrap: wrap; */
+    /* width: 100vw; */
+    /* overflow: auto; */
 }
 
 .items {
@@ -376,23 +369,12 @@ textarea {
 
 .member {
     /* background-color: purple; */
-    margin: 10px;
+    margin: 20px 20px 0 0;
+
     max-width: 100px;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-}
-
-.member p {
-    /* color: yellow; */
-    /* max-width: 10em;
-    flex-wrap: wrap; */
-    /* line-break: normal; */
-}
-.member img {
-    /* width: 100px;
-    height: 100px; */
-    /* justify-self: flex-end; */
 }
 
 #nav-container {
@@ -481,11 +463,16 @@ between the image and the menu */
     margin: 30px;
 }
 .msgboard-innerContainer {
-    background-color: royalblue;
+    background-color: var(--lightGrey);
+    border-radius: 5px;
     padding: 20px;
     height: 500px;
     width: 75vw;
     overflow-y: scroll;
+    margin-bottom: 20px;
+}
+.message {
+    padding-bottom: 20px;
 }
 
 .message img {
@@ -496,23 +483,72 @@ between the image and the menu */
     font-weight: bold;
 }
 .message .message-box {
-    background-color: thistle;
+    background-color: var(--lilac);
     border-radius: 5px;
     width: fit-content;
     padding: 2px 10px;
-    margin-bottom: 20px;
+    margin-bottom: 4px;
     filter: drop-shadow(2px 2px 2px #222);
 }
 
+.message .timestamp {
+    float: right;
+    font-size: 12px;
+}
+
+#messageBoard p {
+    color: var(--beige);
+}
+
+.msgTextarea {
+    /* display: inline-block; */
+}
+
+.msgLower {
+    display: flex;
+}
+
+#unreadBox {
+    display: flex;
+    justify-content: space-around;
+    padding: 3px 3px 2px 3px;
+    margin-left: 10px;
+    background-color: var(--green);
+
+    height: 50px;
+    width: 50px;
+    clip-path: polygon(
+        0% 0%,
+        100% 0%,
+        100% 75%,
+        75% 75%,
+        75% 100%,
+        50% 75%,
+        0% 75%
+    );
+    transition: transform 100ms;
+}
+
+#unreadBox:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
+#unreadBox p {
+    color: white;
+    font-weight: bolder;
+    padding-top: 4px;
+    font-size: 17px;
+    border: 1px solid white;
+    border-radius: 50%;
+    height: 2rem;
+    width: 2rem;
+    text-align: center;
+}
+/* 
 .brokenImage {
     background-color: seashell;
     border-radius: 5px;
     padding: 2px;
     margin-top: 10px;
-}
-
-.help {
-    position: absolute;
-    top: 200px;
-    left: 200px;
-}
+} */
