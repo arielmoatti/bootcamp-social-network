@@ -46,7 +46,7 @@ export default class ResetPassword extends React.Component {
                     this.setState({
                         step: "",
                     });
-                    console.log("phase 1 completed");
+                    // console.log("phase 1 completed");
                     // this.clearErrMsg();
                 } else {
                     this.setState({

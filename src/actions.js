@@ -20,7 +20,7 @@ export async function unfriend(id) {
     try {
         //
         let { data } = await axios.post(`/api/setFriendship/${id}`);
-        console.log("unfriended!");
+        // console.log("unfriended!");
         if (data.success) {
             return {
                 type: "UNFRIENDED",
@@ -36,7 +36,7 @@ export async function accept(id) {
     try {
         //
         let { data } = await axios.post(`/api/setFriendship/${id}`);
-        console.log("accepted!");
+        // console.log("accepted!");
         if (data.success) {
             return {
                 type: "ACCEPTED",
@@ -53,7 +53,7 @@ export async function reject(id) {
     try {
         //
         let { data } = await axios.post(`/api/setFriendship/${id}`, body);
-        console.log("rejected!");
+        // console.log("rejected!");
         if (data.success) {
             return {
                 type: "REJECTED",
@@ -69,7 +69,7 @@ export async function cancel(id) {
     try {
         //
         let { data } = await axios.post(`/api/setFriendship/${id}`);
-        console.log("cancelled!");
+        // console.log("cancelled!");
         if (data.success) {
             return {
                 type: "CANCELLED",

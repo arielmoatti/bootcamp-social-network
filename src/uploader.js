@@ -17,7 +17,7 @@ export default class Uploader extends React.Component {
     }
 
     handleFileChange(e) {
-        console.log("file size: ", e.target.files[0].size);
+        // console.log("file size: ", e.target.files[0].size);
         this.setState({ errMsg: null });
         if (e.target.files[0].size > 2000000) {
             this.setState({
