@@ -3,9 +3,9 @@ CREATE TABLE msgboard(
     id          SERIAL PRIMARY KEY,
     message     TEXT,
     author      INT REFERENCES users(id) NOT NULL,
-    -- created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+    created_at  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
     -- created_at  timestamp without time zone default (now() at time zone 'MEST')
-    created_at  TIMESTAMP DEFAULT TIMEZONE('MEST', NOW())
+    -- created_at  TIMESTAMP DEFAULT TIMEZONE('MEST', NOW())
     );
 INSERT INTO msgboard
     (message, author, created_at)

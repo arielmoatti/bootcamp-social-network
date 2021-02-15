@@ -2,8 +2,10 @@ const express = require("express");
 const app = (exports.app = express());
 //setup for sockets
 const server = require("http").Server(app);
-const io = require("socket.io")(server, { origins: "localhost:8080" });
-// const io = require("socket.io")(server, { origins: "localhost:8080 https://more-cowbell.heruko.com:*" });
+// const io = require("socket.io")(server, { origins: "localhost:8080" });
+const io = require("socket.io")(server, {
+    origins: "localhost:8080 https://cool-beans-sn.herokuapp.com/:*",
+});
 ////////////////////
 const compression = require("compression");
 const cookieSession = require("cookie-session");
