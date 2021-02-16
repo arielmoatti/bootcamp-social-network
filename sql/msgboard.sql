@@ -10,11 +10,11 @@ CREATE TABLE msgboard(
 INSERT INTO msgboard
     (message, author, created_at)
 VALUES 
-    ('Hello, I''m not new to third-wave coffee, been using V60 or AeroPress with fresh roasted beans for 10 years. ', 201, '2020-11-17 23:05:58'),
+    ('Hello, I''m not new to third-wave coffee, been using V60 or AeroPress with fresh roasted beans for 10 years. ', 201, '2020-10-22 23:05:58'),
 
-    ('I''ve always changed up what I''m drinking from bag to bag, no issue.', 3, '2020-10-17 23:06:58'),
+    ('I''ve always changed up what I''m drinking from bag to bag, no issue.', 3, '2020-10-22 23:15:00'),
 
-    ('when you''re still learning how to dial in and evaluate espresso, it''s probably best to stick with the same beans until you become proficient in getting the most you can out of the beans.', 64, '2020-11-17 23:07:58'),
+    ('when you''re still learning how to dial in and evaluate espresso, it''s probably best to stick with the same beans until you become proficient in getting the most you can out of the beans.', 64, '2020-10-26 12:32:58'),
 
     ('Once you can consistently dial in those beans to taste about the same as the cafe''s product, you can move on to trying other beans and change them up as often as you like.', 23, '2020-11-13 23:08:58'),
 

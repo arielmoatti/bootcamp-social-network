@@ -102,7 +102,7 @@ exports.getMsgBrdHistory = () => {
         JOIN users
         ON author = users.id
         ORDER BY msgboard.created_at DESC
-        LIMIT 10;
+        LIMIT 20;
         `
     );
 };
